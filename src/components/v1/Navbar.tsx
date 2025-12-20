@@ -107,9 +107,6 @@ export default function Navbar() {
             <a href="#pricing" className="text-gray-600 hover:text-indigo-600">
               {translate("components.navbar.pricing")}
             </a>
-            <a href="#features" className="text-gray-600 hover:text-indigo-600">
-              {translate("components.navbar.features")}
-            </a>
             <a href="#faq" className="text-gray-600 hover:text-indigo-600">
               {translate("components.navbar.faq")}
             </a>
