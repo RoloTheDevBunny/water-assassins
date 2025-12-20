@@ -27,21 +27,37 @@
           }
         },
         "features": {
-          "title": "Bounties (1/2 Player Fee)",
-          "description": "Get paid $5 each week for killing your target and suriving to claim their bounty."
+          "title": "Payouts",
+          "description": "Where the Player Fee goes",
+          "bounties": {
+            "title": "Bounties (1/2 Player Fee)",
+            "description": "Get paid $5 each week for killing your target and suriving to claim their bounty."
+          },
+          "prize": {
+            "title": "Grand Prize (1/2 Player Fee)",
+            "description": "The winning team claims the full Grand Prize, split between the members."
+          }
         },
-        "subscription": {
-          "title": "Grand Prize (1/2 Player Fee)",
-          "description": "The winning team claims the full Grand Prize, split between the members."
-        }
-      },
-      "faq": {
-        "title": "Frequently Asked Questions",
-        "description": "May change",
-        "items": {
-          "1": {
-            "question": "How much does it cost",
-            "answer": "The registration fee per team is $5. Each player costs $25, with the Player Fee split between the Bounty program and the Grand Prize."
+        "faq": {
+          "title": "Frequently Asked Questions",
+          "description": "May change",
+          "items": {
+            "1": {
+              "question": "How much does it cost",
+              "answer": "The registration fee per team is $10. Each player costs $25, with the Player Fee split between the Bounty program and the Grand Prize."
+            },
+            "2": {
+              "question": "Can I make my money back without winning the Grand Prize?",
+              "answer": "Yes. As teams are eliminated, the bounty per kill increases."
+            },
+            "3": {
+              "question": "How many rounds will there be?",
+              "answer": "The current plan is 5 rounds"
+            },
+            "4": {
+              "question": "What if my friend group can't evenly divide into teams of 5?",
+              "answer": "You can register as a smaller team, and later decide to merge or add new members"
+            }
           }
         }
       }
@@ -214,8 +230,7 @@
   },
   "components": {
     "navbar": {
-      "pricing": "Pricing",
-      "features": "Features",
+      "pricing": "Payouts",
       "faq": "FAQ",
       "signin": "Sign In",
       "try": "Try For Free",

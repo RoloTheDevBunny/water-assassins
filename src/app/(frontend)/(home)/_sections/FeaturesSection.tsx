@@ -10,16 +10,12 @@ export default function FeaturesSection() {
 
   const features = [
     {
-      title: translate('pages.home.sections.features.oauth.title'),
-      description: translate('pages.home.sections.features.oauth.description'),
+      title: translate('pages.home.sections.features.bounties.title'),
+      description: translate('pages.home.sections.features.bounties.description'),
     },
     {
-      title: translate('pages.home.sections.features.subscription.title'),
-      description: translate('pages.home.sections.features.subscription.description'),
-    },
-    {
-      title: translate('pages.home.sections.features.responsive.title'),
-      description: translate('pages.home.sections.features.responsive.description'),
+      title: translate('pages.home.sections.features.prize.title'),
+      description: translate('pages.home.sections.features.prize.description'),
     },
   ];
 
@@ -35,7 +31,7 @@ export default function FeaturesSection() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2">
           {features.map((feature, index) => (
             <div
               key={index}
