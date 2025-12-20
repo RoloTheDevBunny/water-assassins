@@ -1,109 +1,200 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+<p align="center">
+  <a href="https://github.com/marcelodosreis/sassy"><img src="https://raw.githubusercontent.com/marcelodosreis/sassy/refs/heads/main/public/logo.ico" alt="Logo" height=170></a>
+</p>
+<h1 align="center">Sassy</h1>
 
 <p align="center">
- The fastest way to build apps with Next.js and Supabase
+<img src="https://img.shields.io/github/stars/marcelodosreis/sassy" alt="stars">
+<a><img src="https://img.shields.io/static/v1?label=speed&message=fast&color=success" /></a>
 </p>
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+Welcome to **Sassy**, a powerful template generator designed to accelerate the development of AHS Water Assassins applications. Built with **Next.js 15**, **TypeScript**, **TailwindCSS**, **Supabase**, and **Stripe**, Sassy provides a robust foundation for building subscription-based services with integrated authentication, subscription management, and payment processing.
 
-## Features
+| **Feature**                             | **Status** |
+|-----------------------------------------|------------|
+| OAuth Authentication (Google, FB, Twitter) | ✅         |
+| Subscription & Billing (Stripe)         | ✅         |
+| Free Trial Periods (Stripe)             | ✅         |
+| Billing Portal (Stripe)                 | ✅         |
+| Webhooks for Stripe Events              | ✅         |
+| Subscriptions & Payments API Routes     | ✅         |
+| User Authentication (Supabase)          | ✅         |
+| E-Mail (Mailgun)  | ✅         |
+| Personalized Dashboard                  | ✅         |
+| Responsive Design + Landing Page        | ✅         |
+| Logs & Monitoring (Datadog)             | ✅         |
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Proxy
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+You can learn more about the other features by visiting the following documentation page: [Sassy Documentation](https://github.com/marcelodosreis/sassy/blob/develop/docs).
 
-## Demo
+We are constantly improving Sassy with new features to make it even more powerful. You can find the current roadmap and planned features on our [Feature Roadmap](https://github.com/marcelodosreis/sassy/blob/develop/docs/feature-roadmap.md)
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
 
-## Deploy to Vercel
+## Architecture and Structure
 
-Vercel deployment will guide you through creating a Supabase account and project.
+Sassy's architecture is designed to streamline the rapid development of AHS Water Assassins applications by providing essential features like user authentication, subscription management, and seamless payment processing. The project structure is clean and organized to help developers get started quickly while maintaining flexibility and scalability.
 
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
+### Project Structure:
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
+```bash
+src/
+├── app/                # Main logic and core functionality of the application
+├── components/         # Reusable UI components
+├── constants/           # Global constants and configurations
+├── contexts/            # React contexts for global state management
+├── hooks/               # Custom React hooks
+├── libs/                # Third-party libraries and utilities
+├── pages/               # Next.js pages corresponding to routes
+│   └── api/             # API routes for backend functionality
+├── services/            # External API integrations and services
+├── styles/              # TailwindCSS configuration and custom styles
+├── utils/               # Utility functions and helpers
+└── middleware.ts        # Middleware for request processing
+```
 
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
+### Integration with Supabase and Stripe:
 
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
+- **Supabase** is used for user authentication and real-time database management. The `subscriptions` table is created to store subscription-related data for each user.
+- **Stripe** is integrated to handle payment processing and subscription plan management.
 
-## Clone and run locally
+### SQL Script for Creating the `subscriptions` Table in Supabase:
 
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
+```sql
+CREATE TABLE subscriptions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    stripe_subscription_id TEXT UNIQUE,
+    plan TEXT CHECK (plan IN ('free', 'starter', 'creator', 'pro')) NOT NULL DEFAULT 'free',
+    status TEXT CHECK (status IN ('active', 'canceled', 'past_due', 'incomplete', 'trialing')) NOT NULL DEFAULT 'active',
+    current_period_start TIMESTAMP WITH TIME ZONE,
+    current_period_end TIMESTAMP WITH TIME ZONE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
 
-2. Create a Next.js app using the Supabase Starter template npx command
+> **Note:** Since subscription data is sensitive, ensure that **Row Level Security (RLS)** is disabled for the `subscriptions` table.
 
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
+### Environment Configuration:
 
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
+The environment variables are configured to integrate Sassy with Supabase and Stripe. Make sure to update the values accordingly.
 
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
+```env
+NEXT_PUBLIC_PROJECT_URL=
 
-3. Use `cd` to change into the app's directory
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_SUPABASE_URL=
 
-   ```bash
-   cd with-supabase-app
-   ```
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
 
-4. Rename `.env.example` to `.env.local` and update the following:
+NEXT_PUBLIC_DATADOG_APPLICATION_ID=
+NEXT_PUBLIC_DATADOG_CLIENT_TOKEN=
 
-  ```env
-  NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-  NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
-  ```
-  > [!NOTE]
-  > This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-  > Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-  > See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
+SUPABASE_SECRET_KEY=
 
-  Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
 
-5. You can now run the Next.js local development server:
+DATADOG_SECRET_KEY=
 
-   ```bash
-   npm run dev
-   ```
+MAILGUN_SECRET_KEY=
+MAILGUN_SECRET_DOMAIN=
+```
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+> **Note:** Replace the above values with your own Supabase and Stripe keys.
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+## Key Features
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+- **Authentication with Supabase:** Utilize Supabase for user authentication, providing a secure and scalable login system.
+- **Subscription Management with Stripe:** Easily manage different subscription plans, handle payments, and track user subscriptions with Stripe integration.
+- **Responsive Design with TailwindCSS:** The application uses TailwindCSS for styling, ensuring a modern and responsive design out of the box.
+- **Built-in API Routes:** Ready-to-use API routes for managing subscriptions, payments, and user data.
+- **OAuth Support:** The app supports OAuth login via **Google**, **Facebook**, and **Twitter**, providing users with a seamless authentication experience.
 
-## Feedback and issues
+---
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+## Webhook Listener for Stripe
 
-## More Supabase examples
+To handle incoming webhooks from Stripe (such as subscription updates, payment failures, etc.), Sassy includes a script for listening to Stripe webhooks:
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+```bash
+pnpm stripe:listen
+```
+
+This script connects your local environment to Stripe and listens for events like **invoice.payment_succeeded**, **invoice.payment_failed**, and more. It will automatically trigger the corresponding handler in your application to process the events.
+
+> **Note:** When using this in your development environment, make sure you have the Stripe secret key and webhook secret configured in your `.env.local` file.
+
+---
+
+## OAuth Authentication
+
+Sassy comes with built-in OAuth authentication support for popular platforms such as **Google**, **Facebook**, and **Twitter**. The authentication flow is fully integrated with Supabase, ensuring a secure and seamless experience for users.
+
+### Dependencies:
+- OAuth SDKs for Google, Facebook, and Twitter to provide login functionality.
+
+With **OAuth**, users can authenticate with their preferred social media accounts, reducing friction in the signup/login process. OAuth tokens are securely managed by Supabase, and user data is synchronized across both Supabase and your application.
+
+> **Note:** The OAuth login functionality is already set up and fully supported out of the box. If you're using different authentication providers, you can easily extend this functionality by following the Supabase OAuth documentation.
+
+---
+
+## Setup Instructions
+
+### 1. Install Dependencies
+
+Ensure that you have **pnpm** installed. If not, install it globally:
+
+```bash
+npm install -g pnpm
+```
+
+Then, install the project dependencies:
+
+```bash
+pnpm install
+```
+
+### 2. Set Up Environment Variables
+
+Create a `.env.local` file in the root directory of the project and add the necessary environment variables (as provided in the **Environment Configuration** section).
+
+### 3. Run the Development Server
+
+Once the environment is set up, start the development server:
+
+```bash
+pnpm dev
+```
+
+The application will be available at `http://localhost:3000`.
+
+### 4. Database Configuration
+
+To set up your Supabase project, run the provided SQL script to create the `subscriptions` table in your Supabase database.
+
+### 5. Stripe Integration
+
+Make sure your Stripe API keys are correctly set up. You can test the payment processing using Stripe’s test keys in a sandbox environment.
+
+---
+
+## Development vs Production Environments
+
+For **development** and **production**, Sassy uses separate Supabase projects to ensure a clean and isolated environment. This allows you to safely test changes in the development environment without affecting live data in production.
+
+> **Note:** Ensure that you configure your `.env.local` with the correct Supabase project URL and keys for each environment.
+
+---
+
+## Conclusion
+
+Sassy provides a solid foundation for developing subscription-based AHS Water Assassins applications. By leveraging the power of **Next.js**, **Supabase**, **Stripe**, **OAuth**, and **TailwindCSS**, you can rapidly build and deploy secure and scalable applications. Whether you're just starting a new SaaS product or iterating on an existing idea, Sassy makes it easy to focus on what matters most: delivering value to your users.
+
+---
+
+For more information on integrating **Stripe**, **Supabase**, and **OAuth**, refer to the official documentation:
+
+- [Stripe Documentation](https://stripe.com/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [OAuth Integration Guide](https://supabase.com/docs/guides/auth/auth-helpers/oauth)
+- [Sassy Integration with Datadog](https://github.com/marcelodosreis/sassy/blob/main/docs/datadog.md)

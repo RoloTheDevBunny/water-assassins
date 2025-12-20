@@ -1,0 +1,29 @@
+'use client';
+
+
+import { useI18n } from "@/contexts/i18nContext";
+
+import MyAccount from "./MyAccount";
+import LanguageSelector from "../../LanguageSelector";
+
+export function Navbar() {
+    const { translate } = useI18n();
+
+    return (
+        <header className="bg-white border-b border-gray-200 shadow-xs">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center">
+                        <a href="/dashboard" className="cursor-pointer">
+                            <h1 className="text-xl font-bold text-gray-900">{translate("components.dashboard.navbar.title")}</h1>
+                        </a>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <MyAccount />
+                        <LanguageSelector />
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+}
