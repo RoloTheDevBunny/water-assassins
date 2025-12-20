@@ -16,10 +16,8 @@ export default function Home() {
         <HeroSection />
         <HowItWorksSection />
         <section id="pricing" className="bg-gray-100 py-20">
-          <PricingSection selectedOption="preview"  hasFreeplan={true} />
+          <FeaturesSection />
         </section>
-        <FeaturesSection />
-        <TestimonialSection />
         <FaqSection />
         <Footer />
       </main>
