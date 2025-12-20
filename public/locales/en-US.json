@@ -211,139 +211,138 @@
   "settings": {
     "name": "Name",
     "email": "Email"
-  }
-},
-"components": {
-  "navbar": {
-    "pricing": "Pricing",
-    "features": "Features",
-    "faq": "FAQ",
-    "signin": "Sign In",
-    "try": "Try For Free",
-    "dashboard": "Dashboard"
   },
-  "pricing": {
-    "title": "Pricing Plans",
-    "description": "Simple and transparent pricing to suit your needs.",
-    "toggle": {
-      "monthly": "Monthly",
-      "annual": "Annual"
-    },
-    "trial": {
-      "title": "You have a free trial for",
-      "description": "Try our service with no commitment."
-    },
-    "tag": {
-      "selected": "Selected Plan",
-      "popular": "Most Popular"
-    },
-    "button": {
-      "default": "Subscribe",
-      "subscribed": "Current Plan"
-    },
-    "plans": {
-      "prices": {
-        "monthly": "${value}/month",
-        "annual": "${value}/year"
-      },
-      "free": {
-        "title": "Free",
-        "description": "Ideal for individuals trying out our service.",
-        "features": {
-          "first": "✔ Access to basic features",
-          "second": "✔ 1 project",
-          "third": " "
-        },
-        "extra": ""
-      },
-      "starter": {
-        "title": "Starter",
-        "description": "Ideal for individuals launching first AHS Water Assassins.",
-        "features": {
-          "first": "✔ Access to core features",
-          "second": "✔ 1 project",
-          "third": " "
-        },
-        "extra": "Everything in Free, plus"
-      },
-      "creator": {
-        "title": "Creator",
-        "description": "Great for creators looking to expand their reach.",
-        "features": {
-          "first": "✔ Access to core features",
-          "second": "✔ 3 project",
-          "third": "✔ Email support"
-        },
-        "extra": "Everything in Starter, plus"
-      },
-      "pro": {
-        "title": "Pro",
-        "description": "Perfect for teams scaling their AHS Water Assassins business.",
-        "features": {
-          "first": "✔ Access to core features",
-          "second": "✔ Unlimited projects",
-          "third": "✔ Priority support"
-        },
-        "extra": "Everything in Creator, plus"
-      }
-    }
-  },
-  "footer-auth": {
-    "dont-have-account": "Don't have an account?",
-    "create-account": "Create an account",
-    "already-have-account": "Already have an account?",
-    "go-back-to-login": "Go back to login"
-  },
-  "dashboard": {
-    "modal": {
-      "title": "Important Notice",
-      "description": "To test our app, you need to start a free trial. No features are available after the trial period.",
-      "actions": {
-        "proceed": "Start Free Trial"
-      }
-    },
+  "components": {
     "navbar": {
-      "title": "Dashboard",
-      "my-account": {
-        "options": {
-          "button": "My Account",
-          "profile": "Profile",
-          "subscription": "Subscription",
-          "terms-privacy": "Terms and Privacy",
-          "sign-out": "Sign Out"
+      "pricing": "Pricing",
+      "features": "Features",
+      "faq": "FAQ",
+      "signin": "Sign In",
+      "try": "Try For Free",
+      "dashboard": "Dashboard"
+    },
+    "pricing": {
+      "title": "Pricing Plans",
+      "description": "Simple and transparent pricing to suit your needs.",
+      "toggle": {
+        "monthly": "Monthly",
+        "annual": "Annual"
+      },
+      "trial": {
+        "title": "You have a free trial for",
+        "description": "Try our service with no commitment."
+      },
+      "tag": {
+        "selected": "Selected Plan",
+        "popular": "Most Popular"
+      },
+      "button": {
+        "default": "Subscribe",
+        "subscribed": "Current Plan"
+      },
+      "plans": {
+        "prices": {
+          "monthly": "${value}/month",
+          "annual": "${value}/year"
+        },
+        "free": {
+          "title": "Free",
+          "description": "Ideal for individuals trying out our service.",
+          "features": {
+            "first": "✔ Access to basic features",
+            "second": "✔ 1 project",
+            "third": " "
+          },
+          "extra": ""
+        },
+        "starter": {
+          "title": "Starter",
+          "description": "Ideal for individuals launching first AHS Water Assassins.",
+          "features": {
+            "first": "✔ Access to core features",
+            "second": "✔ 1 project",
+            "third": " "
+          },
+          "extra": "Everything in Free, plus"
+        },
+        "creator": {
+          "title": "Creator",
+          "description": "Great for creators looking to expand their reach.",
+          "features": {
+            "first": "✔ Access to core features",
+            "second": "✔ 3 project",
+            "third": "✔ Email support"
+          },
+          "extra": "Everything in Starter, plus"
+        },
+        "pro": {
+          "title": "Pro",
+          "description": "Perfect for teams scaling their AHS Water Assassins business.",
+          "features": {
+            "first": "✔ Access to core features",
+            "second": "✔ Unlimited projects",
+            "third": "✔ Priority support"
+          },
+          "extra": "Everything in Creator, plus"
         }
       }
     },
-    "menu": {
-      "options": {
-        "free": "Free",
-        "starter": "Starter/Creator",
-        "pro": "Pro"
-      }
-    }
-  },
-  "manage-billing": {
-    "title": "Subscription Details",
-    "actions": {
-      "proceed": "Manage billing info"
-    }
-  },
-  "settings-options": {
-    "plan": "Current Plan",
-    "subscription": "Manage Subscription",
-    "actions": {
-      "change-password": "Change Password"
+    "footer-auth": {
+      "dont-have-account": "Don't have an account?",
+      "create-account": "Create an account",
+      "already-have-account": "Already have an account?",
+      "go-back-to-login": "Go back to login"
     },
-    "toast": {
-      "success": {
-        "title": "Password Change Request Sent!",
-        "description": "Please check your inbox for an email to complete the process."
+    "dashboard": {
+      "modal": {
+        "title": "Important Notice",
+        "description": "To test our app, you need to start a free trial. No features are available after the trial period.",
+        "actions": {
+          "proceed": "Start Free Trial"
+        }
       },
-      "error": {
-        "title": "Password Change Failed",
-        "description": "An error occurred while processing your request. Please try again later."
+      "navbar": {
+        "title": "Dashboard",
+        "my-account": {
+          "options": {
+            "button": "My Account",
+            "profile": "Profile",
+            "subscription": "Subscription",
+            "terms-privacy": "Terms and Privacy",
+            "sign-out": "Sign Out"
+          }
+        }
+      },
+      "menu": {
+        "options": {
+          "free": "Free",
+          "starter": "Starter/Creator",
+          "pro": "Pro"
+        }
+      }
+    },
+    "manage-billing": {
+      "title": "Subscription Details",
+      "actions": {
+        "proceed": "Manage billing info"
+      }
+    },
+    "settings-options": {
+      "plan": "Current Plan",
+      "subscription": "Manage Subscription",
+      "actions": {
+        "change-password": "Change Password"
+      },
+      "toast": {
+        "success": {
+          "title": "Password Change Request Sent!",
+          "description": "Please check your inbox for an email to complete the process."
+        },
+        "error": {
+          "title": "Password Change Failed",
+          "description": "An error occurred while processing your request. Please try again later."
+        }
       }
     }
   }
-}
 }
