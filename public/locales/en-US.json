@@ -60,14 +60,15 @@
             }
           }
         }
+      },
+      "footer": {
+        "title": "Ready to Get Started?",
+        "join": "Join",
+        "terms": "Terms of Service",
+        "privacy": "Privacy Policy",
+        "github": "GitHub",
+        "copyright": "© 2025 AHSWATERASSASSINS. All rights reserved."
       }
-    },
-    "footer": {
-      "title": "Ready to Get Started?",
-      "join": "Join ",
-      "terms": "Terms & Privacy",
-      "github": "GitHub",
-      "copyright": "© 2025 AHSWATERASSASSINS. All rights reserved."
     },
     "terms-and-privacy": {
       "title": "Terms and Privacy Policy",

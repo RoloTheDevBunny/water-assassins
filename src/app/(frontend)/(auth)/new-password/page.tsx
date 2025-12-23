@@ -32,18 +32,18 @@ export type NewPasswordStateType = typeof initialState;
 export type NewPasswordAction =
   | { type: "SET_LOADING"; payload: boolean }
   | {
-      type: "SET_INPUT_VALUE";
-      payload: { password?: string; confirmPassword?: string };
-    }
+    type: "SET_INPUT_VALUE";
+    payload: { password?: string; confirmPassword?: string };
+  }
   | {
-      type: "SET_ERRORS";
-      payload: {
-        password?: string;
-        confirmPassword?: string;
-        general?: string;
-        token?: string;
-      };
-    }
+    type: "SET_ERRORS";
+    payload: {
+      password?: string;
+      confirmPassword?: string;
+      general?: string;
+      token?: string;
+    };
+  }
   | { type: "SET_PASSWORD_CHANGED"; payload: boolean }
   | { type: "SET_TOKEN_VALUE"; payload: string };
 
@@ -139,7 +139,7 @@ export default function NewPassword() {
       {state.errors.token ? (
         <>
           <BackLinkComponent
-            href="/signin"
+            href="/register"
             label={translate("actions.signin")}
           />
           <div className="text-center text-red-500">
@@ -149,7 +149,7 @@ export default function NewPassword() {
       ) : state.isSuccess ? (
         <>
           <BackLinkComponent
-            href="/signin"
+            href="/register"
             label={translate("actions.dashboard")}
           />
           <div className="text-center">

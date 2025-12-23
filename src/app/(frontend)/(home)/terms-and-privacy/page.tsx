@@ -10,6 +10,7 @@ interface TranslationFunction {
 }
 
 interface SectionProps {
+  id?: string; // new
   titleKey: string;
   descriptionKey: string;
   translate: TranslationFunction;
@@ -19,10 +20,11 @@ interface SectionProps {
 interface SectionConfig {
   title: string;
   description: string;
+  id?: string; // optional, only for link targets
 }
 
-const Section: React.FC<SectionProps> = ({ titleKey, descriptionKey, translate }) => (
-  <section className="mb-8">
+const Section: React.FC<SectionProps> = ({ id, titleKey, descriptionKey, translate }) => (
+  <section id={id} className="mb-8">
     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
       {translate(titleKey)}
     </h2>
@@ -33,8 +35,8 @@ const Section: React.FC<SectionProps> = ({ titleKey, descriptionKey, translate }
 );
 
 const sections: SectionConfig[] = [
-  { title: "terms.title", description: "terms.description" },
-  { title: "policy.title", description: "policy.description" },
+  { title: "terms.title", description: "terms.description", id: "terms-of-service" },
+  { title: "policy.title", description: "policy.description", id: "privacy-policy" },
   { title: "collection.title", description: "collection.description" },
   { title: "security.title", description: "security.description" },
   { title: "changes.title", description: "changes.description" },
@@ -55,11 +57,13 @@ async function TermsAndPrivacy() {
         {sections.map((section) => (
           <Section
             key={section.title}
+            id={section.id} // new
             titleKey={`pages.terms-and-privacy.${section.title}`}
             descriptionKey={`pages.terms-and-privacy.${section.description}`}
             translate={translate}
           />
         ))}
+
       </main>
       <Footer />
     </div>
