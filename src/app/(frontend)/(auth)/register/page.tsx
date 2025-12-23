@@ -4,45 +4,6 @@ import OAuth from "@/components/v1/OAuth";
 import { ROUTES } from "@/constants/routes-constants";
 import { useI18n } from "@/contexts/i18nContext";
 
-const initialState = {
-  isLoading: false,
-  inputValue: {
-    email: "",
-    password: "",
-  },
-  errors: {
-    email: "",
-    password: "",
-    general: "",
-  },
-};
-
-export type SignInStateType = typeof initialState;
-
-export type SignInAction =
-  | { type: "SET_LOADING"; payload: boolean }
-  | { type: "SET_INPUT_VALUE"; payload: { email?: string; password?: string } }
-  | {
-    type: "SET_ERRORS";
-    payload: { email?: string; password?: string; general?: string };
-  };
-
-function reducer(state: SignInStateType, action: SignInAction) {
-  switch (action.type) {
-    case "SET_LOADING":
-      return { ...state, isLoading: action.payload };
-    case "SET_INPUT_VALUE":
-      return {
-        ...state,
-        inputValue: { ...state.inputValue, ...action.payload },
-      };
-    case "SET_ERRORS":
-      return { ...state, isLoading: false, errors: { ...state.errors, ...action.payload } };
-    default:
-      return state;
-  }
-}
-
 export default function SignIn() {
   const { translate } = useI18n("pages.signin");
 

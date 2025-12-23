@@ -33,16 +33,16 @@ export default function Footer({ isDashboard }: FooterProps) {
           <div className="mt-12 text-center border-t border-indigo-500 pt-8">
             <div className="flex justify-center space-x-6">
               <a
-                href="/terms-and-privacy#privacy-policy"
+                href="https://ahswaterassassins.com/terms-and-privacy#privacy-policy"
                 className="text-sm hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {translate("pages.home.footer.privacy")}
+                Privacy Policy
               </a>
 
               <a
-                href="/terms-and-privacy#terms-of-service"
+                href="https://ahswaterassassins.com/terms-and-privacy#terms-of-service"
                 className="text-sm hover:underline"
                 target="_blank"
                 rel="noopener noreferrer"
