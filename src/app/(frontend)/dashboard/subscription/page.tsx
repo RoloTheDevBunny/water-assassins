@@ -2,7 +2,6 @@ import { headers } from "next/headers";
 
 import { GET as getSessionHandler } from "@/app/(backend)/api/v1/session/route";
 import ManageBilling from "@/components/v1/ManageBilling";
-import PricingSection from "@/components/v1/Pricing";
 import { capitalize } from "@/utils/capitalize";
 import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
 
@@ -35,9 +34,6 @@ export default async function Subscription() {
               <ManageBilling accessToken={session?.access_token} />
             )}
           </div>
-        </div>
-        <div className="mt-12">
-          <PricingSection selectedOption={sharedData?.plan} />
         </div>
       </div>
     </div>

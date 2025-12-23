@@ -43,12 +43,9 @@ export default function ConfirmSignUp() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    const token = queryParams.get("token");
     const code = queryParams.get("code");
 
-    if (token) {
-      handleConfirmEmail(token);
-    } else if (code) {
+    if (code) {
       handleOAuthCode(code);
     } else {
       dispatch({
@@ -56,7 +53,7 @@ export default function ConfirmSignUp() {
         error: translate("errors.missing-token"),
       });
     }
-  }, []);
+  }, [handleOAuthCode, translate]);
 
   async function handleConfirmEmail(token: string) {
     dispatch({ type: "SET_LOADING", isLoading: true });

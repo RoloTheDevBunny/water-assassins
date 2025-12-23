@@ -3,7 +3,6 @@ import FeaturesSection from "@/app/(frontend)/(home)/_sections/FeaturesSection";
 import HeroSection from "@/app/(frontend)/(home)/_sections/HeroSection";
 import HowItWorksSection from "@/app/(frontend)/(home)/_sections/HowItWorksSection";
 import Navbar from "@/components/v1/Navbar";
-import PricingSection from "@/components/v1/Pricing";
 
 import Footer from "./_sections/Footer";
 

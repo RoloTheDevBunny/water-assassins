@@ -82,7 +82,7 @@ export default function NewPassword() {
     } else {
       dispatch({ type: "SET_TOKEN_VALUE", payload: token });
     }
-  }, []);
+  }, [searchParams, translate]);
 
   async function handleNewPassword() {
     try {
