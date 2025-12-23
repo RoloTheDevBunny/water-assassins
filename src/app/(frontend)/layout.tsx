@@ -31,6 +31,7 @@ export default async function RootLayout({ children }: Props) {
         <title>{translate("title")}</title>
       </head>
       <body className={poppins.className}>
+        {/* Providers */}
         <I18nProvider locale={locale} translations={translations}>
           <DatadogProvider>
             <ToastProvider>
@@ -39,7 +40,19 @@ export default async function RootLayout({ children }: Props) {
             </ToastProvider>
           </DatadogProvider>
         </I18nProvider>
+
+        {/* Make the privacy link visible for bots that don’t execute JS */}
+        <noscript>
+          <div style={{ position: "absolute", top: 0, left: 0 }}>
+            <a href="https://ahswaterassassins.com/terms-and-privacy#privacy-policy">
+              Privacy Policy
+            </a>
+          </div>
+        </noscript>
       </body>
     </html>
   );
 }
+
+
+
