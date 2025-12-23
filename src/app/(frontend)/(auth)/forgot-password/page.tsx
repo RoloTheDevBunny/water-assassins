@@ -96,7 +96,7 @@ export default function ForgotPassword() {
   if (state.isSuccess) {
     return (
       <>
-        <BackLinkComponent href="/signin" label={translate("actions.back")} />
+        <BackLinkComponent href="/register" label={translate("actions.back")} />
         <h2 className="text-2xl font-semibold text-center text-gray-900">
           {translate("actions.inbox.title")}
         </h2>
@@ -109,7 +109,7 @@ export default function ForgotPassword() {
 
   return (
     <>
-      <BackLinkComponent href="/signin" label={translate("actions.back")} />
+      <BackLinkComponent href="/register" label={translate("actions.back")} />
       <h2 className="text-2xl font-semibold text-center text-gray-900">
         {translate("title")}
       </h2>

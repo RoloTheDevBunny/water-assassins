@@ -68,172 +68,172 @@
       "terms": "Terms & Privacy",
       "github": "GitHub",
       "copyright": "© 2025 AHSWATERASSASSINS. All rights reserved."
-    }
-  },
-  "terms-and-privacy": {
-    "title": "Terms and Privacy Policy",
-    "terms": {
-      "title": "Terms of Use",
-      "description": "Welcome to our service. By using our website, you agree to comply with the following terms and conditions."
     },
-    "policy": {
-      "title": "Privacy Policy",
-      "description": "We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data."
-    },
-    "collection": {
-      "title": "Data Collection",
-      "description": "We may collect personal information such as your name, email address, and usage data to improve our service and provide a better user experience."
-    },
-    "security": {
-      "title": "Data Security",
-      "description": "We implement a variety of security measures to ensure the safety of your personal data. However, no method of transmission over the internet is completely secure, so we cannot guarantee absolute security."
-    },
-    "changes": {
-      "title": "Changes to this Policy",
-      "description": "We may update this Terms and Privacy Policy from time to time. Any changes will be posted on this page with an updated date."
-    },
-    "contact": {
-      "title": "Contact Us",
-      "description": "If you have any questions about these terms or our privacy policy, feel free to contact us."
-    }
-  },
-  "signin": {
-    "title": "Sign In",
-    "description": "Enter your details to use an account",
-    "inputs": {
-      "email": "Email",
-      "password": "Password"
-    },
-    "actions": {
-      "back": "Back To Home",
-      "forgot-password": "Forgot your password?",
-      "submit": "Sign In"
-    },
-    "errors": {
-      "email": "Invalid email format.",
-      "password": "Password must be at least 6 characters long.",
-      "credentials": "Invalid email or password.",
-      "error": "Something went wrong. Please try again."
-    }
-  },
-  "signup": {
-    "back-to-login": "Back To Login",
-    "title": "Sign Up",
-    "description": "Create your account to get started",
-    "inputs": {
-      "email": "Email",
-      "password": "Password",
-      "confirm-password": "Confirm Password",
-      "terms": "I accept the Terms and Privacy Policy"
-    },
-    "actions": {
-      "submit": "Sign Up",
-      "success": "Please check your inbox for an email to complete the process."
-    },
-    "errors": {
-      "email": "Invalid email format.",
-      "password": "Password must be at least 6 characters long.",
-      "confirm-password": "Passwords do not match.",
-      "terms": "You must accept the terms and conditions.",
-      "error": "Something went wrong. Please try again."
-    }
-  },
-  "forgot-password": {
-    "title": "Forgot Password",
-    "description": "Enter your email to receive a password reset link.",
-    "inputs": {
-      "email": {
-        "label": "Email",
-        "placeholder": "Enter your email"
-      }
-    },
-    "actions": {
-      "submit": "Send Reset Link",
-      "back": "Back To Login",
-      "inbox": {
-        "title": "Check Your Inbox",
-        "description": "A password reset link has been sent to your email. Please check your inbox."
-      }
-    },
-    "errors": {
-      "email": "Invalid email format.",
-      "error": "Something went wrong. Please try again."
-    }
-  },
-  "confirm-signup": {
-    "messages": {
-      "success": {
-        "title": "Login Successfully",
-        "description": "Your provider has been confirmed register."
-      }
-    },
-    "actions": {
-      "dashboard": "Go To Dashboard"
-    },
-    "errors": {
-      "missing-token": "Invalid or missing token.",
-      "failed": "Email confirmation failed. Please try again.",
-      "unexpected": "An unexpected error occurred."
-    }
-  },
-  "new-password": {
-    "title": "Create a New Password",
-    "description": "Set your new password to continue",
-    "inputs": {
-      "password": "Password",
-      "confirm-password": "Confirm Password"
-    },
-    "actions": {
-      "submit": "Change Password",
-      "dashboard": "Back To Dashboard",
-      "signin": "Back To SignIn",
-      "success": "Your password has been changed successfully!"
-    },
-    "errors": {
-      "missing-token": "Invalid or missing token.",
-      "password-valid": "Password must be at least 6 characters long.",
-      "password-match": "Passwords do not match.",
-      "general": "Failed to change the password. Please try again.",
-      "unexpected": "Something went wrong. Please try again."
-    }
-  },
-  "payments": {
-    "status": {
-      "success": {
-        "title": "Purchase Confirmed",
-        "description": "Your purchase has been successfully confirmed."
+    "terms-and-privacy": {
+      "title": "Terms and Privacy Policy",
+      "terms": {
+        "title": "Terms of Use",
+        "description": "Welcome to our service. By using our website, you agree to comply with the following terms and conditions."
       },
-      "cancel": {
-        "title": "Purchase Cancelled",
-        "description": "Your purchase has been cancelled."
+      "policy": {
+        "title": "Privacy Policy",
+        "description": "We value your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard your data."
       },
-      "unknown": {
-        "title": "Unknown Status",
-        "description": "The status of your purchase is unknown."
+      "collection": {
+        "title": "Data Collection",
+        "description": "We may collect personal information such as your name, email address, and usage data to improve our service and provide a better user experience."
+      },
+      "security": {
+        "title": "Data Security",
+        "description": "We implement a variety of security measures to ensure the safety of your personal data. However, no method of transmission over the internet is completely secure, so we cannot guarantee absolute security."
+      },
+      "changes": {
+        "title": "Changes to this Policy",
+        "description": "We may update this Terms and Privacy Policy from time to time. Any changes will be posted on this page with an updated date."
+      },
+      "contact": {
+        "title": "Contact Us",
+        "description": "If you have any questions about these terms or our privacy policy, feel free to contact us."
       }
     },
-    "actions": {
-      "billing": "Back To Billing",
-      "settings": "Back To Settings",
-      "home": "Back To Home"
+    "signin": {
+      "title": "Register",
+      "description": "Make sure to use your school email to register.",
+      "inputs": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "actions": {
+        "back": "Back To Home",
+        "forgot-password": "Forgot your password?",
+        "submit": "Sign In"
+      },
+      "errors": {
+        "email": "Invalid email format.",
+        "password": "Password must be at least 6 characters long.",
+        "credentials": "Invalid email or password.",
+        "error": "Something went wrong. Please try again."
+      }
+    },
+    "signup": {
+      "back-to-login": "Back To Login",
+      "title": "Register",
+      "description": "Make sure to use your school email to register.",
+      "inputs": {
+        "email": "Email",
+        "password": "Password",
+        "confirm-password": "Confirm Password",
+        "terms": "I accept the Terms and Privacy Policy"
+      },
+      "actions": {
+        "submit": "Sign Up",
+        "success": "Please check your inbox for an email to complete the process."
+      },
+      "errors": {
+        "email": "Invalid email format.",
+        "password": "Password must be at least 6 characters long.",
+        "confirm-password": "Passwords do not match.",
+        "terms": "You must accept the terms and conditions.",
+        "error": "Something went wrong. Please try again."
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password",
+      "description": "Enter your email to receive a password reset link.",
+      "inputs": {
+        "email": {
+          "label": "Email",
+          "placeholder": "Enter your email"
+        }
+      },
+      "actions": {
+        "submit": "Send Reset Link",
+        "back": "Back To Login",
+        "inbox": {
+          "title": "Check Your Inbox",
+          "description": "A password reset link has been sent to your email. Please check your inbox."
+        }
+      },
+      "errors": {
+        "email": "Invalid email format.",
+        "error": "Something went wrong. Please try again."
+      }
+    },
+    "confirm-signup": {
+      "messages": {
+        "success": {
+          "title": "Login Successfully",
+          "description": "Your provider has been confirmed register."
+        }
+      },
+      "actions": {
+        "dashboard": "Go To Dashboard"
+      },
+      "errors": {
+        "missing-token": "Invalid or missing token.",
+        "failed": "Email confirmation failed. Please try again.",
+        "unexpected": "An unexpected error occurred."
+      }
+    },
+    "new-password": {
+      "title": "Create a New Password",
+      "description": "Set your new password to continue",
+      "inputs": {
+        "password": "Password",
+        "confirm-password": "Confirm Password"
+      },
+      "actions": {
+        "submit": "Change Password",
+        "dashboard": "Back To Dashboard",
+        "signin": "Back To SignIn",
+        "success": "Your password has been changed successfully!"
+      },
+      "errors": {
+        "missing-token": "Invalid or missing token.",
+        "password-valid": "Password must be at least 6 characters long.",
+        "password-match": "Passwords do not match.",
+        "general": "Failed to change the password. Please try again.",
+        "unexpected": "Something went wrong. Please try again."
+      }
+    },
+    "payments": {
+      "status": {
+        "success": {
+          "title": "Purchase Confirmed",
+          "description": "Your purchase has been successfully confirmed."
+        },
+        "cancel": {
+          "title": "Purchase Cancelled",
+          "description": "Your purchase has been cancelled."
+        },
+        "unknown": {
+          "title": "Unknown Status",
+          "description": "The status of your purchase is unknown."
+        }
+      },
+      "actions": {
+        "billing": "Back To Billing",
+        "settings": "Back To Settings",
+        "home": "Back To Home"
+      }
+    },
+    "subscription": {
+      "plan": {
+        "title": "Current Plan",
+        "description": "You are currently on the {plan} plan."
+      }
+    },
+    "settings": {
+      "name": "Name",
+      "email": "Email"
     }
-  },
-  "subscription": {
-    "plan": {
-      "title": "Current Plan",
-      "description": "You are currently on the {plan} plan."
-    }
-  },
-  "settings": {
-    "name": "Name",
-    "email": "Email"
   },
   "components": {
     "navbar": {
       "pricing": "Payouts",
       "faq": "FAQ",
       "signin": "Sign In",
-      "try": "Try For Free",
+      "try": "Register",
       "dashboard": "Dashboard"
     },
     "pricing": {

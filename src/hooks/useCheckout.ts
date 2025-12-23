@@ -28,7 +28,7 @@ export const useCheckout = () => {
       const auth = await getMeBridge.execute();
 
       if (!auth?.id) {
-        window.location.href = "/signin";
+        window.location.href = "/register";
         return;
       }
 

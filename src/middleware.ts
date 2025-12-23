@@ -38,7 +38,7 @@ export async function middleware(request: NextRequest) {
 
 
     if (!data?.id) {
-      const redirectUrl = new URL("/signin", request.url);
+      const redirectUrl = new URL("/register", request.url);
       return NextResponse.redirect(redirectUrl);
     }
 

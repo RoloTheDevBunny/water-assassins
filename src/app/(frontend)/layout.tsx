@@ -14,7 +14,7 @@ const poppins = Poppins({
 });
 
 export async function generateStaticParams() {
-  return [{ locale: "en-US" }, { locale: "pt-BR" }, { locale: "es" }];
+  return [{ locale: "en-US" }];
 }
 
 type Props = {

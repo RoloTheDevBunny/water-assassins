@@ -57,13 +57,7 @@ export default function Navbar() {
           ) : !isLogged ? (
             <>
               <a
-                href="/signin"
-                className="py-2 px-4 border border-indigo-600 text-indigo-600 rounded-sm hover:bg-indigo-100"
-              >
-                {translate("components.navbar.signin")}
-              </a>
-              <a
-                href="/signup"
+                href="/register"
                 className="py-2 px-4 bg-indigo-600 text-white rounded-sm hover:bg-indigo-700"
               >
                 {translate("components.navbar.try")}
@@ -77,7 +71,6 @@ export default function Navbar() {
               {translate("components.navbar.dashboard")}
             </a>
           )}
-          <LanguageSelector />
         </div>
 
         <button
@@ -117,13 +110,7 @@ export default function Navbar() {
             ) : !isLogged ? (
               <>
                 <a
-                  href="/signin"
-                  className="py-2 px-4 border border-indigo-600 text-indigo-600 rounded-sm hover:bg-indigo-100"
-                >
-                  {translate("components.navbar.signin")}
-                </a>
-                <a
-                  href="/signup"
+                  href="/register"
                   className="py-2 px-4 bg-indigo-600 text-white rounded-sm hover:bg-indigo-700"
                 >
                   {translate("components.navbar.try")}
