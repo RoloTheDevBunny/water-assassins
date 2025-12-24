@@ -9,17 +9,17 @@ import { useModal } from "@/contexts/ModalContext";
 type Tab = {
     name: string;
     href: string;
-    requiredPlan: "free" | "starter" | "creator" | "pro";
+    requiredPlan: "free" | "member" | "owner";
 };
 
 const tabs: Tab[] = [
-    { name: "components.dashboard.menu.options.free", href: "/feature1", requiredPlan: "free" },
-    { name: "components.dashboard.menu.options.starter", href: "/feature2", requiredPlan: "starter" },
-    { name: "components.dashboard.menu.options.pro", href: "/feature3", requiredPlan: "pro" },
+    { name: "Global", href: "/Global", requiredPlan: "free" },
+    { name: "Individual", href: "/Individual", requiredPlan: "member" },
+    { name: "Team", href: "/Team", requiredPlan: "owner" },
 ];
 
 type MenuProps = {
-    activePlan: "free" | "starter" | "creator" | "pro";
+    activePlan: "free" | "member" | "owner";
     onTabChange: (activeTab: string) => void;
 };
 
@@ -30,11 +30,11 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
 
     const isTabAvailable = (requiredPlan: string): boolean => {
         if (requiredPlan === "free") return true;
-        if (requiredPlan === "starter" || requiredPlan === "creator") {
-            return activePlan === "starter" || activePlan === "creator" || activePlan === "pro";
+        if (requiredPlan === "member") {
+            return activePlan === "member" || activePlan === "owner";
         }
-        if (requiredPlan === "pro") {
-            return activePlan === "pro";
+        if (requiredPlan === "owner") {
+            return activePlan === "owner";
         }
         return false;
     };
@@ -58,12 +58,7 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
     return (
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul className="flex justify-center space-x-8 py-4 items-center">
-                <p
-                    className={`text-sm font-medium rounded-md transition "text-indigo-600 font-extrabold"`}
-                >
-                    Come back later
-                </p>
-                {/* {tabs.map((tab) => {
+                {tabs.map((tab) => {
                     const available = isTabAvailable(tab.requiredPlan);
                     return (
                         <li key={tab.name} className="relative group">
@@ -87,7 +82,7 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
                             </button>
                         </li>
                     );
-                })} */}
+                })}
             </ul>
         </nav>
     );
