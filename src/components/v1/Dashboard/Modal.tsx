@@ -18,7 +18,7 @@ export function Modal() {
           {translate("components.dashboard.modal.description")}
         </p>
         <a
-          href="/dashboard/subscription"
+          href="/dashboard/team"
           className="bg-indigo-600 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-800 transition duration-300"
         >
           {translate("components.dashboard.modal.actions.proceed")}

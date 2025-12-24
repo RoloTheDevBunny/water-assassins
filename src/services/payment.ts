@@ -48,10 +48,10 @@ export default class PaymentService {
     return this.stripe.webhooks.constructEvent(rawBody, sig, secret);
   }
 
-  async getCustomerIdFromSubscription(subscriptionId: string): Promise<string | null> {
+  async getCustomerIdFromTeam(teamId: string): Promise<string | null> {
     try {
-      const subscription = await this.stripe.subscriptions.retrieve(subscriptionId);
-      return subscription.customer as string;
+      const team = await this.stripe.teams.retrieve(teamId);
+      return team.customer as string;
     } catch (error) {
       console.error('Erro ao buscar assinatura:', error);
       return null;
@@ -61,7 +61,7 @@ export default class PaymentService {
   async createBillingPortalSession(customerId: string): Promise<Stripe.BillingPortal.Session> {
     return await this.stripe.billingPortal.sessions.create({
       customer: customerId,
-      return_url: `${process.env.NEXT_PUBLIC_PROJECT_URL}/dashboard/subscription`,
+      return_url: `${process.env.NEXT_PUBLIC_PROJECT_URL}/dashboard/team`,
     });
   }
 
@@ -88,14 +88,14 @@ export default class PaymentService {
     const sessionData: Stripe.Checkout.SessionCreateParams = {
       payment_method_types: ['card'],
       line_items: [this.buildLineItem(priceId, plan, recurringInterval, currency, unitAmount)],
-      mode: 'subscription',
+      mode: 'team',
       success_url: `${origin}/payments?status=success`,
       cancel_url: `${origin}/payments?status=cancel`,
       metadata: { userId, plan },
     };
 
     if (freeTrial) {
-      sessionData.subscription_data = { trial_period_days: freeTrial };
+      sessionData.team_data = { trial_period_days: freeTrial };
     }
 
     return sessionData;

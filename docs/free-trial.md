@@ -54,7 +54,7 @@ import { HAS_FREE_TRIAL } from '../../constants/FreeTrial';
 
 ### 2. Impact on Other Pricing Plans
 
-The trial functionality operates alongside the available pricing plans. If a user opts for the trial, they will still be able to select any subscription plan afterward, either on a monthly or annual basis. The trial does not affect the ability to choose between these billing options.
+The trial functionality operates alongside the available pricing plans. If a user opts for the trial, they will still be able to select any team plan afterward, either on a monthly or annual basis. The trial does not affect the ability to choose between these billing options.
 
 ### 3. Customization of Trial Duration
 

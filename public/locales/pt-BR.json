@@ -33,7 +33,7 @@
             "title": "Autenticação OAuth",
             "description": "Integre facilmente com Google, Facebook e Twitter para uma experiência de login suave."
           },
-          "subscription": {
+          "team": {
             "title": "Gestão de Assinaturas",
             "description": "Gerencie assinaturas facilmente com as ferramentas robustas do Stripe e atualizações em tempo real."
           },
@@ -246,7 +246,7 @@
         "home": "Voltar para o Início"
       }
     },
-    "subscription": {
+    "team": {
       "plan": {
         "title": "Plano Atual",
         "description": "Você está atualmente no plano {plan}."
@@ -352,7 +352,7 @@
           "options": {
             "button": "Minha Conta",
             "profile": "Perfil",
-            "subscription": "Assinatura",
+            "team": "Assinatura",
             "terms-privacy": "Termos e Privacidade",
             "sign-out": "Sair"
           }
@@ -374,7 +374,7 @@
     },
     "settings-options": {
       "plan": "Plano Atual",
-      "subscription": "Gerenciar Assinatura",
+      "team": "Gerenciar Assinatura",
       "actions": {
         "change-password": "Alterar Senha"
       },

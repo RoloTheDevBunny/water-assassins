@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { supabaseServerClient as supabase } from "@/libs/supabase/server";
-import SubscriptionService from "@/services/subscription";
+import TeamService from "@/services/team";
 
 export async function GET(request: NextRequest) {
   try {
@@ -12,16 +12,16 @@ export async function GET(request: NextRequest) {
       throw new Error("Invalid or missing userId");
     }
 
-    const subscriptionService = new SubscriptionService(supabase);
-    const subscription = await subscriptionService.getSubscriptionByUserId(
+    const teamService = new TeamService(supabase);
+    const team = await teamService.getTeamByUserId(
       userId
     );
 
-    if (!subscription) {
+    if (!team) {
       return NextResponse.json({ status: 204 });
     }
 
-    return NextResponse.json(subscription, { status: 200 });
+    return NextResponse.json(team, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: error }, { status: 500 });

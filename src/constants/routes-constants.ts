@@ -3,6 +3,6 @@ export const ROUTES = {
     'dashboard': '/dashboard',
     'signin': '/signin',
     'signup': '/signup',
-    'subscription': '/dashboard/subscription',
+    'team': '/dashboard/team',
     'forgotPassword': '/forgot-password'
 }

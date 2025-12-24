@@ -5,14 +5,14 @@ import ManageBilling from "@/components/v1/ManageBilling";
 import { capitalize } from "@/utils/capitalize";
 import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
 
-export default async function Subscription() {
+export default async function Team() {
   const { translate } = await loadTranslationsSSR();
   const sharedData = JSON.parse((await headers()).get("x-shared-data") || "{}");
 
   const getSessionResponse = await getSessionHandler();
   const session = await getSessionResponse.json();
 
-  const currentPlanText = translate("pages.subscription.plan.description");
+  const currentPlanText = translate("pages.team.plan.description");
   const currentPlan = capitalize(sharedData?.plan);
 
   return (
@@ -23,7 +23,7 @@ export default async function Subscription() {
             <div className="flex justify-between items-center">
               <div>
                 <h2 className="text-2xl font-semibold text-gray-800">
-                  {translate("pages.subscription.plan.title")}
+                  {translate("pages.team.plan.title")}
                 </h2>
                 <p className="text-lg text-gray-600">
                   {currentPlanText.replace("{plan}", currentPlan)}

@@ -7,7 +7,7 @@ import { supabaseServerClient as supabase } from "@/libs/supabase/server";
 import AuthService from "@/services/auth";
 import EmailService from "@/services/email";
 import PaymentService from "@/services/payment";
-import SubscriptionService from "@/services/subscription";
+import TeamService from "@/services/team";
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
@@ -25,7 +25,7 @@ async function getRawBody(req: NextRequest): Promise<string> {
 export async function POST(req: NextRequest) {
   const emailService = new EmailService();
   const authService = new AuthService(supabase);
-  const subscriptionService = new SubscriptionService(supabase);
+  const teamService = new TeamService(supabase);
   const paymentService = new PaymentService(stripe);
 
   const headersList = headers();
@@ -60,9 +60,9 @@ export async function POST(req: NextRequest) {
         const session = event.data.object as any;
         const { userId, plan } = session.metadata;
 
-        await subscriptionService.upsertSubscription({
+        await teamService.upsertTeam({
           user_id: userId,
-          stripe_subscription_id: session.subscription,
+          stripe_team_id: session.team,
           plan,
           status: "active",
           current_period_start: new Date(session.current_period_start * 1000),
@@ -78,34 +78,34 @@ export async function POST(req: NextRequest) {
           from: "Sassy - Powerful AHS Water Assassins",
           to: [email],
           subject: "Welcome to Sassy!",
-          text: "Welcome to Sassy! Your subscription has been activated.",
+          text: "Welcome to Sassy! Your team has been activated.",
           html: FINISH_CHECKOUT_EMAIL.replace("{plan}", plan),
         });
 
         break;
       }
 
-      case "customer.subscription.updated": {
+      case "customer.team.updated": {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const subscription = event.data.object as any;
+        const team = event.data.object as any;
 
-        await subscriptionService.updateSubscriptionPeriod(
-          subscription.id,
-          new Date(subscription.current_period_start * 1000),
-          new Date(subscription.current_period_end * 1000)
+        await teamService.updateTeamPeriod(
+          team.id,
+          new Date(team.current_period_start * 1000),
+          new Date(team.current_period_end * 1000)
         );
 
-        await subscriptionService.updateSubscriptionStatus(
-          subscription.id,
-          subscription.status
+        await teamService.updateTeamStatus(
+          team.id,
+          team.status
         );
         break;
       }
 
-      case "customer.subscription.deleted": {
+      case "customer.team.deleted": {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const subscription = event.data.object as any;
-        await subscriptionService.cancelSubscription(subscription.id);
+        const team = event.data.object as any;
+        await teamService.cancelTeam(team.id);
         break;
       }
 

@@ -50,10 +50,10 @@ function MyAccount() {
           </a>
           <hr />
           <a
-            href="/dashboard/subscription"
+            href="/dashboard/team"
             className="block px-4 py-2 text-gray-500 hover:bg-gray-100"
           >
-            {translate("options.subscription")}
+            Team
           </a>
           <hr />
           <a

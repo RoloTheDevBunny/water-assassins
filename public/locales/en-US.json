@@ -97,28 +97,9 @@
         "description": "If you have any questions about these terms or our privacy policy, feel free to contact us."
       }
     },
-    "signin": {
-      "title": "Register",
-      "description": "Make sure to use your school email to register.",
-      "inputs": {
-        "email": "Email",
-        "password": "Password"
-      },
-      "actions": {
-        "back": "Back To Home",
-        "forgot-password": "Forgot your password?",
-        "submit": "Sign In"
-      },
-      "errors": {
-        "email": "Invalid email format.",
-        "password": "Password must be at least 6 characters long.",
-        "credentials": "Invalid email or password.",
-        "error": "Something went wrong. Please try again."
-      }
-    },
     "signup": {
       "back-to-login": "Back To Login",
-      "title": "Register",
+      "title": "Register (NOT WORKING YET)",
       "description": "Make sure to use your school email to register.",
       "inputs": {
         "email": "Email",
@@ -218,7 +199,7 @@
         "home": "Back To Home"
       }
     },
-    "subscription": {
+    "team": {
       "plan": {
         "title": "Current Plan",
         "description": "You are currently on the {plan} plan."
@@ -323,7 +304,7 @@
           "options": {
             "button": "My Account",
             "profile": "Profile",
-            "subscription": "Subscription",
+            "team": "Team",
             "terms-privacy": "Terms and Privacy",
             "sign-out": "Sign Out"
           }
@@ -338,14 +319,14 @@
       }
     },
     "manage-billing": {
-      "title": "Subscription Details",
+      "title": "Team Details",
       "actions": {
         "proceed": "Manage billing info"
       }
     },
     "settings-options": {
       "plan": "Current Plan",
-      "subscription": "Manage Subscription",
+      "team": "Manage Team",
       "actions": {
         "change-password": "Change Password"
       },

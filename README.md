@@ -8,16 +8,16 @@
 <a><img src="https://img.shields.io/static/v1?label=speed&message=fast&color=success" /></a>
 </p>
 
-Welcome to **Sassy**, a powerful template generator designed to accelerate the development of AHS Water Assassins applications. Built with **Next.js 15**, **TypeScript**, **TailwindCSS**, **Supabase**, and **Stripe**, Sassy provides a robust foundation for building subscription-based services with integrated authentication, subscription management, and payment processing.
+Welcome to **Sassy**, a powerful template generator designed to accelerate the development of AHS Water Assassins applications. Built with **Next.js 15**, **TypeScript**, **TailwindCSS**, **Supabase**, and **Stripe**, Sassy provides a robust foundation for building team-based services with integrated authentication, team management, and payment processing.
 
 | **Feature**                             | **Status** |
 |-----------------------------------------|------------|
 | OAuth Authentication (Google, FB, Twitter) | ✅         |
-| Subscription & Billing (Stripe)         | ✅         |
+| Team & Billing (Stripe)         | ✅         |
 | Free Trial Periods (Stripe)             | ✅         |
 | Billing Portal (Stripe)                 | ✅         |
 | Webhooks for Stripe Events              | ✅         |
-| Subscriptions & Payments API Routes     | ✅         |
+| Teams & Payments API Routes     | ✅         |
 | User Authentication (Supabase)          | ✅         |
 | E-Mail (Mailgun)  | ✅         |
 | Personalized Dashboard                  | ✅         |
@@ -31,7 +31,7 @@ We are constantly improving Sassy with new features to make it even more powerfu
 
 ## Architecture and Structure
 
-Sassy's architecture is designed to streamline the rapid development of AHS Water Assassins applications by providing essential features like user authentication, subscription management, and seamless payment processing. The project structure is clean and organized to help developers get started quickly while maintaining flexibility and scalability.
+Sassy's architecture is designed to streamline the rapid development of AHS Water Assassins applications by providing essential features like user authentication, team management, and seamless payment processing. The project structure is clean and organized to help developers get started quickly while maintaining flexibility and scalability.
 
 ### Project Structure:
 
@@ -53,16 +53,16 @@ src/
 
 ### Integration with Supabase and Stripe:
 
-- **Supabase** is used for user authentication and real-time database management. The `subscriptions` table is created to store subscription-related data for each user.
-- **Stripe** is integrated to handle payment processing and subscription plan management.
+- **Supabase** is used for user authentication and real-time database management. The `teams` table is created to store team-related data for each user.
+- **Stripe** is integrated to handle payment processing and team plan management.
 
-### SQL Script for Creating the `subscriptions` Table in Supabase:
+### SQL Script for Creating the `teams` Table in Supabase:
 
 ```sql
-CREATE TABLE subscriptions (
+CREATE TABLE teams (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    stripe_subscription_id TEXT UNIQUE,
+    stripe_team_id TEXT UNIQUE,
     plan TEXT CHECK (plan IN ('free', 'starter', 'creator', 'pro')) NOT NULL DEFAULT 'free',
     status TEXT CHECK (status IN ('active', 'canceled', 'past_due', 'incomplete', 'trialing')) NOT NULL DEFAULT 'active',
     current_period_start TIMESTAMP WITH TIME ZONE,
@@ -71,7 +71,7 @@ CREATE TABLE subscriptions (
 );
 ```
 
-> **Note:** Since subscription data is sensitive, ensure that **Row Level Security (RLS)** is disabled for the `subscriptions` table.
+> **Note:** Since team data is sensitive, ensure that **Row Level Security (RLS)** is disabled for the `teams` table.
 
 ### Environment Configuration:
 
@@ -104,16 +104,16 @@ MAILGUN_SECRET_DOMAIN=
 ## Key Features
 
 - **Authentication with Supabase:** Utilize Supabase for user authentication, providing a secure and scalable login system.
-- **Subscription Management with Stripe:** Easily manage different subscription plans, handle payments, and track user subscriptions with Stripe integration.
+- **Team Management with Stripe:** Easily manage different team plans, handle payments, and track user teams with Stripe integration.
 - **Responsive Design with TailwindCSS:** The application uses TailwindCSS for styling, ensuring a modern and responsive design out of the box.
-- **Built-in API Routes:** Ready-to-use API routes for managing subscriptions, payments, and user data.
+- **Built-in API Routes:** Ready-to-use API routes for managing teams, payments, and user data.
 - **OAuth Support:** The app supports OAuth login via **Google**, **Facebook**, and **Twitter**, providing users with a seamless authentication experience.
 
 ---
 
 ## Webhook Listener for Stripe
 
-To handle incoming webhooks from Stripe (such as subscription updates, payment failures, etc.), Sassy includes a script for listening to Stripe webhooks:
+To handle incoming webhooks from Stripe (such as team updates, payment failures, etc.), Sassy includes a script for listening to Stripe webhooks:
 
 ```bash
 pnpm stripe:listen
@@ -170,7 +170,7 @@ The application will be available at `http://localhost:3000`.
 
 ### 4. Database Configuration
 
-To set up your Supabase project, run the provided SQL script to create the `subscriptions` table in your Supabase database.
+To set up your Supabase project, run the provided SQL script to create the `teams` table in your Supabase database.
 
 ### 5. Stripe Integration
 
@@ -188,7 +188,7 @@ For **development** and **production**, Sassy uses separate Supabase projects to
 
 ## Conclusion
 
-Sassy provides a solid foundation for developing subscription-based AHS Water Assassins applications. By leveraging the power of **Next.js**, **Supabase**, **Stripe**, **OAuth**, and **TailwindCSS**, you can rapidly build and deploy secure and scalable applications. Whether you're just starting a new SaaS product or iterating on an existing idea, Sassy makes it easy to focus on what matters most: delivering value to your users.
+Sassy provides a solid foundation for developing team-based AHS Water Assassins applications. By leveraging the power of **Next.js**, **Supabase**, **Stripe**, **OAuth**, and **TailwindCSS**, you can rapidly build and deploy secure and scalable applications. Whether you're just starting a new SaaS product or iterating on an existing idea, Sassy makes it easy to focus on what matters most: delivering value to your users.
 
 ---
 

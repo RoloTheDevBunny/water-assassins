@@ -5,7 +5,7 @@ import { stripe } from "@/libs/stripe";
 import { supabaseServerClient as supabase } from "@/libs/supabase/server";
 import AuthService from "@/services/auth";
 import PaymentService from "@/services/payment";
-import SubscriptionService from "@/services/subscription";
+import TeamService from "@/services/team";
 
 export async function POST() {
   try {
@@ -22,7 +22,7 @@ export async function POST() {
     }
 
     const authService = new AuthService(supabase);
-    const subscriptionService = new SubscriptionService(supabase);
+    const teamService = new TeamService(supabase);
     const PaymentServiceInstance = new PaymentService(stripe);
 
     const user = await authService.getUser(cleanBearer);
@@ -34,25 +34,25 @@ export async function POST() {
       );
     }
 
-    const subscription = await subscriptionService.getSubscriptionByUserId(
+    const team = await teamService.getTeamByUserId(
       user.id
     );
 
-    if (!subscription) {
+    if (!team) {
       return NextResponse.json(
-        { error: "No subscription found for user" },
+        { error: "No team found for user" },
         { status: 404 }
       );
     }
 
     const customerId =
-      await PaymentServiceInstance.getCustomerIdFromSubscription(
-        subscription.stripe_subscription_id
+      await PaymentServiceInstance.getCustomerIdFromTeam(
+        team.stripe_team_id
       );
 
     if (!customerId) {
       return NextResponse.json(
-        { error: "No customerId found for subscription" },
+        { error: "No customerId found for team" },
         { status: 404 }
       );
     }

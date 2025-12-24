@@ -58,7 +58,12 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
     return (
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <ul className="flex justify-center space-x-8 py-4 items-center">
-                {tabs.map((tab) => {
+                <p
+                    className={`text-sm font-medium rounded-md transition "text-indigo-600 font-extrabold"`}
+                >
+                    Come back later
+                </p>
+                {/* {tabs.map((tab) => {
                     const available = isTabAvailable(tab.requiredPlan);
                     return (
                         <li key={tab.name} className="relative group">
@@ -82,7 +87,7 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
                             </button>
                         </li>
                     );
-                })}
+                })} */}
             </ul>
         </nav>
     );

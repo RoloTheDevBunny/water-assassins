@@ -72,9 +72,9 @@ function SettingsOptions({ userEmail, currentPlan }: SettingsOptionsProps) {
           </h2>
           <p className="text-gray-700">{currentPlan}</p>
         </div>
-        <a href="/dashboard/subscription">
+        <a href="/dashboard/team">
           <ButtonComponent type="button" variant="filled">
-            {translate("subscription")}
+            {translate("team")}
           </ButtonComponent>
         </a>
       </div>

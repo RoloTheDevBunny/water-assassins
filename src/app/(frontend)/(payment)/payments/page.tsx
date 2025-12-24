@@ -10,13 +10,13 @@ const PaymentStatus = () => {
 
   const statusMap = {
     success: {
-      href: "/dashboard/subscription",
+      href: "/dashboard/team",
       label: translate("pages.payments.actions.billing"),
       title: translate("pages.payments.status.success.title"),
       description: translate("pages.payments.status.success.description"),
     },
     cancel: {
-      href: "/dashboard/subscription",
+      href: "/dashboard/team",
       label: translate("pages.payments.actions.settings"),
       title: translate("pages.payments.status.cancel.title"),
       description: translate("pages.payments.status.cancel.description"),

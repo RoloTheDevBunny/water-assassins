@@ -18,10 +18,10 @@ async function getUserPlan(
     }
   );
 
-  const subscription = await response.json();
+  const team = await response.json();
 
-  if (subscription?.status === "active") {
-    return subscription.plan as "starter" | "creator" | "pro";
+  if (team?.status === "active") {
+    return team.plan as "starter" | "creator" | "pro";
   }
 
   return "free";
