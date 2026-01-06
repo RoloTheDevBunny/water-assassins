@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
       provider,
       options: {
         redirectTo: `${process.env.NEXT_PUBLIC_PROJECT_URL}/confirm-signup?oauth=${provider}`,
+        scopes: 'openid email profile',
       },
     });
 

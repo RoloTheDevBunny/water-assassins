@@ -7,6 +7,7 @@ import { useEffect, useReducer } from "react";
 import BackLink from "@/components/v1/BackLink";
 import Spinner from "@/components/v1/Spinner";
 import { useI18n } from "@/contexts/i18nContext";
+import { supabase } from "@/libs/supabase/client";
 
 type State = {
   isLoading: boolean;
@@ -90,6 +91,14 @@ export default function ConfirmSignUp() {
       });
       const { error } = await res.json();
       if (error) throw new Error(error);
+
+      // Check email domain
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user?.email?.endsWith('@yourdomain.com')) { // Replace '@yourdomain.com' with your specific domain
+        await supabase.auth.signOut();
+        throw new Error('Sign-in restricted to specific email domain');
+      }
+
       dispatch({ type: "SUCCESS" });
       router.push("/dashboard");
     } catch (err: unknown) {
