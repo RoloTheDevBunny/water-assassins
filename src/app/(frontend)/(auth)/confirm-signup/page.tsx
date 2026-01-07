@@ -94,9 +94,9 @@ export default function ConfirmSignUp() {
 
       // Check email domain
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user?.email?.endsWith('@yourdomain.com')) { // Replace '@yourdomain.com' with your specific domain
+      if (!user?.email?.endsWith('@student.lvusd.org')) { // Replace '@yourdomain.com' with your specific domain
         await supabase.auth.signOut();
-        throw new Error('Sign-in restricted to specific email domain');
+        throw new Error('Please sign in with an @student.lvusd.org');
       }
 
       dispatch({ type: "SUCCESS" });

@@ -9,14 +9,12 @@
     "test": "jest --passWithNoTests --coverage",
     "test:coverage": "jest --passWithNoTests --coverage --collectCoverageFrom='src/**/*.{js,ts,tsx}'",
     "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix ",
-    "stripe:listen": "stripe listen --forward-to localhost:3000/api/v1/payments/webhooks"
+    "lint:fix": "eslint src/ --fix "
   },
   "dependencies": {
     "@datadog/browser-logs": "^6.6.4",
     "@datadog/browser-rum": "^6.6.4",
     "@heroicons/react": "^2.2.0",
-    "@stripe/stripe-js": "^7.3.0",
     "@supabase/auth-helpers-nextjs": "^0.15.0",
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.89.0",
@@ -25,8 +23,7 @@
     "mailgun.js": "^12.0.1",
     "next": "^15.3.2",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "stripe": "^18.1.0"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",

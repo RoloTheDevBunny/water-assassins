@@ -4,7 +4,7 @@ import { Menu } from "./Menu";
 import { Modal } from "./Modal";
 
 type ComponentDashboardProps = {
-  plan: "free" | "starter" | "creator" | "pro";
+  plan: "global" | "individual" | "member" | "team";
 };
 
 export const Dashboard = ({ plan }: ComponentDashboardProps) => {

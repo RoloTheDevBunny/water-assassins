@@ -6,25 +6,30 @@ import { updateSession } from "@/libs/supabase/middleware";
 
 async function getUserPlan(
   userId: string
-): Promise<"free" | "starter" | "creator" | "pro"> {
+): Promise<"global" | "individual" | "member" | "team"> {
+  // Check user's level based on team membership
   const baseUrl = process.env.NEXT_PUBLIC_PROJECT_URL;
   if (!baseUrl) throw new Error("Missing NEXT_PUBLIC_PROJECT_URL env variable");
 
-  const response = await fetch(
-    `${baseUrl}/api/v1/payments/subscription?userId=${userId}`,
-    {
-      method: "GET",
-      cache: "no-store",
+  try {
+    const response = await fetch(
+      `${baseUrl}/api/v1/user/level?userId=${userId}`,
+      {
+        method: "GET",
+        cache: "no-store",
+      }
+    );
+
+    if (response.ok) {
+      const data = await response.json();
+      return data.level;
     }
-  );
-
-  const team = await response.json();
-
-  if (team?.status === "active") {
-    return team.plan as "starter" | "creator" | "pro";
+  } catch (error) {
+    console.error("Error fetching user level:", error);
   }
 
-  return "free";
+  // Default to global if API fails
+  return "global";
 }
 
 export async function middleware(request: NextRequest) {

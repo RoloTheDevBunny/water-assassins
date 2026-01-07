@@ -11,7 +11,7 @@ export const useFetchPlans = (
   setIsLoading: (isLoading: boolean) => void
 ) => {
   const { translate } = useI18n("components.pricing.plans");
-  const SUBSCRIPTION_PLANS_BASE: Plan[] = [
+  const _PLANS_BASE: Plan[] = [
     {
       id: "free",
       name: translate("free.title"),
@@ -28,7 +28,7 @@ export const useFetchPlans = (
   ];
 
   const basePlan =
-    hasFreeplan && !HAS_FREE_TRIAL ? SUBSCRIPTION_PLANS_BASE : [];
+    hasFreeplan && !HAS_FREE_TRIAL ? _PLANS_BASE : [];
   const [plans, setPlans] = useState<Plan[]>(basePlan);
 
   useEffect(() => {

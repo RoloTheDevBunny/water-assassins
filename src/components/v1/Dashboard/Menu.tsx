@@ -9,17 +9,17 @@ import { useModal } from "@/contexts/ModalContext";
 type Tab = {
     name: string;
     href: string;
-    requiredPlan: "free" | "member" | "owner";
+    requiredPlan: "global" | "member" | "team";
 };
 
 const tabs: Tab[] = [
-    { name: "Global", href: "/Global", requiredPlan: "free" },
+    { name: "Global", href: "/Global", requiredPlan: "global" },
     { name: "Individual", href: "/Individual", requiredPlan: "member" },
-    { name: "Team", href: "/Team", requiredPlan: "owner" },
+    { name: "Team", href: "/Team", requiredPlan: "team" },
 ];
 
 type MenuProps = {
-    activePlan: "free" | "member" | "owner";
+    activePlan: "global" | "member" | "team";
     onTabChange: (activeTab: string) => void;
 };
 
@@ -29,14 +29,10 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
     const { translate } = useI18n();
 
     const isTabAvailable = (requiredPlan: string): boolean => {
-        if (requiredPlan === "free") return true;
-        if (requiredPlan === "member") {
-            return activePlan === "member" || activePlan === "owner";
-        }
-        if (requiredPlan === "owner") {
-            return activePlan === "owner";
-        }
-        return false;
+        const levels = ["global", "member", "team"];
+        const userLevelIndex = levels.indexOf(activePlan);
+        const requiredIndex = levels.indexOf(requiredPlan);
+        return userLevelIndex >= requiredIndex;
     };
 
     const availableTabs = tabs.filter((tab) => isTabAvailable(tab.requiredPlan));
