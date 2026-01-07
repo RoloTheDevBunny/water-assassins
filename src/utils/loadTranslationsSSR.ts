@@ -3,16 +3,14 @@ import { cookies } from 'next/headers';
 import { Translations } from '@/contexts/i18nContext';
 
 import enUSLocale from '../../public/locales/en-US.json';
-import ptBRLocale from '../../public/locales/pt-BR.json';
 
-type SupportedLocale = 'en-US' | 'pt-BR';
+type SupportedLocale = 'en-US';
 type TranslationsMap = Record<SupportedLocale, Translations>;
 
 const DEFAULT_LOCALE: SupportedLocale = 'en-US';
 
 const translationsMap: TranslationsMap = {
   'en-US': enUSLocale,
-  'pt-BR': ptBRLocale,
 };
 
 function isValidLocale(locale: string): locale is SupportedLocale {
