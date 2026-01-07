@@ -20,9 +20,6 @@ const LanguageSelector = () => {
       <option value="en-US">
         🇺🇸
       </option>
-      <option value="pt-BR">
-        🇧🇷
-      </option>
     </select>
   );
 };
