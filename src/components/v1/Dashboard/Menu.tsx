@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { useI18n } from "@/contexts/i18nContext";
 import { useModal } from "@/contexts/ModalContext";
+import { getMyInvites } from "@/libs/supabase/services"; // Import the service
 
 type Tab = {
     name: string;
@@ -25,6 +26,7 @@ type MenuProps = {
 
 export function Menu({ activePlan, onTabChange }: MenuProps) {
     const [activeTab, setActiveTab] = useState("");
+    const [inviteCount, setInviteCount] = useState(0); // State for the badge
     const { openModal } = useModal();
     const { translate } = useI18n();
 
@@ -36,6 +38,19 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
     };
 
     const availableTabs = tabs.filter((tab) => isTabAvailable(tab.requiredPlan));
+
+    // 1. Fetch Invite Count on Load
+    useEffect(() => {
+        const fetchInvites = async () => {
+            try {
+                const invites = await getMyInvites();
+                setInviteCount(invites.length);
+            } catch (err) {
+                console.error("Failed to fetch invites:", err);
+            }
+        };
+        fetchInvites();
+    }, []);
 
     useEffect(() => {
         if (availableTabs.length > 0 && !activeTab) {
@@ -56,11 +71,13 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
             <ul className="flex justify-center space-x-8 py-4 items-center">
                 {tabs.map((tab) => {
                     const available = isTabAvailable(tab.requiredPlan);
+                    const isTeamTab = tab.name === "Team";
+
                     return (
                         <li key={tab.name} className="relative group">
                             <button
                                 onClick={() => available && setActiveTab(tab.href)}
-                                className="flex items-center rounded-md"
+                                className="flex items-center rounded-md relative"
                                 disabled={!available}
                             >
                                 <p
@@ -69,9 +86,16 @@ export function Menu({ activePlan, onTabChange }: MenuProps) {
                                     {translate(tab.name)}
                                 </p>
 
+                                {/* 2. Notification Badge for Team Invites */}
+                                {isTeamTab && inviteCount > 0 && (
+                                    <span className="absolute -top-2 -right-3 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                                        {inviteCount}
+                                    </span>
+                                )}
+
                                 {!available && (
                                     <LockClosedIcon
-                                        className="h-5 w-5 mr-4 text-gray-500"
+                                        className="h-5 w-5 ml-2 text-gray-500" // Moved ml-2 to the right of text
                                         aria-hidden="true"
                                     />
                                 )}
