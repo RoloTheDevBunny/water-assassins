@@ -1,7 +1,6 @@
 import { headers } from "next/headers";
 
 import { GET as getSessionHandler } from "@/app/(backend)/api/v1/session/route";
-import ManageBilling from "@/components/v1/ManageBilling";
 import { capitalize } from "@/utils/capitalize";
 import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
 
@@ -30,9 +29,6 @@ export default async function Team() {
                 </p>
               </div>
             </div>
-            {sharedData?.plan !== "free" && session?.access_token && (
-              <ManageBilling accessToken={session?.access_token} />
-            )}
           </div>
         </div>
       </div>
