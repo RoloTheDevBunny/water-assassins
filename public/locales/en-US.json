@@ -110,7 +110,7 @@
       }
     },
     "signin": {
-      "title": "Register (NOT WORKING YET)",
+      "title": "Register",
       "description": "Make sure to use your school email to register.",
       "actions": {
         "back": "Back"
@@ -118,7 +118,7 @@
     },
     "signup": {
       "back-to-login": "Back To Login",
-      "title": "Register (NOT WORKING YET)",
+      "title": "Register",
       "description": "Make sure to use your school email to register.",
       "inputs": {
         "email": "Email",
@@ -135,28 +135,6 @@
         "password": "Password must be at least 6 characters long.",
         "confirm-password": "Passwords do not match.",
         "terms": "You must accept the terms and conditions.",
-        "error": "Something went wrong. Please try again."
-      }
-    },
-    "forgot-password": {
-      "title": "Forgot Password",
-      "description": "Enter your email to receive a password reset link.",
-      "inputs": {
-        "email": {
-          "label": "Email",
-          "placeholder": "Enter your email"
-        }
-      },
-      "actions": {
-        "submit": "Send Reset Link",
-        "back": "Back To Login",
-        "inbox": {
-          "title": "Check Your Inbox",
-          "description": "A password reset link has been sent to your email. Please check your inbox."
-        }
-      },
-      "errors": {
-        "email": "Invalid email format.",
         "error": "Something went wrong. Please try again."
       }
     },
