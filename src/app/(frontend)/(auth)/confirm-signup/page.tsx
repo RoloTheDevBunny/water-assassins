@@ -6,7 +6,7 @@ import { useEffect, useReducer } from "react";
 import BackLink from "@/components/v1/BackLink";
 import Spinner from "@/components/v1/Spinner";
 import { useI18n } from "@/contexts/i18nContext";
-import { json } from "stream/consumers";
+import { supabase } from "@/libs/supabase/client";
 
 type State = {
   isLoading: boolean;
@@ -42,7 +42,6 @@ export default function ConfirmSignUp() {
   const router = useRouter();
 
   useEffect(() => {
-    // Only runs client-side
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get("code");
 
@@ -59,29 +58,46 @@ export default function ConfirmSignUp() {
 
   async function handleOAuthCode(code: string) {
     dispatch({ type: "SET_LOADING", isLoading: true });
+
     try {
-      // Call server route to exchange OAuth code and return user
+      // Exchange the code for a session on the backend
       const res = await fetch("/api/v1/auth/oauth/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
       });
 
-      const { user, error } = await res.json();
-      if (error) throw new Error(error);
+      const data = await res.json();
+      console.log("OAuth callback response:", data);
 
-      if (!user?.email?.endsWith("@student.lvusd.org")) {
-        await fetch("/api/v1/auth/signout", { method: "POST" });
-        throw new Error(
-          "Please sign in with an @student.lvusd.org account. Your json data is: " + JSON.stringify(user)
-        );
+      const user = data?.user;
+
+      // Log all user info for debugging
+      console.log("Full user object:", user);
+
+      if (!user?.email) {
+        throw new Error("Could not determine user email from OAuth response");
       }
 
+      // Domain restriction
+      if (!user.email.endsWith("@student.lvusd.org")) {
+        // Fully clear client session
+        await supabase.auth.signOut();
+
+        // Optionally call backend signout if needed
+        await fetch("/api/v1/auth/signout", { method: "POST" });
+
+        throw new Error(
+          "Please sign in with an @student.lvusd.org account. Your email is: " +
+          user.email
+        );
+      }
 
       dispatch({ type: "SUCCESS" });
       router.push("/dashboard");
     } catch (err: unknown) {
       if (err instanceof Error) {
+        console.error("ConfirmSignUp error:", err);
         dispatch({ type: "FAILURE", error: err.message });
       } else {
         dispatch({ type: "FAILURE", error: translate("errors.unexpected") });
