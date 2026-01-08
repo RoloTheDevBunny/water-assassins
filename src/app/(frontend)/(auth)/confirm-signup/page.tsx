@@ -76,7 +76,7 @@ export default function ConfirmSignUp() {
       console.log("Full user object:", user);
 
       if (!user?.email) {
-        throw new Error("Could not determine user email from OAuth response. User object: " + JSON.stringify(user));
+        throw new Error("Could not determine user email from OAuth response. Data: " + JSON.stringify(data));
       }
 
       // Domain restriction
