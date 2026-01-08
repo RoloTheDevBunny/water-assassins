@@ -1,4 +1,3 @@
-// src/app/dashboard/settings/page.tsx
 import { headers, cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { GET as getMeHandler } from "@/app/(backend)/api/v1/me/route";
@@ -14,7 +13,11 @@ export default async function Settings() {
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll() { return cookieStore.getAll(); } } }
+    { 
+      cookies: { 
+        getAll() { return cookieStore.getAll(); } 
+      } 
+    }
   );
 
   // 2. Fetch User and Shared Data
@@ -23,11 +26,22 @@ export default async function Settings() {
   const sharedData = JSON.parse((await headers()).get("x-shared-data") || "{}");
 
   // 3. Fetch Player Profile using the unified UUID
+  // Note: We use .single() to tell Supabase we expect one row
   const { data: playerProfile } = await supabase
     .from("players")
-    .select("name, is_member, teams(name)")
+    .select(`
+      name, 
+      is_member, 
+      teams ( name )
+    `)
     .eq("id", authData?.id)
     .single();
+
+  // Fix for the Type Error: access the first element if it's an array, 
+  // or handle it if it's a single object (depends on your specific Supabase version/types)
+  const teamData = Array.isArray(playerProfile?.teams) 
+    ? playerProfile?.teams[0] 
+    : playerProfile?.teams;
 
   return (
     <div className="max-w-3xl mx-auto space-y-8">
@@ -68,14 +82,14 @@ export default async function Settings() {
               />
             </div>
 
-            {/* Team Display */}
+            {/* Team Display - Fixed logic here */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Current Team
               </label>
               <input
                 type="text"
-                value={playerProfile?.teams?.name || "None"}
+                value={teamData?.name || "None"}
                 readOnly
                 className="w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-md text-gray-600 focus:outline-none"
               />
