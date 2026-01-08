@@ -1,7 +1,8 @@
+// src/app/team/page.tsx
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import InviteList from "@/components/v1/InviteList";
 import TeamRequestForm from "@/components/v1/TeamRequestForm";
-import { InviteList } from "@/components/v1/InviteList";
 import TeamManager from "@/components/v1/TeamManager";
 
 export default async function TeamPage() {
@@ -9,59 +10,89 @@ export default async function TeamPage() {
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    { cookies: { getAll() { return cookieStore.getAll() } } }
+    {
+      cookies: {
+        getAll() {
+          return cookieStore.getAll();
+        },
+      },
+    }
   );
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Fetch player, their team (via join), and pending invites
-  const [playerRes, inviteRes, requestRes] = await Promise.all([
-    supabase.from("players").select("*, teams(*)").eq("user_id", user?.id).single(),
-    supabase.from("invitations").select("*, teams(name)").eq("invited_player_id", 
-      (await supabase.from("players").select("id").eq("user_id", user?.id).single()).data?.id
-    ).eq("status", "pending"),
-    supabase.from("team_requests").select("*").eq("user_id", user?.id).eq("is_approved", false)
+  // Fetch everything using the unified UUID (user.id)
+  const [playerRes, requestRes, membershipRes] = await Promise.all([
+    supabase.from("players").select("*").eq("id", user?.id).single(),
+    supabase.from("team_requests").select("*").eq("user_id", user?.id).eq("is_approved", false).maybeSingle(),
+    supabase.from("team_members").select("*, teams(*)").eq("member_id", user?.id).maybeSingle()
   ]);
 
   const player = playerRes.data;
-  const invitations = inviteRes.data || [];
-  const pendingRequest = requestRes.data?.[0];
-  const isOwner = player?.teams?.owner_id === user?.id;
+  const pendingRequest = requestRes.data;
+  const currentTeam = membershipRes.data?.teams;
+  const isOwner = membershipRes.data?.is_owner ?? false;
+  const isMember = player?.is_member ?? false;
+
+  // Fetch invitations sent to this player UUID
+  const { data: invitations } = await supabase
+    .from("invitations")
+    .select("*, teams(name)")
+    .eq("invited_player_id", user?.id)
+    .eq("status", "pending");
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
-      {/* 1. Membership Status */}
-      <div className="p-4 rounded-lg border bg-white flex justify-between items-center">
+    <div className="max-w-5xl mx-auto p-6 space-y-8">
+      {/* 1. Membership Status Banner */}
+      <div className={`p-6 border rounded-xl flex justify-between items-center shadow-sm transition-all ${!isMember ? 'bg-amber-50 border-amber-200' : 'bg-white border-gray-100'}`}>
         <div>
-          <h2 className="font-bold">Player Membership</h2>
-          <p className="text-sm text-gray-500">Required to join any team.</p>
+          <h2 className="text-xl font-black uppercase italic tracking-tight text-gray-900">Player Membership</h2>
+          <p className="text-sm text-gray-500 font-medium">Required to join or create a team.</p>
         </div>
-        <span className={`px-3 py-1 rounded-full text-xs font-bold ${player?.is_member ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {player?.is_member ? "PAID MEMBER" : "UNPAID"}
-        </span>
+        <div className="flex flex-col items-end gap-1">
+          <span className={`px-4 py-1 rounded-full text-xs font-black uppercase tracking-widest ${isMember ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+            {isMember ? "ACTIVE MEMBER" : "UNPAID"}
+          </span>
+          {!isMember && <span className="text-[10px] font-bold text-red-400 uppercase">Action Required</span>}
+        </div>
       </div>
 
-      {player?.teams ? (
-        /* 2. Team Management (If in a team) */
-        <div className="space-y-4">
-          <h2 className="text-2xl font-black uppercase italic tracking-tighter text-indigo-900">
-            {player.teams.name}
-          </h2>
-          <TeamManager teamId={player.teams.id} isOwner={isOwner} />
+      {currentTeam ? (
+        /* 2. Active Team View */
+        <div className="space-y-6">
+          <div className="flex items-baseline gap-4">
+            <h1 className="text-5xl font-black italic uppercase tracking-tighter text-indigo-600">
+              {currentTeam.name}
+            </h1>
+            <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Team Hub</span>
+          </div>
+          <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
         </div>
       ) : (
-        /* 3. Join/Create Options (If not in a team) */
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="p-6 bg-white rounded-xl border">
-            <h3 className="font-bold mb-4">Pending Invitations</h3>
-            <InviteList invitations={invitations} isMember={player?.is_member} />
+        /* 3. Join / Create View (Locked if Unpaid) */
+        <div className="grid md:grid-cols-2 gap-8">
+          {/* Invitations Section */}
+          <div className={`space-y-4 transition-all ${!isMember ? 'opacity-50 pointer-events-none' : ''}`}>
+            <div className="flex items-center justify-between">
+              <h3 className="font-black uppercase text-gray-400 text-sm tracking-widest">Pending Invitations</h3>
+              {!isMember && <span className="text-[10px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded font-bold">LOCKED</span>}
+            </div>
+            <InviteList invitations={invitations || []} isMember={isMember} />
           </div>
-          <div className="p-6 bg-white rounded-xl border">
-            <h3 className="font-bold mb-4">Create a Team</h3>
+
+          {/* Create Team Section */}
+          <div className={`space-y-4 transition-all ${!isMember ? 'opacity-50 pointer-events-none' : ''}`}>
+            <div className="flex items-center justify-between">
+              <h3 className="font-black uppercase text-gray-400 text-sm tracking-widest">Start a Team</h3>
+              {!isMember && <span className="text-[10px] bg-gray-200 text-gray-600 px-2 py-0.5 rounded font-bold">LOCKED</span>}
+            </div>
             {pendingRequest ? (
-              <p className="text-sm text-amber-600">Request for "{pendingRequest.desired_team_name}" is pending approval.</p>
+              <div className="p-6 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-700">
+                <p className="text-xs uppercase font-black tracking-widest mb-1 opacity-60">Status: Pending</p>
+                <p className="font-bold">Request for "{pendingRequest.team_name}" is awaiting admin approval.</p>
+              </div>
             ) : (
-              <TeamRequestForm />
+              <TeamRequestForm isMember={isMember} />
             )}
           </div>
         </div>
