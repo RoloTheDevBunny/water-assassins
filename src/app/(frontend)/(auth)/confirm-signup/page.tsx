@@ -45,16 +45,19 @@ export default function ConfirmSignUp() {
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get("code");
 
-    if (code) {
-      handleOAuthCode(code);
-    } else {
-      dispatch({
-        type: "FAILURE",
-        error: translate("errors.missing-token"),
-      });
+    if (!code) {
+      dispatch({ type: "FAILURE", error: translate("errors.missing-token") });
+      return;
     }
+
+    // Remove the code from the URL immediately so reloading doesn't repeat the flow
+    const cleanUrl = window.location.origin + window.location.pathname;
+    window.history.replaceState({}, "", cleanUrl);
+
+    handleOAuthCode(code);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   async function handleOAuthCode(code: string) {
     dispatch({ type: "SET_LOADING", isLoading: true });
