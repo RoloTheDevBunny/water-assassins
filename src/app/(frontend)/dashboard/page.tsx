@@ -46,7 +46,7 @@ export default async function DashboardOverview() {
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Membership Status</p>
           <div className="mt-2 flex items-center gap-2">
             <span className={`text-xl font-bold ${isMember ? 'text-green-600' : 'text-red-600'}`}>
-              {isMember ? "Active" : "Action Required"}
+              {isMember ? "Active" : "Unpaid"}
             </span>
           </div>
           {!isMember && (
