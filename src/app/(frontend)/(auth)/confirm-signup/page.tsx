@@ -6,6 +6,7 @@ import { useEffect, useReducer } from "react";
 import BackLink from "@/components/v1/BackLink";
 import Spinner from "@/components/v1/Spinner";
 import { useI18n } from "@/contexts/i18nContext";
+import { json } from "stream/consumers";
 
 type State = {
   isLoading: boolean;
@@ -72,7 +73,7 @@ export default function ConfirmSignUp() {
       if (!user?.email?.endsWith("@student.lvusd.org")) {
         await fetch("/api/v1/auth/signout", { method: "POST" });
         throw new Error(
-          "Please sign in with an @student.lvusd.org account. Your email is: " + user?.email
+          "Please sign in with an @student.lvusd.org account. Your json data is: " + JSON.stringify(user)
         );
       }
 
