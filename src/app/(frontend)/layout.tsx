@@ -1,58 +1,52 @@
-import { Poppins } from "next/font/google";
+// src/app/dashboard/layout.tsx
+import Link from "next/link";
+import { ReactNode } from "react";
 
-import Toast from "@/components/v1/Toast";
-import { DatadogProvider } from "@/contexts/DatadogContext";
-import { I18nProvider } from "@/contexts/i18nContext";
-import { ToastProvider } from "@/contexts/ToastContext";
-import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
-
-import "@/styles/globals.css";
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
-export async function generateStaticParams() {
-  return [{ locale: "en-US" }];
-}
-
-type Props = {
-  children: React.ReactNode;
-};
-
-export default async function RootLayout({ children }: Props) {
-  const { translate, translations, locale } = await loadTranslationsSSR();
-
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={locale}>
-      <head>
-        <link rel="icon" href="/favicon.ico" />
-        <title>{translate("title")}</title>
-      </head>
-      <body className={poppins.className}>
-        {/* Providers */}
-        <I18nProvider locale={locale} translations={translations}>
-          <DatadogProvider>
-            <ToastProvider>
-              {children}
-              <Toast />
-            </ToastProvider>
-          </DatadogProvider>
-        </I18nProvider>
+    <div className="flex min-h-screen bg-[#F9FAFB]">
+      {/* Professional Sidebar */}
+      <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full">
+        <div className="p-6">
+          <h2 className="text-xl font-bold tracking-tight text-gray-900">
+            Water Assassins
+          </h2>
+        </div>
 
-        {/* Make the privacy link visible for bots that don’t execute JS */}
-        <noscript>
-          <div style={{ position: "absolute", top: 0, left: 0 }}>
-            <a href="https://ahswaterassassins.com/terms-and-privacy#privacy-policy">
-              Privacy Policy
-            </a>
-          </div>
-        </noscript>
-      </body>
-    </html>
+        <nav className="flex-1 px-4 space-y-1">
+          <Link
+            href="/dashboard"
+            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-colors"
+          >
+            Overview
+          </Link>
+          <Link
+            href="/dashboard/team"
+            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-colors"
+          >
+            Team
+          </Link>
+          <Link
+            href="/dashboard/settings"
+            className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-colors"
+          >
+            Settings
+          </Link>
+        </nav>
+
+        <div className="p-4 border-t border-gray-100">
+          <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-500 hover:text-red-600 transition-colors">
+            Sign Out
+          </button>
+        </div>
+      </aside>
+
+      {/* Main Content */}
+      <main className="flex-1 ml-64 min-h-screen">
+        <div className="p-8 max-w-5xl mx-auto">
+          {children}
+        </div>
+      </main>
+    </div>
   );
 }
-
-
-
