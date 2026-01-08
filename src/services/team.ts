@@ -14,7 +14,7 @@ export default class TeamService {
 
     async getTeamByUserId(userId: string): Promise<TeamData | null> {
         const { data, error } = await this.supabase
-            .from('Teams')
+            .from('teams')
             .select('*')
             .eq('user_id', userId)
             .order('created_at', { ascending: false })
@@ -26,7 +26,7 @@ export default class TeamService {
 
     async upsertTeam(teamData: TeamData): Promise<void> {
         const { error } = await this.supabase
-            .from('Teams')
+            .from('teams')
             .upsert(teamData);
 
         this.handleError(error);

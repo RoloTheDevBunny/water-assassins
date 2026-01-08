@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
 
     // Check if user is owner of a team
     const { data: ownerData, error: ownerError } = await supabase
-      .from('Teams')
+      .from('teams')
       .select('TeamID')
       .eq('Owner', userId)
       .limit(1);
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
 
     // Check if user is a member of any team
     const { data: memberData, error: memberError } = await supabase
-      .from('Teams')
+      .from('teams')
       .select('TeamID')
       .contains('Members', [userId])
       .limit(1);
