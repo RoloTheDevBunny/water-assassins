@@ -1,80 +1,85 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/libs/supabase/client";
 
+interface Member {
+  member_id: string;
+  is_owner: boolean;
+  players: {
+    name: string;
+    email: string;
+  };
+}
+
 export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwner: boolean }) {
-  const [members, setMembers] = useState<any[]>([]);
-  const [email, setEmail] = useState("");
+  const [members, setMembers] = useState<Member[]>([]);
 
   useEffect(() => {
     const fetchMembers = async () => {
       const { data } = await supabase
-        .from("players")
-        .select("name, email, user_id")
+        .from("team_members")
+        .select(`
+          is_owner,
+          member_id,
+          players:member_id ( name, email )
+        `)
         .eq("team_id", teamId);
-      setMembers(data || []);
+      
+      if (data) setMembers(data as any);
     };
     fetchMembers();
   }, [teamId]);
 
-  const handleInvite = async () => {
-    // 1. Find the player's internal ID via email
-    const { data: player } = await supabase.from("players").select("id").eq("email", email).single();
+  const handleKick = async (memberId: string) => {
+    if (!confirm("Are you sure you want to remove this player?")) return;
+
+    // 1. Remove from junction
+    await supabase.from("team_members").delete().eq("member_id", memberId).eq("team_id", teamId);
+    // 2. Clear player's current team
+    await supabase.from("players").update({ team_id: null }).eq("id", memberId);
     
-    if (!player) {
-      alert("No player found with that school email.");
-      return;
-    }
-
-    // 2. Insert invitation
-    const { error } = await supabase.from("invitations").insert({
-      team_id: teamId,
-      invited_player_id: player.id
-    });
-
-    if (error) alert(error.message);
-    else {
-      alert("Invite sent!");
-      setEmail("");
-    }
+    setMembers(prev => prev.filter(m => m.member_id !== memberId));
   };
 
   return (
-    <div className="bg-white rounded-xl border overflow-hidden">
-      <table className="w-full text-left">
-        <thead className="bg-gray-50 text-xs font-bold uppercase text-gray-400">
+    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+      <table className="w-full text-left border-collapse">
+        <thead className="bg-gray-50 border-b">
           <tr>
-            <th className="p-4">Player</th>
-            <th className="p-4">Role</th>
-            {isOwner && <th className="p-4 text-right">Action</th>}
+            <th className="p-4 text-xs font-black uppercase text-gray-400 tracking-widest">Player</th>
+            <th className="p-4 text-xs font-black uppercase text-gray-400 tracking-widest">Role</th>
+            {isOwner && <th className="p-4 text-right text-xs font-black uppercase text-gray-400 tracking-widest">Admin</th>}
           </tr>
         </thead>
-        <tbody className="divide-y">
+        <tbody className="divide-y divide-gray-100">
           {members.map((m) => (
-            <tr key={m.user_id}>
-              <td className="p-4 font-medium">{m.name}</td>
-              <td className="p-4 text-sm text-gray-500">Member</td>
+            <tr key={m.member_id} className="hover:bg-gray-50 transition-colors">
+              <td className="p-4 font-bold text-gray-800">
+                {m.players?.name || "Anonymous Assassin"}
+                <p className="text-[10px] font-medium text-gray-400 lowercase">{m.players?.email}</p>
+              </td>
+              <td className="p-4">
+                <span className={`text-[10px] font-black px-2 py-1 rounded tracking-tighter ${m.is_owner ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
+                  {m.is_owner ? 'CAPTAIN' : 'OPERATIVE'}
+                </span>
+              </td>
               {isOwner && (
-                <td className="p-4 text-right text-red-500 font-bold cursor-pointer hover:underline text-xs">KICK</td>
+                <td className="p-4 text-right">
+                  {!m.is_owner && (
+                    <button 
+                      onClick={() => handleKick(m.member_id)}
+                      className="text-red-500 hover:text-red-700 text-[10px] font-black uppercase tracking-tighter"
+                    >
+                      Kick
+                    </button>
+                  )}
+                </td>
               )}
             </tr>
           ))}
         </tbody>
       </table>
-
-      {isOwner && (
-        <div className="p-4 bg-indigo-50 border-t flex gap-2">
-          <input 
-            className="flex-1 p-2 text-sm border rounded" 
-            placeholder="Invite by student email..."
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <button onClick={handleInvite} className="bg-indigo-600 text-white px-4 py-2 rounded text-xs font-bold">
-            SEND INVITE
-          </button>
-        </div>
-      )}
     </div>
   );
 }
