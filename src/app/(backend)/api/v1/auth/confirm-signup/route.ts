@@ -1,32 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/libs/supabase/server";
-import { type EmailOtpType } from "@supabase/supabase-js";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  
-  // Supabase sends 'token_hash' and 'type' in the email link
-  const token_hash = searchParams.get("token_hash");
-  const type = searchParams.get("type") as EmailOtpType | null;
-  const next = searchParams.get("next") ?? "/Dashboard";
-
-  if (token_hash && type) {
+export async function POST(request: NextRequest) {
+  try {
+    const { code } = await request.json();
     const supabase = await createClient();
 
-    // This method handles the cookie exchange internally
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash,
-    });
+    // Exchange the OAuth code for session
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (!error) {
-      // On success, redirect to the dashboard
-      return NextResponse.redirect(new URL(next, request.url));
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
-    
-    console.error("Auth Error:", error.message);
-  }
 
-  // On failure, redirect to signin with an error message
-  return NextResponse.redirect(new URL("/signin?error=invalid_token", request.url));
+    const user = data?.user;
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found in session" }, { status: 400 });
+    }
+
+    // Return the user to the frontend
+    return NextResponse.json({ user }, { status: 200 });
+  } catch (err: unknown) {
+    console.error(err);
+    return NextResponse.json({ error: "Unexpected server error" }, { status: 500 });
+  }
 }

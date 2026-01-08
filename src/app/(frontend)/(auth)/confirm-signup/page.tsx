@@ -69,13 +69,13 @@ export default function ConfirmSignUp() {
       const { user, error } = await res.json();
       if (error) throw new Error(error);
 
-      // Domain restriction
       if (!user?.email?.endsWith("@student.lvusd.org")) {
         await fetch("/api/v1/auth/signout", { method: "POST" });
         throw new Error(
-          "Please sign in with an @student.lvusd.org account. Your email is: " + (user?.email || "unknown")
+          "Please sign in with an @student.lvusd.org account. Your email is: " + user?.email
         );
       }
+
 
       dispatch({ type: "SUCCESS" });
       router.push("/dashboard");
