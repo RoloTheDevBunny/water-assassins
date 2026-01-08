@@ -1,20 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-
-import { createClient } from "@/libs/supabase/server";
-import AuthService from "@/services/auth";
+import AuthService from "@/services/auth.server"; // server-safe async version
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { email, password } = body;
+    const { email, password } = await request.json();
+    if (!email || !password) {
+      return NextResponse.json({ error: "Email and password are required" }, { status: 400 });
+    }
 
-    const supabase = await createClient();
-    const authService = new AuthService(supabase);
-    const response = await authService.signIn(email, password);
+    // ✅ Use the async factory
+    const authService = await AuthService.create();
+    const user = await authService.signIn(email, password);
 
-    return NextResponse.json({ response }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    return NextResponse.json({ user }, { status: 200 });
+  } catch (error: any) {
+    console.error("Sign-in error:", error);
+    return NextResponse.json(
+      { error: error.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }

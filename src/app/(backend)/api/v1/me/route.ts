@@ -1,18 +1,19 @@
 export const runtime = 'nodejs';
 import { NextResponse } from "next/server";
-
-import { createClient } from "@/libs/supabase/server";
-import AuthService from "@/services/auth";
+import AuthService from "@/services/auth.server"; // server-safe async
 
 export async function GET() {
   try {
-    const supabase = await createClient();
-    const authService = new AuthService(supabase);
+    // ✅ Use async factory to create the service
+    const authService = await AuthService.create();
 
-    const response = await authService.getUser();
-    return NextResponse.json({ ...response }, { status: 200 });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: error }, { status: 500 });
+    const user = await authService.getUser();
+    return NextResponse.json(user ?? {}, { status: 200 });
+  } catch (error: any) {
+    console.error("Get user error:", error);
+    return NextResponse.json(
+      { error: error.message || "Internal server error" },
+      { status: 500 }
+    );
   }
 }

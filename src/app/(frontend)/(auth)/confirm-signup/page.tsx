@@ -1,13 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-
 import { useEffect, useReducer } from "react";
 
 import BackLink from "@/components/v1/BackLink";
 import Spinner from "@/components/v1/Spinner";
 import { useI18n } from "@/contexts/i18nContext";
-import { supabase } from "@/libs/supabase/client";
 
 type State = {
   isLoading: boolean;
@@ -19,12 +17,12 @@ const initialState: State = {
   error: null,
 };
 
-type ConfirmSignupAction =
+type Action =
   | { type: "SUCCESS" }
   | { type: "FAILURE"; error: string }
   | { type: "SET_LOADING"; isLoading: boolean };
 
-function reducer(state: State, action: ConfirmSignupAction): State {
+function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "SUCCESS":
       return { ...state, isLoading: false, error: null };
@@ -43,6 +41,7 @@ export default function ConfirmSignUp() {
   const router = useRouter();
 
   useEffect(() => {
+    // Only runs client-side
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get("code");
 
@@ -54,32 +53,8 @@ export default function ConfirmSignUp() {
         error: translate("errors.missing-token"),
       });
     }
-  }, [handleOAuthCode, translate]);
-
-  async function handleConfirmEmail(token: string) {
-    dispatch({ type: "SET_LOADING", isLoading: true });
-    try {
-      const res = await fetch("/api/v1/auth/confirm-signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
-      const { response, error } = await res.json();
-      if (error) throw new Error(error);
-      if (response?.id) {
-        dispatch({ type: "SUCCESS" });
-        router.push("/dashboard");
-      } else {
-        throw new Error(translate("errors.failed"));
-      }
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        dispatch({ type: "FAILURE", error: err.message });
-      } else {
-        dispatch({ type: "FAILURE", error: translate("errors.unexpected") });
-      }
-    }
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleOAuthCode(code: string) {
     dispatch({ type: "SET_LOADING", isLoading: true });
@@ -89,14 +64,14 @@ export default function ConfirmSignUp() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ code }),
       });
-      const { error } = await res.json();
+
+      const { user, error } = await res.json();
       if (error) throw new Error(error);
 
-      // Check email domain
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user?.email?.endsWith('@student.lvusd.org')) { // Replace '@yourdomain.com' with your specific domain
-        await supabase.auth.signOut();
-        throw new Error('Please sign in with an @student.lvusd.org');
+      // Domain restriction
+      if (!user?.email?.endsWith("@student.lvusd.org")) {
+        await fetch("/api/v1/auth/signout", { method: "POST" });
+        throw new Error("Please sign in with an @student.lvusd.org account");
       }
 
       dispatch({ type: "SUCCESS" });
@@ -113,7 +88,7 @@ export default function ConfirmSignUp() {
   const { isLoading, error } = state;
 
   return (
-    <>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
       {isLoading ? (
         <Spinner />
       ) : error ? (
@@ -121,27 +96,27 @@ export default function ConfirmSignUp() {
       ) : (
         <SuccessMessage />
       )}
-    </>
+    </div>
   );
 }
 
 const ErrorMessage = ({ message }: { message: string }) => (
-  <div className="text-red-600">
-    <h2 className="text-2xl font-semibold text-center">{message}</h2>
+  <div className="text-red-600 text-center">
+    <h2 className="text-2xl font-semibold">{message}</h2>
   </div>
 );
 
 const SuccessMessage = () => {
   const { translate } = useI18n("pages.confirm-signup");
   return (
-    <>
+    <div className="text-center">
       <BackLink href="/dashboard" label={translate("actions.dashboard")} />
-      <h2 className="text-2xl font-semibold text-center text-gray-900">
+      <h2 className="text-2xl font-semibold text-gray-900 mt-4">
         {translate("messages.success.title")}
       </h2>
-      <p className="text-center text-sm text-gray-600">
+      <p className="text-sm text-gray-600 mt-2">
         {translate("messages.success.description")}
       </p>
-    </>
+    </div>
   );
 };

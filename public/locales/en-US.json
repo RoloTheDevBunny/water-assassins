@@ -97,6 +97,13 @@
         "description": "If you have any questions about these terms or our privacy policy, feel free to contact us."
       }
     },
+    "signin": {
+      "title": "Register (NOT WORKING YET)",
+      "description": "Make sure to use your school email to register.",
+      "actions": {
+        "back": "Back"
+      }
+    },
     "signup": {
       "back-to-login": "Back To Login",
       "title": "Register (NOT WORKING YET)",
