@@ -33,46 +33,39 @@ export default async function TeamPage() {
 
   return (
     <div className="space-y-10">
-      {/* Page Header */}
       <section>
-        <h1 className="text-3xl font-bold text-gray-900">Team Management</h1>
-        <p className="text-gray-500 mt-2">Required to join or create a team.</p>
+        <h1 className="text-3xl font-bold text-gray-900">Team</h1>
+        <p className="text-gray-500 mt-2">Join an existing team via invitation or request to start your own.</p>
 
         <div className="mt-6 inline-flex items-center gap-2 px-3 py-1 bg-white border border-gray-200 rounded-full shadow-sm">
           <div className={`w-2 h-2 rounded-full ${isMember ? 'bg-green-500' : 'bg-red-500'}`} />
           <span className="text-[10px] font-black uppercase tracking-widest text-gray-600">
-            Membership: {isMember ? "Active" : "Unpaid"}
+            Status: {isMember ? "Active Member" : "Non-Member"}
           </span>
         </div>
       </section>
 
       {currentTeam ? (
-        /* If user is in a team */
         <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
       ) : (
-        /* If user is looking for a team */
         <div className="grid md:grid-cols-2 gap-12 items-start">
-
-          {/* Left: Invitations */}
           <div className={`space-y-4 ${!isMember ? 'opacity-50 grayscale' : ''}`}>
-            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Pending Invitations</h2>
+            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Invitations</h2>
             <InviteList invitations={invitations || []} isMember={isMember} />
           </div>
 
-          {/* Right: Team Creation */}
           <div className={`space-y-4 ${!isMember ? 'opacity-50 grayscale' : ''}`}>
-            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Start a Team</h2>
+            <h2 className="text-xs font-black uppercase tracking-widest text-gray-400">Create Team</h2>
             {requestRes.data ? (
-              <div className="p-6 bg-white border border-indigo-100 rounded-xl shadow-sm">
-                <p className="text-sm font-medium text-indigo-600 italic">
-                  Request for <span className="font-bold">"{requestRes.data.team_name}"</span> is pending approval.
+              <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm">
+                <p className="text-sm font-medium text-indigo-600">
+                  Request for <span className="font-bold">"{requestRes.data.team_name}"</span> is pending.
                 </p>
               </div>
             ) : (
               <TeamRequestForm isMember={isMember} />
             )}
           </div>
-
         </div>
       )}
     </div>

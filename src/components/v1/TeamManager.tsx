@@ -19,59 +19,47 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
     const fetchMembers = async () => {
       const { data } = await supabase
         .from("team_members")
-        .select(`
-          is_owner,
-          member_id,
-          players:member_id ( name, email )
-        `)
+        .select(`is_owner, member_id, players:member_id ( name, email )`)
         .eq("team_id", teamId);
-      
       if (data) setMembers(data as any);
     };
     fetchMembers();
   }, [teamId]);
 
   const handleKick = async (memberId: string) => {
-    if (!confirm("Are you sure you want to remove this player?")) return;
-
-    // 1. Remove from junction
+    if (!confirm("Remove this player from the team?")) return;
     await supabase.from("team_members").delete().eq("member_id", memberId).eq("team_id", teamId);
-    // 2. Clear player's current team
     await supabase.from("players").update({ team_id: null }).eq("id", memberId);
-    
     setMembers(prev => prev.filter(m => m.member_id !== memberId));
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-      <table className="w-full text-left border-collapse">
-        <thead className="bg-gray-50 border-b">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <table className="w-full text-left">
+        <thead className="bg-gray-50 border-b border-gray-200">
           <tr>
-            <th className="p-4 text-xs font-black uppercase text-gray-400 tracking-widest">Player</th>
-            <th className="p-4 text-xs font-black uppercase text-gray-400 tracking-widest">Role</th>
-            {isOwner && <th className="p-4 text-right text-xs font-black uppercase text-gray-400 tracking-widest">Admin</th>}
+            <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Player</th>
+            <th className="px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Role</th>
+            {isOwner && <th className="px-6 py-3 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100">
+        <tbody className="divide-y divide-gray-200">
           {members.map((m) => (
-            <tr key={m.member_id} className="hover:bg-gray-50 transition-colors">
-              <td className="p-4 font-bold text-gray-800">
-                {m.players?.name || "Anonymous Assassin"}
-                <p className="text-[10px] font-medium text-gray-400 lowercase">{m.players?.email}</p>
+            <tr key={m.member_id}>
+              <td className="px-6 py-4">
+                <div className="text-sm font-bold text-gray-900">{m.players?.name}</div>
+                <div className="text-xs text-gray-500">{m.players?.email}</div>
               </td>
-              <td className="p-4">
-                <span className={`text-[10px] font-black px-2 py-1 rounded tracking-tighter ${m.is_owner ? 'bg-amber-100 text-amber-700' : 'bg-blue-100 text-blue-700'}`}>
-                  {m.is_owner ? 'CAPTAIN' : 'OPERATIVE'}
+              <td className="px-6 py-4">
+                <span className={`inline-flex px-2 py-1 text-[10px] font-bold rounded-md ${m.is_owner ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-blue-50 text-blue-700 border border-blue-200'}`}>
+                  {m.is_owner ? 'LEADER' : 'MEMBER'}
                 </span>
               </td>
               {isOwner && (
-                <td className="p-4 text-right">
+                <td className="px-6 py-4 text-right">
                   {!m.is_owner && (
-                    <button 
-                      onClick={() => handleKick(m.member_id)}
-                      className="text-red-500 hover:text-red-700 text-[10px] font-black uppercase tracking-tighter"
-                    >
-                      Kick
+                    <button onClick={() => handleKick(m.member_id)} className="text-xs font-bold text-red-600 hover:text-red-800">
+                      Remove
                     </button>
                   )}
                 </td>
