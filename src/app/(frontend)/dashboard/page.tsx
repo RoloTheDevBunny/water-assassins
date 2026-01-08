@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import TeamRequestForm from "@/components/v1/TeamRequestForm";
-import { InviteList } from "@/components/v1/InviteList";
+import InviteList from "@/components/v1/InviteList";
 import TeamManager from "@/components/v1/TeamManager";
 
 export default async function TeamPage() {

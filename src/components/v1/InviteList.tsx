@@ -1,7 +1,7 @@
 "use client";
 import { supabase } from "@/libs/supabase/client";
 
-export function InviteList({ invitations, isMember }: { invitations: any[], isMember: boolean }) {
+export default function InviteList({ invitations, isMember }: { invitations: any[], isMember: boolean }) {
   const handleAccept = async (inviteId: string) => {
     if (!isMember) {
       alert("You must pay your membership fee before joining a team.");
@@ -21,7 +21,7 @@ export function InviteList({ invitations, isMember }: { invitations: any[], isMe
       {invitations.map((inv) => (
         <div key={inv.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
           <span className="font-semibold text-sm">{inv.teams.name}</span>
-          <button 
+          <button
             onClick={() => handleAccept(inv.id)}
             className="bg-indigo-600 text-white px-4 py-1 rounded text-xs font-bold hover:bg-indigo-700"
           >
