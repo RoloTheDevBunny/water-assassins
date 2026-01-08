@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-10">
         <div className="p-6">
-          <Link href="/dashboard" className="text-xl font-bold tracking-tight text-gray-900">
+          <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
             Water Assassins
           </Link>
         </div>
