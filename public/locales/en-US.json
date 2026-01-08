@@ -178,8 +178,8 @@
     },
     "team": {
       "plan": {
-        "title": "Current Plan",
-        "description": "You are currently on the {plan} plan."
+        "title": "Account Status",
+        "description": "You can access {plan} information."
       }
     },
     "settings": {
