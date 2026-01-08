@@ -14,17 +14,11 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        // Explicitly type the cookiesToSet parameter
+        // Define the type for the cookiesToSet parameter
         setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
-          // 1. Update request cookies (for the current middleware execution)
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value))
-          
-          // 2. Refresh the response object
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          
-          // 3. Update response cookies (for the browser to save)
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          )
           cookiesToSet.forEach(({ name, value, options }) =>
             supabaseResponse.cookies.set(name, value, options)
           )
@@ -33,16 +27,25 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // This call is essential to refresh the session and prevent loops
+  // This is required for a secure setup
   const { data: { user } } = await supabase.auth.getUser()
 
   const { pathname } = request.nextUrl
   
-  // Protect the Dashboard: Redirect to signin if no user is found
   if (!user && pathname.startsWith('/Dashboard')) {
     const url = request.nextUrl.clone()
     url.pathname = '/signin' 
-    return NextResponse.redirect(url)
+    
+    // Create the redirect response
+    const response = NextResponse.redirect(url)
+
+    // Essential: Copy cookies from the modified response to the redirect response
+    // This is often why "Invalid flow state" occurs—the verifier cookie is lost on redirect.
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      response.cookies.set(cookie.name, cookie.value);
+    });
+
+    return response
   }
 
   return supabaseResponse
