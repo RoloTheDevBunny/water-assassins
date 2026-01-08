@@ -124,11 +124,22 @@ export default function ConfirmSignUp() {
   );
 }
 
-const ErrorMessage = ({ message }: { message: string }) => (
-  <div className="text-red-600 text-center">
-    <h2 className="text-2xl font-semibold">{message}</h2>
-  </div>
-);
+const ErrorMessage = ({ message }: { message: string }) => {
+  const router = useRouter();
+
+  return (
+    <div className="text-red-600 text-center flex flex-col items-center gap-4">
+      <h2 className="text-2xl font-semibold">{message}</h2>
+      <button
+        onClick={() => router.push("/register")}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+      >
+        Go to Register
+      </button>
+    </div>
+  );
+};
+
 
 const SuccessMessage = () => {
   const { translate } = useI18n("pages.confirm-signup");
