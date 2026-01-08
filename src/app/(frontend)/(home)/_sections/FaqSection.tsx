@@ -21,19 +21,19 @@ const FaqSection = () => {
     {
       question: translate('pages.home.sections.faq.items.4.question'),
       answer: translate('pages.home.sections.faq.items.4.answer'),
-    }
-    // {
-    //   question: translate('pages.home.sections.faq.items.5.question'),
-    //   answer: translate('pages.home.sections.faq.items.5.answer'),
-    // },
-    // {
-    //   question: translate('pages.home.sections.faq.items.6.question'),
-    //   answer: translate('pages.home.sections.faq.items.6.answer'),
-    // },
-    // {
-    //   question: translate('pages.home.sections.faq.items.7.question'),
-    //   answer: translate('pages.home.sections.faq.items.7.answer'),
-    // },
+    },
+    {
+      question: translate('pages.home.sections.faq.items.5.question'),
+      answer: translate('pages.home.sections.faq.items.5.answer'),
+    },
+    {
+      question: translate('pages.home.sections.faq.items.6.question'),
+      answer: translate('pages.home.sections.faq.items.6.answer'),
+    },
+    {
+      question: translate('pages.home.sections.faq.items.7.question'),
+      answer: translate('pages.home.sections.faq.items.7.answer'),
+    },
   ];
 
   return (
