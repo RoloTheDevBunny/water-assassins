@@ -6,14 +6,14 @@
         "hero": {
           "title": "AHS Water Assassins 2026 (unaffiliated)",
           "description": "I'm still working on this so ignore everything here.",
-          "button": "Register"
+          "button": "Sign In"
         },
         "how": {
           "title": "How It Works",
           "description": "Create an account and join a team.",
           "options": {
             "first": {
-              "title": "Sign Up",
+              "title": "Sign In",
               "description": "Create an account and set up your profile."
             },
             "second": {
@@ -21,7 +21,7 @@
               "description": "Get into a group of 2-5 people."
             },
             "third": {
-              "title": "Register",
+              "title": "Sign In",
               "description": "The team leader pays through Stripe."
             }
           }
@@ -110,16 +110,16 @@
       }
     },
     "signin": {
-      "title": "Register",
-      "description": "Make sure to use your school email to register.",
+      "title": "Sign In",
+      "description": "Make sure to use your school email to sign in.",
       "actions": {
         "back": "Back"
       }
     },
     "signup": {
       "back-to-login": "Back To Login",
-      "title": "Register",
-      "description": "Make sure to use your school email to register.",
+      "title": "Sign In",
+      "description": "Make sure to use your school email to sign in.",
       "inputs": {
         "email": "Email",
         "password": "Password",
@@ -127,7 +127,7 @@
         "terms": "I accept the Terms and Privacy Policy"
       },
       "actions": {
-        "submit": "Sign Up",
+        "submit": "Sign In",
         "success": "Please check your inbox for an email to complete the process."
       },
       "errors": {
@@ -170,7 +170,7 @@
       "pricing": "Payouts",
       "faq": "FAQ",
       "signin": "Sign In",
-      "try": "Register",
+      "try": "Sign In",
       "dashboard": "Dashboard"
     },
     "pricing": {
