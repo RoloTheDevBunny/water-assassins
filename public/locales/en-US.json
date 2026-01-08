@@ -176,48 +176,6 @@
         "unexpected": "An unexpected error occurred."
       }
     },
-    "new-password": {
-      "title": "Create a New Password",
-      "description": "Set your new password to continue",
-      "inputs": {
-        "password": "Password",
-        "confirm-password": "Confirm Password"
-      },
-      "actions": {
-        "submit": "Change Password",
-        "dashboard": "Back To Dashboard",
-        "signin": "Back To SignIn",
-        "success": "Your password has been changed successfully!"
-      },
-      "errors": {
-        "missing-token": "Invalid or missing token.",
-        "password-valid": "Password must be at least 6 characters long.",
-        "password-match": "Passwords do not match.",
-        "general": "Failed to change the password. Please try again.",
-        "unexpected": "Something went wrong. Please try again."
-      }
-    },
-    "payments": {
-      "status": {
-        "success": {
-          "title": "Purchase Confirmed",
-          "description": "Your purchase has been successfully confirmed."
-        },
-        "cancel": {
-          "title": "Purchase Cancelled",
-          "description": "Your purchase has been cancelled."
-        },
-        "unknown": {
-          "title": "Unknown Status",
-          "description": "The status of your purchase is unknown."
-        }
-      },
-      "actions": {
-        "billing": "Back To Billing",
-        "settings": "Back To Settings",
-        "home": "Back To Home"
-      }
-    },
     "team": {
       "plan": {
         "title": "Current Plan",
@@ -346,9 +304,6 @@
     "settings-options": {
       "plan": "Current Plan",
       "team": "Manage Team",
-      "actions": {
-        "change-password": "Change Password"
-      },
       "toast": {
         "success": {
           "title": "Password Change Request Sent!",

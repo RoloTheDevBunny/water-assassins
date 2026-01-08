@@ -46,25 +46,6 @@ function SettingsOptions({ userEmail, currentPlan }: SettingsOptionsProps) {
 
   return (
     <div className="space-y-6">
-      {userEmail && (
-        <div className="flex justify-between items-start">
-          <div className="max-w-md">
-            <h2 className="text-lg font-medium text-gray-700">
-              {translate("actions.change-password")}
-            </h2>
-          </div>
-          <a>
-            <ButtonComponent
-              isLoading={isLoading.forgotPassword}
-              onClick={() => handleForgotPassword(userEmail)}
-              type="button"
-              variant="outlined"
-            >
-              {translate("actions.change-password")}
-            </ButtonComponent>
-          </a>
-        </div>
-      )}
       <div className="flex justify-between items-start">
         <div className="max-w-md">
           <h2 className="text-lg font-medium text-gray-700">
