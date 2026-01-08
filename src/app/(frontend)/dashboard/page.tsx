@@ -1,8 +1,10 @@
-// src/app/dashboard/page.tsx
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import TeamRequestForm from "@/components/v1/TeamRequestForm";
+import { InviteList } from "@/components/v1/InviteList";
+import TeamManager from "@/components/v1/TeamManager";
 
-export default async function DashboardOverview() {
+export default async function TeamPage() {
   const cookieStore = await cookies();
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,48 +13,53 @@ export default async function DashboardOverview() {
   );
 
   const { data: { user } } = await supabase.auth.getUser();
-  const { data: player } = await supabase
-    .from("players")
+
+  const [playerRes, requestRes, membershipRes] = await Promise.all([
+    supabase.from("players").select("*").eq("id", user?.id).single(),
+    supabase.from("team_requests").select("*").eq("user_id", user?.id).eq("is_approved", false).maybeSingle(),
+    supabase.from("team_members").select("*, teams(*)").eq("member_id", user?.id).maybeSingle()
+  ]);
+
+  const isMember = playerRes.data?.is_member ?? false;
+  const currentTeam = membershipRes.data?.teams;
+  const isOwner = membershipRes.data?.is_owner ?? false;
+
+  const { data: invitations } = await supabase
+    .from("invitations")
     .select("*, teams(name)")
-    .eq("id", user?.id)
-    .single();
+    .eq("invited_player_id", user?.id)
+    .eq("status", "pending");
 
   return (
     <div className="space-y-8">
-      <div className="flex justify-between items-end">
-        <h1 className="text-4xl font-black uppercase italic tracking-tighter text-gray-900">
-          Agent Briefing
-        </h1>
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-[0.3em]">
-          ID: {user?.id?.slice(0, 8)}...
-        </p>
-      </div>
+      <header>
+        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Team Management</h1>
+        <p className="text-slate-500">Manage your current team or create a new one to participate.</p>
+      </header>
 
-      <div className="grid grid-cols-3 gap-6">
-        {/* Membership Status */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Membership</p>
-          <p className={`text-xl font-bold ${player?.is_member ? 'text-green-600' : 'text-red-600'}`}>
-            {player?.is_member ? 'ACTIVE DUTY' : 'UNPAID'}
-          </p>
+      {currentTeam ? (
+        <div className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm">
+          <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
         </div>
+      ) : (
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className={`p-8 bg-white rounded-3xl border border-slate-100 shadow-sm ${!isMember ? 'opacity-50 grayscale' : ''}`}>
+            <h3 className="text-lg font-bold text-slate-900 mb-6">Invitations</h3>
+            <InviteList invitations={invitations || []} isMember={isMember} />
+          </div>
 
-        {/* Team Status */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Current Unit</p>
-          <p className="text-xl font-bold text-gray-900 uppercase">
-            {player?.teams?.name || 'LONE WOLF'}
-          </p>
+          <div className={`p-8 bg-white rounded-3xl border border-slate-100 shadow-sm ${!isMember ? 'opacity-50 grayscale' : ''}`}>
+            <h3 className="text-lg font-bold text-slate-900 mb-6">Create a Team</h3>
+            {requestRes.data ? (
+              <div className="bg-indigo-50 p-6 rounded-2xl text-indigo-700 font-medium border border-indigo-100 text-sm">
+                Your request for "{requestRes.data.team_name}" is currently being reviewed.
+              </div>
+            ) : (
+              <TeamRequestForm isMember={isMember} />
+            )}
+          </div>
         </div>
-
-        {/* Join Date */}
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-          <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Enlisted</p>
-          <p className="text-xl font-bold text-gray-900 uppercase">
-            {new Date(player?.created_at).toLocaleDateString()}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
