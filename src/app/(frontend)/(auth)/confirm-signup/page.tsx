@@ -59,6 +59,7 @@ export default function ConfirmSignUp() {
   async function handleOAuthCode(code: string) {
     dispatch({ type: "SET_LOADING", isLoading: true });
     try {
+      // Call server route to exchange OAuth code and return user
       const res = await fetch("/api/v1/auth/oauth/callback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -71,7 +72,9 @@ export default function ConfirmSignUp() {
       // Domain restriction
       if (!user?.email?.endsWith("@student.lvusd.org")) {
         await fetch("/api/v1/auth/signout", { method: "POST" });
-        throw new Error("Please sign in with an @student.lvusd.org account. Your email is: " + user?.email);
+        throw new Error(
+          "Please sign in with an @student.lvusd.org account. Your email is: " + (user?.email || "unknown")
+        );
       }
 
       dispatch({ type: "SUCCESS" });
