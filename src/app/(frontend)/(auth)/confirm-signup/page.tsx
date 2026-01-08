@@ -71,7 +71,7 @@ export default function ConfirmSignUp() {
       // Domain restriction
       if (!user?.email?.endsWith("@student.lvusd.org")) {
         await fetch("/api/v1/auth/signout", { method: "POST" });
-        throw new Error("Please sign in with an @student.lvusd.org account");
+        throw new Error("Please sign in with an @student.lvusd.org account. Your email is: " + user?.email);
       }
 
       dispatch({ type: "SUCCESS" });
