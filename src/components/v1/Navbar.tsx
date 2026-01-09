@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { GetMeBridge } from "@/bridges/getMe";
 import { useI18n } from "@/contexts/i18nContext";
-import LanguageSelector from "./LanguageSelector";
 import Spinner from "./Spinner";
 
 export default function Navbar() {
@@ -61,8 +60,6 @@ export default function Navbar() {
 
         {/* Action Buttons */}
         <div className="hidden md:flex items-center space-x-6">
-          <LanguageSelector />
-
           {isLoading ? (
             <Spinner />
           ) : !isLogged ? (
