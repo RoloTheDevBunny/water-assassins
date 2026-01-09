@@ -40,7 +40,7 @@ export default async function PaymentOverview() {
         <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
           <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Team Registration</p>
           <p className={`text-3xl font-black mt-2 ${hasPendingRequest ? 'text-blue-700' : 'text-slate-400'}`}>
-            {hasPendingRequest ? "$10.00 DUE" : "$0.00"}
+            {hasPendingRequest ? "$0.00 DUE" : "$0.00"}
           </p>
         </div>
       </div>
