@@ -11,8 +11,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       </div>
 
       <div className="flex flex-1">
-        {/* 2. Sidebar (Adjusted top to account for Navbar height) */}
-        <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-[calc(100vh-64px)] z-10">
+        {/* 2. Sidebar: hidden on mobile (hidden), shown on tablet/desktop (md:flex) */}
+        <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 flex-col fixed h-[calc(100vh-64px)] z-10">
           <nav className="flex-1 px-4 py-4 space-y-1">
             <Link
               href="/dashboard"
@@ -42,12 +42,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </aside>
 
         {/* 3. Main Content Area */}
-        {/* Added ml-64 to offset the fixed sidebar */}
-        <main className="flex-1 ml-64 min-h-screen">
-          <div className="max-w-4xl mx-auto px-6 py-12">
+        {/* Changed ml-64 to md:ml-64 so it only offsets on larger screens */}
+        <main className="flex-1 md:ml-64 min-h-screen w-full overflow-x-hidden">
+          <div className="max-w-5xl mx-auto px-4 py-8 md:px-8 md:py-12">
             {children}
           </div>
         </main>
+      </div>
+
+      {/* 4. Mobile Bottom Navigation (Optional but recommended for mobile UX) */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 flex justify-around z-50">
+        <Link href="/dashboard" className="text-xs font-bold uppercase text-slate-500">Overview</Link>
+        <Link href="/dashboard/team" className="text-xs font-bold uppercase text-slate-500">Team</Link>
+        <Link href="/dashboard/settings" className="text-xs font-bold uppercase text-slate-500">Settings</Link>
       </div>
     </div>
   );
