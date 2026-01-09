@@ -35,15 +35,20 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
     setLoading(true);
 
     try {
-      // 1. Find the player by email
+      // 1. Find the player and check if they are already on a team
       const { data: player, error: playerError } = await supabase
         .from("players")
-        .select("id")
+        .select("id, team_id")
         .eq("email", inviteEmail)
         .single();
 
       if (playerError || !player) {
         alert("Player not found with that email.");
+        return;
+      }
+
+      if (player.team_id) {
+        alert("This player is already on a team.");
         return;
       }
 
@@ -56,14 +61,16 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
           status: 'pending'
         });
 
-      if (inviteError) throw inviteError;
+      if (inviteError) {
+        console.error("Supabase Error:", inviteError.message);
+        throw inviteError;
+      }
 
       alert("Invite sent!");
       setInviteEmail("");
       setIsInviteOpen(false);
     } catch (err) {
-      console.error(err);
-      alert("Error sending invitation.");
+      alert("Check the console for the specific database error.");
     } finally {
       setLoading(false);
     }
