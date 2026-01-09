@@ -41,10 +41,10 @@ export default function Navbar() {
         </a>
 
         <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center space-x-6">
-          <a href="#pricing" className="text-gray-600 hover:text-indigo-600">
+          <a href="/#pricing" className="text-gray-600 hover:text-indigo-600">
             {translate("components.navbar.pricing")}
           </a>
-          <a href="#faq" className="text-gray-600 hover:text-indigo-600">
+          <a href="/#faq" className="text-gray-600 hover:text-indigo-600">
             {translate("components.navbar.faq")}
           </a>
         </nav>
