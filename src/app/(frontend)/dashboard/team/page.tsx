@@ -71,7 +71,7 @@ export default async function TeamPage() {
                 </div>
               </div>
               {!isMember && (
-                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Pay membership fee to accept invites</p>
+                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Membership required to accept invites</p>
               )}
             </div>
 
@@ -92,7 +92,7 @@ export default async function TeamPage() {
                 )}
               </div>
               {!isMember && (
-                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Pay membership fee to create a team</p>
+                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Membership required to create a team</p>
               )}
             </div>
           </div>
