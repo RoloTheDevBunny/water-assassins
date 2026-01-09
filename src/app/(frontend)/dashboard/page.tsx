@@ -4,6 +4,9 @@ import TeamManager from "@/components/v1/TeamManager";
 import TeamRequestForm from "@/components/v1/TeamRequestForm";
 import InviteList from "@/components/v1/InviteList";
 
+// This ensures the dashboard doesn't show old cached data from Supabase
+export const revalidate = 0;
+
 export default async function DashboardOverview() {
   const cookieStore = await cookies();
   const supabase = createServerClient(
@@ -14,7 +17,6 @@ export default async function DashboardOverview() {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Unified data fetch for the Overview
   const [playerRes, membershipRes, requestRes] = await Promise.all([
     supabase.from("players").select("*").eq("id", user?.id).single(),
     supabase.from("team_members").select("*, teams(*)").eq("member_id", user?.id).maybeSingle(),
@@ -25,7 +27,6 @@ export default async function DashboardOverview() {
   const currentTeam = membershipRes.data?.teams;
   const isOwner = membershipRes.data?.is_owner ?? false;
 
-  // Fetch invitations if they aren't on a team yet
   const { data: invitations } = await supabase
     .from("invitations")
     .select("*, teams(name)")
@@ -33,108 +34,118 @@ export default async function DashboardOverview() {
     .eq("status", "pending");
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-10 max-w-6xl mx-auto pb-20">
       {/* Welcome Header */}
       <section>
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-2">Welcome back, {playerRes.data?.name || 'Player'}.</p>
+        <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Dashboard</h1>
+        <p className="text-gray-600 mt-2 text-lg">
+          Welcome back, <span className="font-semibold text-indigo-600">{playerRes.data?.name || 'Player'}</span>.
+        </p>
       </section>
 
-      {/* Quick Stats Grid */}
+      {/* Quick Stats Grid - High Contrast */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-sm">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Membership Status</p>
-          <div className="mt-2 flex items-center gap-2">
-            <span className={`text-xl font-bold ${isMember ? 'text-green-600' : 'text-red-600'}`}>
-              {isMember ? "Active" : "Unpaid"}
+          <div className="mt-3 flex items-center gap-3">
+            <div className={`h-3 w-3 rounded-full ${isMember ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+            <span className={`text-2xl font-black ${isMember ? 'text-green-700' : 'text-red-700'}`}>
+              {isMember ? "Active Member" : "Action Required"}
             </span>
           </div>
           {!isMember && (
-            <p className="text-sm text-gray-500 mt-1">Visit settings to complete your membership.</p>
+            <p className="text-sm text-gray-500 mt-2 bg-red-50 p-2 rounded-lg border border-red-100">
+              Your account is currently unpaid. Please visit settings to join the league.
+            </p>
           )}
         </div>
 
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div className="bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-sm">
           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Team Association</p>
-          <p className="text-xl font-bold text-gray-900 mt-2">
-            {currentTeam?.name || "No Team Assigned"}
+          <p className="text-2xl font-black text-gray-900 mt-3">
+            {currentTeam?.name || "Free Agent"}
           </p>
+          <p className="text-sm text-gray-500 mt-1">{currentTeam ? "Playing for " + currentTeam.name : "You are not on a team yet."}</p>
         </div>
       </div>
 
       <hr className="border-gray-200" />
 
       {/* Main Action Area */}
-      <div>
+      <section>
         {currentTeam ? (
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-800">Your Team Roster</h2>
+          <div className="bg-white p-8 rounded-3xl border-2 border-gray-100 shadow-sm space-y-6">
+            <div className="border-b border-gray-100 pb-4">
+              <h2 className="text-2xl font-bold text-gray-800">Team Roster</h2>
+              <p className="text-gray-500 text-sm">Manage your teammates and starting lineup.</p>
+            </div>
             <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            <div className="space-y-4">
-              <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Invitations</h2>
-              <div className={!isMember ? 'opacity-50 grayscale pointer-events-none' : ''}>
+            {/* Invitations Card */}
+            <div className="bg-white p-8 rounded-3xl border-2 border-gray-100 shadow-sm space-y-6">
+              <h2 className="text-xl font-bold text-gray-900">Pending Invitations</h2>
+              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
                 <InviteList invitations={invitations || []} isMember={isMember} />
               </div>
             </div>
 
-            <div className="space-y-4">
-              <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Request a Team</h2>
-              <div className={!isMember ? 'opacity-50 grayscale pointer-events-none' : ''}>
+            {/* Request a Team Card */}
+            <div className="bg-white p-8 rounded-3xl border-2 border-gray-100 shadow-sm space-y-6">
+              <h2 className="text-xl font-bold text-gray-900">Start a Team</h2>
+              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
                 {requestRes.data ? (
-                  <div className="p-6 bg-white border border-gray-200 rounded-xl shadow-sm">
-                    <p className="text-sm font-medium text-indigo-600">
-                      Request for <span className="font-bold">"{requestRes.data.team_name}"</span> is currently pending approval.
+                  <div className="p-6 bg-indigo-50 border-2 border-indigo-100 rounded-2xl">
+                    <p className="text-indigo-900 font-medium">
+                      Your request for <span className="font-bold underline">"{requestRes.data.team_name}"</span> is currently being reviewed by admins.
                     </p>
                   </div>
                 ) : (
+                  /* Note: Ensure TeamRequestForm.tsx uses:
+                     - text-gray-900 for input text
+                     - bg-gray-50 for input backgrounds
+                  */
                   <TeamRequestForm isMember={isMember} />
                 )}
               </div>
+              {!isMember && (
+                <p className="text-xs text-center text-red-500 font-semibold italic">
+                  Membership required to join or create teams.
+                </p>
+              )}
             </div>
           </div>
         )}
-      </div>
+      </section>
 
-      {/* DEBUG BOX */}
-      <section className="mt-20">
-        <div className="bg-gray-900 rounded-xl p-6 overflow-hidden border border-gray-800 shadow-2xl">
-          <div className="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
-            <h3 className="text-xs font-mono font-bold text-yellow-500 uppercase tracking-widest">
-              Developer Debug Tool
+      {/* DEBUG BOX - Isolated Dark Section */}
+      <section className="mt-32">
+        <div className="bg-slate-950 rounded-3xl p-8 overflow-hidden shadow-2xl border border-slate-800">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-2 w-2 bg-yellow-400 rounded-full animate-ping" />
+            <h3 className="text-sm font-mono font-bold text-yellow-500 uppercase tracking-[0.2em]">
+              System Debugger
             </h3>
-            <span className="text-[10px] text-gray-500 font-mono">Server-side Data Trace</span>
           </div>
 
-          <div className="space-y-6">
-            <div>
-              <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Auth User Object</p>
-              <pre className="text-xs text-green-400 bg-black/40 p-3 rounded overflow-auto max-h-60 custom-scrollbar">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 font-mono">
+            <div className="space-y-2">
+              <p className="text-[10px] text-slate-500 uppercase">Supabase Auth User</p>
+              <pre className="text-[11px] text-emerald-400 bg-slate-900/50 p-4 rounded-xl border border-slate-800 h-64 overflow-auto custom-scrollbar">
                 {JSON.stringify(user, null, 2)}
               </pre>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Table: players</p>
-                <pre className="text-xs text-blue-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
-                  {JSON.stringify(playerRes.data, null, 2)}
-                </pre>
-              </div>
-              <div>
-                <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Table: team_members</p>
-                <pre className="text-xs text-blue-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
-                  {JSON.stringify(membershipRes.data, null, 2)}
-                </pre>
-              </div>
+            <div className="space-y-2">
+              <p className="text-[10px] text-slate-500 uppercase">Database: Players</p>
+              <pre className="text-[11px] text-sky-400 bg-slate-900/50 p-4 rounded-xl border border-slate-800 h-64 overflow-auto">
+                {JSON.stringify(playerRes.data, null, 2)}
+              </pre>
             </div>
-
-            <div>
-              <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Invitations & Requests</p>
-              <pre className="text-xs text-purple-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
-                {JSON.stringify({ invitations, pendingRequest: requestRes.data }, null, 2)}
+            <div className="space-y-2">
+              <p className="text-[10px] text-slate-500 uppercase">Database: Team Info</p>
+              <pre className="text-[11px] text-purple-400 bg-slate-900/50 p-4 rounded-xl border border-slate-800 h-64 overflow-auto">
+                {JSON.stringify({ membership: membershipRes.data, requests: requestRes.data }, null, 2)}
               </pre>
             </div>
           </div>
