@@ -51,7 +51,7 @@ export default async function DashboardOverview() {
           </p>
           {!isMember && (
             <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
-              Payment required to access team features.
+              Membership required to access team features.
             </p>
           )}
         </div>
@@ -75,12 +75,17 @@ export default async function DashboardOverview() {
           <div className="grid md:grid-cols-2 gap-8 items-start">
             {/* Invitations Section */}
             <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Invitations</h2>
+              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Team Invites</h2>
               <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
                 <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
                   <InviteList invitations={invitations || []} isMember={isMember} />
                 </div>
               </div>
+              {!isMember && (
+                <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
+                  Membership required to access team features.
+                </p>
+              )}
             </div>
           </div>
         )}
@@ -102,6 +107,11 @@ export default async function DashboardOverview() {
                   {/* <InviteList invitations={invitations || []} isMember={isMember} /> */}
                 </div>
               </div>
+              {!isMember && (
+                <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
+                  Membership required to recieve targets.
+                </p>
+              )}
             </div>
           </div>
         )}
