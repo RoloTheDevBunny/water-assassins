@@ -97,6 +97,8 @@ export default async function DashboardOverview() {
             </div>
           </div>
         )}
+        Debug:
+        JSON.stringify(playerRes.data)
       </div>
     </div>
   );
