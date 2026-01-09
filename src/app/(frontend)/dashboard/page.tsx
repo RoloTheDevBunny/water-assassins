@@ -45,86 +45,75 @@ export default async function DashboardOverview() {
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
       {/* Header Area */}
       <section>
-        <h1 className="text-4xl font-black tracking-tight text-slate-900">DASHBOARD</h1>
+        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Dashboard</h1>
         <p className="text-slate-600 font-bold mt-1">Player: {playerRes.data?.name || 'User'}</p>
       </section>
 
-      {/* Top Stats: High Contrast Slate-200 Boxes */}
+      {/* Primary Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-slate-200 p-8 rounded-2xl border-2 border-slate-300 shadow-sm">
-          <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Membership Status</p>
-          <p className={`text-3xl font-black mt-2 ${isMember ? 'text-green-700' : 'text-red-600'}`}>
-            {isMember ? "ACTIVE" : "UNPAID"}
-          </p>
+
+        {/* Card 1: Membership */}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm flex flex-col justify-between">
+          <div>
+            <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Membership Status</p>
+            <p className={`text-3xl font-black mt-2 ${isMember ? 'text-green-700' : 'text-red-600'}`}>
+              {isMember ? "ACTIVE" : "UNPAID"}
+            </p>
+          </div>
           {!isMember && (
-            <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
+            <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">
               Membership required to access team features.
             </p>
           )}
         </div>
 
-        <div className="bg-slate-200 p-8 rounded-2xl border-2 border-slate-300 shadow-sm">
+        {/* Card 2: Team Name */}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
           <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Team Name</p>
           <p className="text-3xl font-black text-slate-900 mt-2 uppercase">
             {currentTeam?.name || "NONE"}
           </p>
         </div>
+
+        {/* Card 3: Team Invites or Roster */}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+          <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">
+            {currentTeam ? "Your Roster" : "Team Invites"}
+          </h2>
+          <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
+            <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed min-h-[120px] flex items-center justify-center text-center">
+              {currentTeam ? (
+                <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
+              ) : (
+                <InviteList invitations={invitations || []} isMember={isMember} />
+              )}
+            </div>
+          </div>
+          {!isMember && (
+            <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">
+              Membership required to access team features.
+            </p>
+          )}
+        </div>
+
+        {/* Card 4: Targets */}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+          <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
+          <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
+            <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed min-h-[120px] flex items-center justify-center text-center">
+              <TargetList targets={targets || []} isMember={isMember} />
+            </div>
+          </div>
+          {!isMember && (
+            <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">
+              Membership required to receive targets.
+            </p>
+          )}
+        </div>
+
       </div>
 
-      {/* Main Content Sections */}
-      <section>
-        {currentTeam ? (
-          <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300">
-            <h2 className="text-2xl font-black text-slate-900 mb-6 uppercase border-b-2 border-slate-300 pb-2">Your Roster</h2>
-            <TeamManager teamId={currentTeam.id} isOwner={isOwner} />
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Invitations Section */}
-            <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Team Invites</h2>
-              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
-                <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
-                  <InviteList invitations={invitations || []} isMember={isMember} />
-                </div>
-              </div>
-              {!isMember && (
-                <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
-                  Membership required to access team features.
-                </p>
-              )}
-            </div>
-          </div>
-        )}
-      </section>
-
-      <section>
-        {currentTeam ? (
-          <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300">
-            <h2 className="text-2xl font-black text-slate-900 mb-6 uppercase border-b-2 border-slate-300 pb-2">Your Targets</h2>
-            {/* <TeamManager teamId={currentTeam.id} isOwner={isOwner} /> */}
-          </div>
-        ) : (
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Invitations Section */}
-            <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
-              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
-                <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
-                  <TargetList targets={targets || []} isMember={isMember} />
-                </div>
-              </div>
-              {!isMember && (
-                <p className="text-xs font-bold text-red-500 mt-2 bg-red-100 p-2 rounded border border-red-200">
-                  Membership required to recieve targets.
-                </p>
-              )}
-            </div>
-          </div>
-        )}
-      </section>
-
-      {/* Collapsible Debug Tool - Keeps the main site clean */}
+      {/* Developer Trace stays outside the grid */}
       <details className="mt-24 border-t border-slate-300 pt-8">
         <summary className="text-xs font-mono font-bold text-slate-400 cursor-pointer hover:text-slate-600 uppercase tracking-widest">
           Developer Trace
