@@ -82,26 +82,26 @@ export default async function DashboardOverview() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+      </section>
 
-            {/* Create Team Section */}
+      <section>
+        {currentTeam ? (
+          <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300">
+            <h2 className="text-2xl font-black text-slate-900 mb-6 uppercase border-b-2 border-slate-300 pb-2">Your Targets</h2>
+            {/* <TeamManager teamId={currentTeam.id} isOwner={isOwner} /> */}
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Invitations Section */}
             <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Create Team</h2>
+              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
               <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
-                {requestRes.data ? (
-                  <div className="p-6 bg-blue-100 border-2 border-blue-200 rounded-xl">
-                    <p className="text-blue-900 font-black italic uppercase">
-                      Request Pending: "{requestRes.data.team_name}"
-                    </p>
-                  </div>
-                ) : (
-                  <div className="bg-white p-6 rounded-2xl border-2 border-slate-300 shadow-md">
-                    <TeamRequestForm isMember={isMember} />
-                  </div>
-                )}
+                <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
+                  {/* <InviteList invitations={invitations || []} isMember={isMember} /> */}
+                </div>
               </div>
-              {!isMember && (
-                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Pay membership fee to create a team</p>
-              )}
             </div>
           </div>
         )}
