@@ -73,7 +73,6 @@ export default async function DashboardOverview() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Components utilized here */}
             <div className="space-y-4">
               <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Invitations</h2>
               <div className={!isMember ? 'opacity-50 grayscale pointer-events-none' : ''}>
@@ -97,9 +96,50 @@ export default async function DashboardOverview() {
             </div>
           </div>
         )}
-        Debug:
-        JSON.stringify(playerRes.data)
       </div>
+
+      {/* DEBUG BOX */}
+      <section className="mt-20">
+        <div className="bg-gray-900 rounded-xl p-6 overflow-hidden border border-gray-800 shadow-2xl">
+          <div className="flex items-center justify-between mb-4 border-b border-gray-700 pb-2">
+            <h3 className="text-xs font-mono font-bold text-yellow-500 uppercase tracking-widest">
+              Developer Debug Tool
+            </h3>
+            <span className="text-[10px] text-gray-500 font-mono">Server-side Data Trace</span>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Auth User Object</p>
+              <pre className="text-xs text-green-400 bg-black/40 p-3 rounded overflow-auto max-h-60 custom-scrollbar">
+                {JSON.stringify(user, null, 2)}
+              </pre>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Table: players</p>
+                <pre className="text-xs text-blue-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
+                  {JSON.stringify(playerRes.data, null, 2)}
+                </pre>
+              </div>
+              <div>
+                <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Table: team_members</p>
+                <pre className="text-xs text-blue-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
+                  {JSON.stringify(membershipRes.data, null, 2)}
+                </pre>
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] text-gray-400 font-mono mb-1 uppercase tracking-tighter">Invitations & Requests</p>
+              <pre className="text-xs text-purple-300 bg-black/40 p-3 rounded overflow-auto max-h-40">
+                {JSON.stringify({ invitations, pendingRequest: requestRes.data }, null, 2)}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
