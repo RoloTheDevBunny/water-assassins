@@ -116,9 +116,6 @@ export default function Navbar() {
                 </a>
               )}
             </div>
-            <div className="flex justify-center pt-4">
-              <LanguageSelector />
-            </div>
           </nav>
         </div>
       )}
