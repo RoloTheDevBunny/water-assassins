@@ -83,14 +83,14 @@ export default async function DashboardOverview() {
               </div>
             </div>
 
-            {/* Request Team Section */}
+            {/* Create Team Section */}
             <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Request a Team</h2>
+              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Create Team</h2>
               <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
                 {requestRes.data ? (
                   <div className="p-6 bg-blue-100 border-2 border-blue-200 rounded-xl">
                     <p className="text-blue-900 font-black italic uppercase">
-                      Pending Approval: "{requestRes.data.team_name}"
+                      Request Pending: "{requestRes.data.team_name}"
                     </p>
                   </div>
                 ) : (
@@ -99,6 +99,9 @@ export default async function DashboardOverview() {
                   </div>
                 )}
               </div>
+              {!isMember && (
+                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Pay membership fee to create a team</p>
+              )}
             </div>
           </div>
         )}
