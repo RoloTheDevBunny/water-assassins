@@ -14,15 +14,15 @@
           "options": {
             "first": {
               "title": "Sign In",
-              "description": "Create an account and set up your profile."
+              "description": "Use your school email to create an account."
             },
             "second": {
-              "title": "Make A Team",
-              "description": "Get into a group of 2-5 people."
+              "title": "Pay",
+              "description": "Pay the individual membership fee, team fee if you are making your own."
             },
             "third": {
-              "title": "Sign In",
-              "description": "The team leader pays through Stripe."
+              "title": "Play",
+              "description": "Invite your team members and get your targets."
             }
           }
         },
