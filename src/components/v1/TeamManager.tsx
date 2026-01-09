@@ -88,40 +88,76 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
   };
 
   return (
-    <div className="relative w-full bg-white border border-gray-200 rounded-xl overflow-hidden">
+    <div className="relative w-full bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm min-h-[300px]">
       <div className="flex justify-between items-center px-6 py-4 border-b border-gray-100">
-        <h3 className="text-xs font-black text-slate-900 uppercase">Roster</h3>
+        <h3 className="text-xs font-black text-slate-900 uppercase tracking-tight">Roster</h3>
         {isOwner && (
-          <button onClick={() => setIsInviteOpen(true)} className="p-1.5 bg-indigo-600 text-white rounded-lg">
+          <button
+            onClick={() => setIsInviteOpen(true)}
+            className="p-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+          >
             <PlusIcon className="w-4 h-4" />
           </button>
         )}
       </div>
 
+      {/* FIXED FORM LOGIC OVERLAY */}
       {isInviteOpen && (
-        <div className="absolute inset-0 z-30 bg-white p-6 flex flex-col justify-center">
-          {/* ... Form Logic Same as Previous Response ... */}
+        <div className="absolute inset-0 z-30 bg-white p-6 flex flex-col justify-center animate-in fade-in zoom-in duration-200">
+          <div className="flex justify-between items-center mb-4">
+            <h4 className="font-bold text-slate-900 uppercase text-sm">Invite Player</h4>
+            <button onClick={() => setIsInviteOpen(false)}>
+              <XMarkIcon className="w-5 h-5 text-slate-400" />
+            </button>
+          </div>
+          <form onSubmit={handleInvite} className="space-y-4">
+            <input
+              type="email"
+              placeholder="Enter player email..."
+              required
+              className="w-full p-3 rounded-xl border border-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+              value={inviteEmail}
+              onChange={(e) => setInviteEmail(e.target.value)}
+            />
+            <button
+              disabled={loading}
+              className="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold text-sm hover:bg-indigo-700 disabled:opacity-50 transition-all"
+            >
+              {loading ? "CHECKING..." : "SEND INVITATION"}
+            </button>
+          </form>
         </div>
       )}
 
       <div className="overflow-x-auto">
         <table className="w-full text-left">
           <tbody className="divide-y divide-gray-200">
-            {roster.map((person) => (
-              <tr key={person.id} className="hover:bg-slate-50">
-                <td className="px-6 py-4">
-                  <div className="text-sm font-black text-gray-900">{person.name}</div>
-                  <div className="text-[10px] text-gray-400">{person.email}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <span className={`inline-flex px-2 py-0.5 text-[9px] font-black rounded border ${person.status === 'invited' ? 'bg-slate-100 text-slate-500 border-slate-200' :
-                    person.role === 'LEADER' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-blue-50 text-blue-700 border-blue-200'
-                    }`}>
-                    {person.role}
-                  </span>
+            {roster.length > 0 ? (
+              roster.map((person) => (
+                <tr key={person.id} className="hover:bg-slate-50 transition-colors">
+                  <td className="px-6 py-4">
+                    <div className="text-sm font-black text-gray-900 leading-none">{person.name}</div>
+                    <div className="text-[10px] text-gray-400 mt-1">{person.email}</div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <span className={`inline-flex px-2 py-0.5 text-[9px] font-black rounded border ${person.status === 'invited'
+                        ? 'bg-slate-100 text-slate-500 border-slate-200' :
+                        person.role === 'LEADER'
+                          ? 'bg-amber-50 text-amber-700 border-amber-200'
+                          : 'bg-blue-50 text-blue-700 border-blue-200'
+                      }`}>
+                      {person.role}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="px-6 py-10 text-center text-xs text-slate-400 font-bold uppercase tracking-widest">
+                  No members found
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
