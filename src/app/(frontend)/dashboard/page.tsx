@@ -3,6 +3,7 @@ import { createServerClient } from "@supabase/ssr";
 import TeamManager from "@/components/v1/TeamManager";
 import TeamRequestForm from "@/components/v1/TeamRequestForm";
 import InviteList from "@/components/v1/InviteList";
+import TargetList from "@/components/v1/TargetList";
 
 // Ensures your dashboard reflects database changes immediately on refresh
 export const revalidate = 0;
@@ -33,6 +34,12 @@ export default async function DashboardOverview() {
     .select("*, teams(name)")
     .eq("invited_player_id", user?.id)
     .eq("status", "pending");
+
+  const { data: targets } = await supabase
+    .from("targets")
+    .select("*")
+    .eq("player_id", user?.id)
+    .eq("is_active", true);
 
   return (
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
@@ -104,7 +111,7 @@ export default async function DashboardOverview() {
               <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
               <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
                 <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
-                  {/* <InviteList invitations={invitations || []} isMember={isMember} /> */}
+                  <TargetList targets={targets || []} isMember={isMember} />
                 </div>
               </div>
               {!isMember && (
