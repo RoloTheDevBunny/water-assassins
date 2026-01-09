@@ -81,7 +81,7 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
       setInviteEmail("");
       fetchRoster(); // Refresh list to show "Invited" status
     } catch (err) {
-      alert("Error sending invite.");
+      alert("Error sending invite: " + (err as Error).message);
     } finally {
       setLoading(false);
     }
@@ -115,7 +115,7 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
                 </td>
                 <td className="px-6 py-4">
                   <span className={`inline-flex px-2 py-0.5 text-[9px] font-black rounded border ${person.status === 'invited' ? 'bg-slate-100 text-slate-500 border-slate-200' :
-                      person.role === 'LEADER' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-blue-50 text-blue-700 border-blue-200'
+                    person.role === 'LEADER' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-blue-50 text-blue-700 border-blue-200'
                     }`}>
                     {person.role}
                   </span>
