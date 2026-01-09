@@ -1,17 +1,19 @@
 // src/app/dashboard/layout.tsx
 import Link from "next/link";
 import { ReactNode } from "react";
+import Navbar from "@/components/v1/Navbar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-[#f9fafb]">
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-10">
-        <div className="p-6">
+        {/* <div className="p-6">
           <Link href="/" className="text-xl font-bold tracking-tight text-gray-900">
             Water Assassins
           </Link>
-        </div>
+        </div> */}
+        <Navbar />
 
         <nav className="flex-1 px-4 space-y-1">
           <Link

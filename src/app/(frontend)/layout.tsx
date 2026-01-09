@@ -6,6 +6,8 @@ import { I18nProvider } from "@/contexts/i18nContext";
 import { ToastProvider } from "@/contexts/ToastContext";
 import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
 
+import Navbar from "@/components/v1/Navbar";
+
 import "@/styles/globals.css";
 
 const poppins = Poppins({
@@ -28,7 +30,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang={locale}>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <title>{translate("title")}</title>
+        <title>DASH BOARD LAYOUT TITLE</title>
       </head>
       <body className={poppins.className}>
         {/* Providers */}
