@@ -43,8 +43,8 @@ export default async function TeamPage() {
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
       {/* Header Area */}
       <section>
-        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Team Management</h1>
-        <p className="text-slate-600 font-bold mt-1">Manage your current team or join a new one.</p>
+        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Targets</h1>
+        <p className="text-slate-600 font-bold mt-1">View your assigned targets.</p>
 
         {/* Status Badge */}
         <div className="mt-6 inline-flex items-center gap-3 px-4 py-2 bg-slate-200 border-2 border-slate-300 rounded-full shadow-sm">
