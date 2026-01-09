@@ -5,38 +5,32 @@
   --color-foreground: var(--foreground);
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
+
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    /* Making default borders darker (Gray-300) for better visibility */
+    border-color: #d1d5db;
   }
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Site background is now a light grey to create contrast with white inputs */
+  --background: #f1f5f9;
+  --foreground: #0f172a;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* REMOVED: (prefers-color-scheme: dark) 
+   We are disabling the auto-dark mode flip to prevent the 'white-on-white' 
+   issue you are seeing on certain monitors.
+*/
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  font-family: 'Satoshi', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
