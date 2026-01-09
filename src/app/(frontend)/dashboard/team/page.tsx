@@ -62,19 +62,6 @@ export default async function TeamPage() {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Invitations Section */}
-            <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Invitations</h2>
-              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
-                <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
-                  <InviteList invitations={invitations || []} isMember={isMember} />
-                </div>
-              </div>
-              {!isMember && (
-                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Membership required to accept invites</p>
-              )}
-            </div>
-
             {/* Create Team Section */}
             <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
               <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Create Team</h2>
@@ -93,6 +80,20 @@ export default async function TeamPage() {
               </div>
               {!isMember && (
                 <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Membership required to create a team</p>
+              )}
+            </div>
+
+
+            {/* Invitations Section */}
+            <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+              <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Invitations</h2>
+              <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
+                <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed text-center">
+                  <InviteList invitations={invitations || []} isMember={isMember} />
+                </div>
+              </div>
+              {!isMember && (
+                <p className="text-[10px] font-bold text-red-500 mt-4 uppercase text-center">Membership required to accept invites</p>
               )}
             </div>
           </div>
