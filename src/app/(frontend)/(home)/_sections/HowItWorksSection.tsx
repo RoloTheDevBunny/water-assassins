@@ -1,32 +1,38 @@
-import { loadTranslationsSSR } from "@/utils/loadTranslationsSSR";
+"use client";
 
-export default async function HowItWorksSection() {
-    const { translate } = await loadTranslationsSSR();
+import { motion } from "framer-motion";
+import { useI18n } from "@/contexts/i18nContext";
+
+export default function HowItWorksSection() {
+    const { translate } = useI18n();
+
+    const steps = [
+        { id: 1, title: "pages.home.sections.how.options.first.title", desc: "pages.home.sections.how.options.first.description" },
+        { id: 2, title: "pages.home.sections.how.options.second.title", desc: "pages.home.sections.how.options.second.description" },
+        { id: 3, title: "pages.home.sections.how.options.third.title", desc: "pages.home.sections.how.options.third.description" }
+    ];
 
     return (
-        <section id="how-it-works" className="py-12 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-4xl font-bold text-center text-gray-900">{translate("pages.home.sections.how.title")}</h2>
-                <p className="mt-4 text-center text-lg text-gray-600">{translate("pages.home.sections.how.description")}</p>
-
-                <div className="mt-10 flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8">
-                    <div className="text-center">
-                        <div className="w-16 h-16 mx-auto flex items-center justify-center bg-indigo-600 text-white rounded-full text-2xl font-bold">1</div>
-                        <h3 className="mt-4 text-xl font-semibold text-gray-900">{translate("pages.home.sections.how.options.first.title")}</h3>
-                        <p className="mt-2 text-gray-600">{translate("pages.home.sections.how.options.first.description")}</p>
-                    </div>
-
-                    <div className="text-center">
-                        <div className="w-16 h-16 mx-auto flex items-center justify-center bg-indigo-600 text-white rounded-full text-2xl font-bold">2</div>
-                        <h3 className="mt-4 text-xl font-semibold text-gray-900">{translate("pages.home.sections.how.options.second.title")}</h3>
-                        <p className="mt-2 text-gray-600">{translate("pages.home.sections.how.options.second.description")} </p>
-                    </div>
-
-                    <div className="text-center">
-                        <div className="w-16 h-16 mx-auto flex items-center justify-center bg-indigo-600 text-white rounded-full text-2xl font-bold">3</div>
-                        <h3 className="mt-4 text-xl font-semibold text-gray-900">{translate("pages.home.sections.how.options.third.title")}</h3>
-                        <p className="mt-2 text-gray-600">{translate("pages.home.sections.how.options.third.description")}</p>
-                    </div>
+        <section className="py-24 bg-slate-50">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {steps.map((step, index) => (
+                        <motion.div
+                            key={step.id}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: index * 0.2 }}
+                            whileHover={{ y: -10 }} // Makes it "pop" on hover
+                            className="p-10 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl transition-shadow duration-300"
+                        >
+                            <div className="w-14 h-14 flex items-center justify-center bg-indigo-600 text-white rounded-2xl text-2xl font-black mb-8 shadow-lg shadow-indigo-100">
+                                {step.id}
+                            </div>
+                            <h3 className="text-2xl font-bold text-slate-900 mb-4">{translate(step.title)}</h3>
+                            <p className="text-slate-500 font-medium leading-relaxed">{translate(step.desc)}</p>
+                        </motion.div>
+                    ))}
                 </div>
             </div>
         </section>

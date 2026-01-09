@@ -1,10 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from 'next/image';
 import { useEffect, useState } from "react";
 import { GetMeBridge } from "@/bridges/getMe";
 import { useI18n } from "@/contexts/i18nContext";
-import Spinner from "@/components/v1/Spinner"; // Adjusted path to your Spinner component
+import Spinner from "@/components/v1/Spinner";
 
 export default function HeroSection() {
     const [isLoading, setIsLoading] = useState(true);
@@ -22,47 +23,56 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <div className="py-12 md:py-28 max-w-7xl mx-auto px-2 sm:px-16 lg:px-28">
-            <div className="flex flex-col md:flex-row items-center md:items-center">
-                <div className="text-center lg:text-left lg:w-2/3">
-                    <h1 className="text-3xl md:text-5xl font-bold leading-tight text-gray-900">
+        <section className="relative pt-20 pb-20 overflow-hidden bg-white">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="flex flex-col items-center text-center"
+                >
+                    <span className="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold bg-indigo-50 text-indigo-600 mb-8 uppercase tracking-widest shadow-sm">
+                        Registration Open
+                    </span>
+
+                    <h1 className="text-5xl md:text-8xl font-extrabold tracking-tighter text-slate-900 max-w-5xl mb-6">
                         {translate("pages.home.sections.hero.title")}
                     </h1>
-                    <p className="mt-4 text-lg md:text-xl text-gray-600">
+
+                    <p className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed mb-10">
                         {translate("pages.home.sections.hero.description")}
                     </p>
 
-                    {/* Button Area with fixed height to prevent layout shift */}
-                    <div className="mt-6 flex items-center justify-center lg:justify-start h-[52px]">
-                        {isLoading ? (
-                            <div className="w-64 flex justify-center">
-                                <Spinner />
-                            </div>
-                        ) : (
-                            <a
+                    <div className="flex flex-col sm:flex-row items-center gap-4 h-[64px]">
+                        {isLoading ? <Spinner /> : (
+                            <motion.a
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                                 href={isLogged ? "/dashboard" : "/register"}
-                                className="inline-block bg-indigo-600 text-white py-3 px-6 rounded-lg hover:bg-indigo-700 w-64 text-center font-semibold transition-colors shadow-md"
+                                className="inline-flex items-center justify-center bg-indigo-600 text-white px-12 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-indigo-200"
                             >
-                                {isLogged
-                                    ? translate("components.navbar.dashboard")
-                                    : translate("components.navbar.try")}
-                            </a>
+                                {isLogged ? translate("components.navbar.dashboard") : translate("components.navbar.try")}
+                            </motion.a>
                         )}
                     </div>
-                </div>
 
-                <div className="lg:ml-auto lg:w-1/3 mt-12 md:mt-0">
-                    <Image
-                        src="/svgs/home.svg"
-                        alt="AHS Water Assassins Illustration"
-                        className="rounded-lg"
-                        layout="intrinsic"
-                        width={400}
-                        height={0}
-                        priority // Added priority to the hero image for better LCP
-                    />
-                </div>
+                    {/* FIXED IMAGE CONTAINER: object-contain ensures no parts are cut off */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3, duration: 0.8 }}
+                        className="mt-20 w-full max-w-5xl aspect-[16/9] relative bg-slate-50 rounded-[3rem] border border-slate-100 p-8 md:p-12 shadow-inner"
+                    >
+                        <Image
+                            src="/svgs/home.svg"
+                            alt="Hero Illustration"
+                            fill
+                            className="object-contain p-4 md:p-8" // object-contain prevents the cutoff
+                            priority
+                        />
+                    </motion.div>
+                </motion.div>
             </div>
-        </div>
+        </section>
     );
 }

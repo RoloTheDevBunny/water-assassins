@@ -3,60 +3,25 @@
 import { ROUTES } from "@/constants/routes-constants";
 import { useI18n } from "@/contexts/i18nContext";
 
-type FooterProps = {
-  isDashboard?: boolean;
-};
-
-export default function Footer({ isDashboard }: FooterProps) {
+export default function Footer({ isDashboard }: { isDashboard?: boolean }) {
   const { translate } = useI18n();
 
+  if (isDashboard) return null;
+
   return (
-    <>
-      {!isDashboard && (
-        <footer id="footer" className="py-20 px-4 bg-indigo-600 text-white">
-          {/* Top Section */}
-          <div className="text-center">
-            <h2 className="text-4xl font-bold mb-6">
-              {translate("pages.home.footer.title")}
-            </h2>
-            <div className="flex justify-center space-x-4">
-              <a
-                href={ROUTES.dashboard}
-                className="py-3 px-8 bg-white text-indigo-600 rounded-lg hover:bg-gray-100 transition"
-              >
-                {translate("pages.home.footer.join")}
-              </a>
-            </div>
+    <footer className="bg-white pb-12 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Links */}
+        <div className="mt-16 flex flex-col md:flex-row justify-between items-center border-t border-slate-100 pt-8 gap-6">
+          <div className="flex space-x-8">
+            <a href="https://ahswaterassassins.com/terms-and-privacy#privacy-policy" className="text-sm font-semibold text-slate-400 hover:text-indigo-600">Privacy</a>
+            <a href="https://ahswaterassassins.com/terms-and-privacy#terms-of-service" className="text-sm font-semibold text-slate-400 hover:text-indigo-600">Terms</a>
           </div>
-
-          {/* Bottom Section */}
-          <div className="mt-12 text-center border-t border-indigo-500 pt-8">
-            <div className="flex justify-center space-x-6">
-              <a
-                href="https://ahswaterassassins.com/terms-and-privacy#privacy-policy"
-                className="text-sm hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Privacy Policy
-              </a>
-
-              <a
-                href="https://ahswaterassassins.com/terms-and-privacy#terms-of-service"
-                className="text-sm hover:underline"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {translate("pages.home.footer.terms")}
-              </a>
-            </div>
-
-            <p className="mt-6 text-sm text-gray-300">
-              {translate("pages.home.footer.copyright")}
-            </p>
-          </div>
-        </footer>
-      )}
-    </>
+          <p className="text-sm font-semibold text-slate-300">
+            {translate("pages.home.footer.copyright")}
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 }

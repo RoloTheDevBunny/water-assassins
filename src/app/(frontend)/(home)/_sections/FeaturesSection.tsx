@@ -1,9 +1,8 @@
 'use client';
 
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
-
+import { motion } from "framer-motion";
+import { BanknotesIcon, TrophyIcon } from "@heroicons/react/24/outline";
 import { useI18n } from "@/contexts/i18nContext";
-
 
 export default function FeaturesSection() {
   const { translate } = useI18n();
@@ -12,41 +11,51 @@ export default function FeaturesSection() {
     {
       title: translate('pages.home.sections.features.bounties.title'),
       description: translate('pages.home.sections.features.bounties.description'),
+      icon: <BanknotesIcon className="h-8 w-8 text-indigo-600" />,
     },
     {
       title: translate('pages.home.sections.features.prize.title'),
       description: translate('pages.home.sections.features.prize.description'),
+      icon: <TrophyIcon className="h-8 w-8 text-indigo-600" />,
     },
   ];
 
   return (
-    <section id="features" className="py-20 bg-gray-50">
+    <section id="payouts" className="py-24 bg-slate-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tighter">
             {translate('pages.home.sections.features.title')}
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
-            {translate('pages.home.sections.features.description')}
+          <p className="mt-4 text-slate-500 text-lg font-medium">
+            Transparent prize pools for the top competitors.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="mt-16 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {features.map((feature, index) => (
-            <div
+            <motion.div
               key={index}
-              className="p-8 bg-white shadow-lg rounded-2xl transition-transform transform hover:scale-105 hover:shadow-2xl"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.2 }}
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              className="flex flex-col p-10 bg-white rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-indigo-100/50 transition-all cursor-default"
             >
-              <div className="flex items-center">
-                <div className="h-12 w-12 rounded-full bg-indigo-100 flex items-center justify-center">
-                  <CheckCircleIcon className="h-6 w-6 text-indigo-600" />
-                </div>
-                <h3 className="ml-4 text-2xl font-semibold text-gray-800">
-                  {feature.title}
-                </h3>
+              <div className="h-16 w-16 rounded-2xl bg-indigo-50 flex items-center justify-center mb-8 shadow-inner">
+                {feature.icon}
               </div>
-              <p className="mt-6 text-gray-600 leading-relaxed">{feature.description}</p>
-            </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
+              <p className="text-slate-500 leading-relaxed font-medium text-lg">
+                {feature.description}
+              </p>
+            </motion.div>
           ))}
         </div>
       </div>
