@@ -12,10 +12,10 @@ export default function RulesPage() {
             {/* 01. The Basics */}
             <section id="basics" className="scroll-mt-24">
                 <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
-                    The text here is just a placeholder
+                    Come back later
                 </h1>
                 
-                <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
+                {/* <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
                     01. The Basics
                 </h2>
                 <div className="space-y-6">
@@ -33,11 +33,11 @@ export default function RulesPage() {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div> */}
             </section>
 
             {/* 02. Safe Zones */}
-            <section id="safe-zones" className="scroll-mt-24 pt-10 border-t-2 border-slate-300">
+            {/* <section id="safe-zones" className="scroll-mt-24 pt-10 border-t-2 border-slate-300">
                 <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
                     02. Safe Zones
                 </h2>
@@ -56,10 +56,10 @@ export default function RulesPage() {
                         </p>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
             {/* 03. Conduct */}
-            <section id="conduct" className="scroll-mt-24 pt-10 border-t-2 border-slate-300">
+            {/* <section id="conduct" className="scroll-mt-24 pt-10 border-t-2 border-slate-300">
                 <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
                     03. Conduct
                 </h2>
@@ -73,7 +73,7 @@ export default function RulesPage() {
                         Respect the community and the spirit of the game.
                     </p>
                 </div>
-            </section>
+            </section> */}
         </div>
     );
 }

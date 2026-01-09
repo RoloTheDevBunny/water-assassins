@@ -34,7 +34,7 @@ export default function RulesLayout({ children }: { children: ReactNode }) {
                             <div className="mt-10 p-4 bg-slate-300/50 rounded-2xl border-2 border-slate-300 border-dashed">
                                 <p className="text-[10px] font-black text-slate-600 uppercase leading-relaxed text-center">
                                     Questions? <br />
-                                    Contact an Admin
+                                    Email alec@ahswaterassassins.com
                                 </p>
                             </div>
                         </div>

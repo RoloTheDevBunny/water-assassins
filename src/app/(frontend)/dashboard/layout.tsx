@@ -27,6 +27,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               Team
             </Link>
             <Link
+              href="/dashboard/targets"
+              className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-colors"
+            >
+              Targets
+            </Link>
+            <Link
               href="/dashboard/settings"
               className="flex items-center px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600 rounded-lg transition-colors"
             >
