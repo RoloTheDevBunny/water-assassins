@@ -24,71 +24,66 @@ export default async function PaymentOverview() {
   return (
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
       <section>
-        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Fees & Payments</h1>
-        <p className="text-slate-600 font-bold mt-1">Manage your tournament dues</p>
+        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase italic">Payments</h1>
+        <p className="text-slate-600 font-bold mt-1">Send your dues via the apps below.</p>
       </section>
 
+      {/* 1. Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-        {/* CARD 1: PLAYER MEMBERSHIP FEE */}
-        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm flex flex-col justify-between min-h-[250px]">
-          <div>
-            <div className="flex justify-between items-start">
-              <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Player Fee</p>
-              <span className={`text-[10px] font-black px-2 py-1 rounded border ${isMember ? 'bg-green-100 text-green-700 border-green-200' : 'bg-red-100 text-red-700 border-red-200'}`}>
-                {isMember ? "PAID" : "REQUIRED"}
-              </span>
-            </div>
-            <p className="text-3xl font-black text-slate-900 mt-2">$25.00</p>
-            <p className="text-sm font-bold text-slate-600 mt-2">Personal membership to join the season.</p>
-          </div>
-
-          {!isMember ? (
-            <button className="w-full bg-slate-900 text-white py-3 rounded-xl font-black text-sm hover:bg-black transition-all mt-6 uppercase tracking-tight">
-              Pay Membership Fee
-            </button>
-          ) : (
-            <div className="mt-6 py-3 px-4 bg-white/50 border border-slate-300 rounded-xl text-center text-xs font-black text-green-700 uppercase">
-              ✓ Membership Active
-            </div>
-          )}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+          <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Player Membership</p>
+          <p className={`text-3xl font-black mt-2 ${isMember ? 'text-green-700' : 'text-red-600'}`}>
+            {isMember ? "$25.00 PAID" : "$25.00 DUE"}
+          </p>
         </div>
 
-        {/* CARD 2: TEAM REGISTRATION FEE */}
-        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm flex flex-col justify-between min-h-[250px]">
-          <div>
-            <div className="flex justify-between items-start">
-              <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Team Fee</p>
-              {hasPendingRequest && (
-                <span className="text-[10px] font-black px-2 py-1 rounded border bg-blue-100 text-blue-700 border-blue-200">
-                  AWAITING PAYMENT
-                </span>
-              )}
-            </div>
-            <p className="text-3xl font-black text-slate-900 mt-2">$10.00</p>
-            <p className="text-sm font-bold text-slate-600 mt-2">
-              {hasPendingRequest 
-                ? `Required for team: ${requestRes.data.team_name}` 
-                : "Only required if you are starting a new team."}
-            </p>
-          </div>
-
-          {hasPendingRequest ? (
-            <button className="w-full bg-indigo-600 text-white py-3 rounded-xl font-black text-sm hover:bg-indigo-700 transition-all mt-6 uppercase tracking-tight shadow-md">
-              Pay Team Fee
-            </button>
-          ) : (
-            <div className="mt-6 py-3 px-4 border border-dashed border-slate-400 rounded-xl text-center text-xs font-bold text-slate-500 uppercase">
-              No Pending Team Requests
-            </div>
-          )}
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+          <p className="text-xs font-black text-slate-500 uppercase tracking-widest">Team Registration</p>
+          <p className={`text-3xl font-black mt-2 ${hasPendingRequest ? 'text-blue-700' : 'text-slate-400'}`}>
+            {hasPendingRequest ? "$10.00 DUE" : "$0.00"}
+          </p>
         </div>
-
       </div>
 
-      <p className="text-center text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-        Secure payments powered by Stripe. Fees are non-refundable once the season begins.
-      </p>
+      {/* 2. Payment Methods Grid */}
+      <section className="space-y-6">
+        <div className="bg-amber-50 border-2 border-amber-200 p-4 rounded-2xl">
+          <p className="text-xs font-black text-amber-800 uppercase text-center">
+            ⚠️ Important: Include your name "({playerRes.data?.name})" in the payment notes so we can verify you!
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Venmo */}
+          <div className="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-sky-100 rounded-full flex items-center justify-center mb-4 text-sky-600 font-black">V</div>
+            <h3 className="font-black text-slate-900">VENMO</h3>
+            <p className="text-sm font-bold text-slate-500 mt-1">@AlecJMacLean</p>
+          </div>
+
+          {/* PayPal */}
+          <div className="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mb-4 text-indigo-600 font-black">P</div>
+            <h3 className="font-black text-slate-900">PAYPAL</h3>
+            <p className="text-sm font-bold text-slate-500 mt-1">Agoura Water Assassins: alec@ahswaterassassins.com</p>
+          </div>
+
+          {/* Zelle */}
+          <div className="bg-white p-6 rounded-2xl border-2 border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4 text-purple-600 font-black">Z</div>
+            <h3 className="font-black text-slate-900">ZELLE</h3>
+            <p className="text-sm font-bold text-slate-500 mt-1">805-795-1059</p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Help Footer */}
+      <div className="bg-slate-900 p-8 rounded-3xl text-center">
+        <p className="text-slate-400 text-xs font-black uppercase tracking-widest">Verification Process</p>
+        <p className="text-white font-bold mt-2">
+          Once sent, an admin will verify your payment and update your dashboard within 24 hours.
+        </p>
+      </div>
     </div>
   );
 }
