@@ -52,9 +52,11 @@ export default function Navbar() {
           <a href="/#faq" className="text-sm font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors">
             {translate("components.navbar.faq")}
           </a>
-          {/* Added an extra link to show "spread" */}
           <a href="/rules" className="text-sm font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors">
             Rules
+          </a>
+          <a href="/payment" className="text-sm font-black uppercase tracking-widest text-slate-500 hover:text-slate-900 transition-colors">
+            Payments
           </a>
         </nav>
 
