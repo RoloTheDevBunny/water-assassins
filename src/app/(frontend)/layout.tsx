@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: Props) {
     <html lang={locale}>
       <head>
         <link rel="icon" href="/favicon.ico" />
-        <title>DASH BOARD LAYOUT TITLE</title>
+        <title>Water Assassins Dashboard</title>
       </head>
       <body className={poppins.className}>
         {/* Providers */}
