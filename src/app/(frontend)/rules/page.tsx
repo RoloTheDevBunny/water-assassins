@@ -11,6 +11,10 @@ export default function RulesPage() {
         <div className="flex flex-col gap-16">
             {/* 01. The Basics */}
             <section id="basics" className="scroll-mt-24">
+                <h1 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
+                    The text here is just a placeholder
+                </h1>
+                
                 <h2 className="text-4xl font-black text-slate-900 uppercase tracking-tight mb-8">
                     01. The Basics
                 </h2>
