@@ -6,6 +6,8 @@ import Navbar from "@/components/v1/Navbar";
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen bg-[#f9fafb]">
+
+      <Navbar />
       {/* Sidebar */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col fixed h-full z-10">
         {/* <div className="p-6">
@@ -13,7 +15,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             Water Assassins
           </Link>
         </div> */}
-        <Navbar />
 
         <nav className="flex-1 px-4 space-y-1">
           <Link
