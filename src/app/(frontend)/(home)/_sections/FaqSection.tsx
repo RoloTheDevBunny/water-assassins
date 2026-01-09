@@ -9,7 +9,7 @@ const FaqSection = () => {
   const { translate } = useI18n();
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
-  const faqs = [1, 2, 3, 4, 5, 6, 7].map(i => ({
+  const faqs = [1, 2, 3, 4, 5, 6, 7, 8].map(i => ({
     question: translate(`pages.home.sections.faq.items.${i}.question`),
     answer: translate(`pages.home.sections.faq.items.${i}.answer`),
   }));

@@ -31,7 +31,7 @@
           "description": "Where the Player Fee goes",
           "bounties": {
             "title": "Bounties (1/2 Player Fee)",
-            "description": "Get paid $5 each week for killing your target and suriving to claim their bounty."
+            "description": "Get paid $5 each week for killing your target and suriving to claim their bounty. Bounties increase as teams are elimated."
           },
           "prize": {
             "title": "Grand Prize (1/2 Player Fee)",
@@ -69,6 +69,10 @@
             "7": {
               "question": "What are the requirements to confirm a kill?",
               "answer": "All water guns must be clearly marked (add an orange tip if it looks real). You can use a hose, bucket, your hands, anything where the water passes through your hands or something you are holding. After calling a hit, you need to stop shooting, and get a picture with your target, showing the water on them. A video of you hitting them is also required."
+            },
+            "8": {
+              "question": "What happens if I get elimated?",
+              "answer": "You can not claim your target's bounty for the week. You will respawn next week."
             }
           }
         }
