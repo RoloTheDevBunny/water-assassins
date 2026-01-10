@@ -49,7 +49,7 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
                                 </span>
                             </div>
                             {compact == false && (
-                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Target</div>
+                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Week {target.week} Target</div>
                             )}
 
                             {/* Status Icon and Description */}
