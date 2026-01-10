@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { VideoCameraIcon, ClockIcon, CheckBadgeIcon, LockClosedIcon, XCircleIcon } from "@heroicons/react/24/outline";
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
@@ -11,9 +12,24 @@ interface TargetListProps {
 }
 
 export default function TargetList({ targets, isMember, week, compact }: TargetListProps) {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const activeTargetId = useRef<string | null>(null);
+
     const handleUploadClick = (id: string) => {
         if (!isMember) return;
-        alert("Redirecting to video upload for target " + id);
+        activeTargetId.current = id;
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const files = event.target.files;
+        if (!files || files.length === 0) return;
+
+        const fileList = Array.from(files);
+        console.log(`Uploading ${fileList.length} files for target: ${activeTargetId.current}`);
+
+        // Logic for Supabase upload would go here
+        alert(`Selected ${fileList.length} files for upload.`);
     };
 
     if (!targets || targets.length === 0) {
@@ -24,20 +40,29 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
         );
     }
 
-    // Sort targets: Current week first, others at the bottom
+    // Sort targets: Current week first
     const sortedTargets = [...targets].sort((a, b) => {
         if (a.week === week && b.week !== week) return -1;
         if (a.week !== week && b.week === week) return 1;
         return b.week - a.week;
     });
 
-    // If compact is true, filter to only show this week's targets
+    // Compact mode: Only show current week targets
     const displayedTargets = compact
         ? sortedTargets.filter(t => t.week === week)
         : sortedTargets;
 
     return (
         <div className="space-y-4">
+            <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                multiple
+                accept="video/*,image/*"
+                className="hidden"
+            />
+
             {displayedTargets.map((target) => {
                 const rawStatus = target.status?.toLowerCase() || 'active';
                 const displayStatus = rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1);
@@ -85,7 +110,7 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
                                             <VideoCameraIcon className="w-4 h-4 text-sky-500 mt-0.5" />
                                             <div>
                                                 <p className="text-[10px] font-black uppercase text-slate-900">Status: Active</p>
-                                                <p className="text-[10px] text-slate-500 font-bold mt-1 leading-tight">Target assigned. Submit your video proof for review.</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1 leading-tight">Target assigned. Submit your proof for review.</p>
                                             </div>
                                         </>
                                     )}
