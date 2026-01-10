@@ -24,15 +24,21 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
         );
     }
 
+    // Sort targets: Current week first, others at the bottom
     const sortedTargets = [...targets].sort((a, b) => {
         if (a.week === week && b.week !== week) return -1;
         if (a.week !== week && b.week === week) return 1;
         return b.week - a.week;
     });
 
+    // If compact is true, filter to only show this week's targets
+    const displayedTargets = compact
+        ? sortedTargets.filter(t => t.week === week)
+        : sortedTargets;
+
     return (
         <div className="space-y-4">
-            {sortedTargets.map((target) => {
+            {displayedTargets.map((target) => {
                 const rawStatus = target.status?.toLowerCase() || 'active';
                 const displayStatus = rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1);
                 const isCurrentWeek = target.week === week;
@@ -43,23 +49,20 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
                         className={`relative overflow-hidden p-6 border-2 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm transition-all
                             ${isCurrentWeek
                                 ? 'bg-white border-slate-200'
-                                // Non-current weeks get a darker, muted background
                                 : 'bg-slate-100 border-slate-300'
                             }`}
                     >
-                        {/* INACTIVE OVERLAY: Only shows if it's not the current week */}
                         {!isCurrentWeek && (
-                            <div className="absolute inset-0 bg-slate-900/5 pointer-events-none" />
+                            <div className="absolute inset-0 bg-black/5 pointer-events-none z-0" />
                         )}
 
                         <div className="mb-4 md:mb-0 w-full relative z-10">
                             <div className="flex items-center gap-3 mb-1">
-                                <div className={`text-xl font-black uppercase italic leading-none ${isCurrentWeek ? 'text-slate-900' : 'text-slate-500'}`}>
+                                <div className={`text-xl font-black uppercase italic leading-none ${isCurrentWeek ? 'text-slate-900' : 'text-slate-600'}`}>
                                     {target.target_name}
                                 </div>
 
-                                {/* Status Badge - Colors preserved even if inactive */}
-                                <span className={`text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-tighter ${rawStatus === 'active' ? 'bg-sky-50 text-sky-600 border-sky-200' :
+                                <span className={`text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-tighter shadow-sm ${rawStatus === 'active' ? 'bg-sky-50 text-sky-600 border-sky-200' :
                                         rawStatus === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-200' :
                                             rawStatus === 'confirmed' ? 'bg-indigo-50 text-indigo-600 border-indigo-200' :
                                                 rawStatus === 'claimed' ? 'bg-green-50 text-green-600 border-green-200' :
@@ -133,7 +136,7 @@ export default function TargetList({ targets, isMember, week, compact }: TargetL
                                         Upload Proof
                                     </button>
                                 ) : (
-                                    <div className="text-[10px] font-black text-slate-500 uppercase italic bg-slate-200/50 px-3 py-1 rounded-lg">
+                                    <div className={`text-[10px] font-black uppercase italic px-3 py-1 rounded-lg ${isCurrentWeek ? 'text-slate-500 bg-slate-200/50' : 'text-slate-400 bg-slate-300/30'}`}>
                                         {isCurrentWeek ? "No Action Required" : "Week Expired"}
                                     </div>
                                 )}
