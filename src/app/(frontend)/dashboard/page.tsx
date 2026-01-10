@@ -51,7 +51,7 @@ export default async function DashboardOverview() {
     .eq("id", 1)
     .single();
 
-  const currentWeek = config?.current_week_number || 1;
+  const currentWeek = config?.current_week_number || 2;
 
   // Map the targets to ensure the name is easily accessible by TargetList
   const formattedTargets = targets?.map(t => ({
