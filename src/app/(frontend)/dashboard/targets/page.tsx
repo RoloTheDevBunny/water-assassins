@@ -43,7 +43,7 @@ export default async function TeamPage() {
     .eq("id", 1)
     .single();
 
-  const currentWeek = config?.current_week_number || 1;
+  const currentWeek = config?.current_week_number || 2;
 
   // Map the targets to ensure the name is easily accessible by TargetList
   const formattedTargets = targets?.map(t => ({
@@ -56,7 +56,7 @@ export default async function TeamPage() {
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
       {/* Header Area */}
       <section>
-        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Targets</h1>
+        <h1 className="text-4xl font-black tracking-tight text-slate-900 uppercase">Week {currentWeek} Targets</h1>
         <p className="text-slate-600 font-bold mt-1">View your assigned targets.</p>
 
         {/* Status Badge */}
