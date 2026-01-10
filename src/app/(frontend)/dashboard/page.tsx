@@ -120,7 +120,7 @@ export default async function DashboardOverview() {
           <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
           <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
             <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed min-h-[120px] flex items-center justify-center text-center">
-              <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} />
+              <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} compact={true} />
             </div>
           </div>
           {!isMember && (

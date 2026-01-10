@@ -75,7 +75,7 @@ export default async function TeamPage() {
             <h2 className="text-2xl font-black text-slate-900 uppercase">Your Targets</h2>
           </div>
 
-          <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} />
+          <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} compact={false} />
 
           {!isMember && (
             <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">

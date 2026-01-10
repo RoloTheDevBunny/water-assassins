@@ -7,9 +7,10 @@ interface TargetListProps {
     targets: any[];
     isMember: boolean;
     week: number;
+    compact: boolean;
 }
 
-export default function TargetList({ targets, isMember, week }: TargetListProps) {
+export default function TargetList({ targets, isMember, week, compact }: TargetListProps) {
     const handleUploadClick = (id: string) => {
         if (!isMember) return;
         alert("Redirecting to video upload for target " + id);
@@ -38,7 +39,6 @@ export default function TargetList({ targets, isMember, week }: TargetListProps)
                                 <div className="text-xl font-black text-slate-900 uppercase italic leading-none">
                                     {target.target_name}
                                 </div>
-
                                 <span className={`text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-tighter ${rawStatus === 'active' ? 'bg-sky-50 text-sky-600 border-sky-200' :
                                     rawStatus === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-200' :
                                         rawStatus === 'confirmed' ? 'bg-indigo-50 text-indigo-600 border-indigo-200' :
@@ -48,68 +48,75 @@ export default function TargetList({ targets, isMember, week }: TargetListProps)
                                     {displayStatus}
                                 </span>
                             </div>
-
-                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Target</div>
+                            {compact == false && (
+                                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Target</div>
+                            )}
 
                             {/* Status Icon and Description */}
-                            <div className="mt-4 flex items-start gap-2">
-                                {rawStatus === 'active' && (
-                                    <>
-                                        <VideoCameraIcon className="w-4 h-4 text-sky-500 mt-0.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Active</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Target assigned. Submit your video proof for review.</p>
-                                        </div>
-                                    </>
-                                )}
-                                {rawStatus === 'pending' && (
-                                    <>
-                                        <ClockIcon className="w-4 h-4 text-amber-500 mt-0.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Pending</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Proof uploaded. Waiting for admin confirmation.</p>
-                                        </div>
-                                    </>
-                                )}
-                                {rawStatus === 'confirmed' && (
-                                    <>
-                                        <CheckBadgeIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Confirmed</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Kill verified. You must survive to the next week to claim.</p>
-                                        </div>
-                                    </>
-                                )}
-                                {rawStatus === 'claimed' && (
-                                    <>
-                                        <CurrencyDollarIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Claimed</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty claimed. You have recieved $5.</p>
-                                        </div>
-                                    </>
-                                )}
-                                {rawStatus === 'lost' && (
-                                    <>
-                                        <XCircleIcon className="w-4 h-4 text-red-500 mt-0.5" />
-                                        <div>
-                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Lost</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty lost. Try to survive next time.</p>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
-                        </div>
 
-                        <div className="w-full md:w-auto flex justify-end">
-                            {rawStatus === 'active' && isMember ? (
-                                <button onClick={() => handleUploadClick(target.id)} className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-black uppercase hover:bg-black transition-all">
-                                    Upload Proof
-                                </button>
-                            ) : (
-                                <div className="text-[10px] font-black text-slate-400 uppercase italic">No Action Required</div>
+                            {compact == false && (
+                                <div className="mt-4 flex items-start gap-2">
+                                    {rawStatus === 'active' && (
+                                        <>
+                                            <VideoCameraIcon className="w-4 h-4 text-sky-500 mt-0.5" />
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase text-slate-900">Status: Active</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1">Target assigned. Submit your video proof for review.</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    {rawStatus === 'pending' && (
+                                        <>
+                                            <ClockIcon className="w-4 h-4 text-amber-500 mt-0.5" />
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase text-slate-900">Status: Pending</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1">Proof uploaded. Waiting for admin confirmation.</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    {rawStatus === 'confirmed' && (
+                                        <>
+                                            <CheckBadgeIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase text-slate-900">Status: Confirmed</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1">Kill verified. You must survive to the next week to claim.</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    {rawStatus === 'claimed' && (
+                                        <>
+                                            <CurrencyDollarIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase text-slate-900">Status: Claimed</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty claimed. You have recieved $5.</p>
+                                            </div>
+                                        </>
+                                    )}
+                                    {rawStatus === 'lost' && (
+                                        <>
+                                            <XCircleIcon className="w-4 h-4 text-red-500 mt-0.5" />
+                                            <div>
+                                                <p className="text-[10px] font-black uppercase text-slate-900">Status: Lost</p>
+                                                <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty lost. Try to survive next time.</p>
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                             )}
                         </div>
+
+
+                        {compact == false && (
+                            <div className="w-full md:w-auto flex justify-end">
+                                {rawStatus === 'active' && isMember ? (
+                                    <button onClick={() => handleUploadClick(target.id)} className="bg-slate-900 text-white px-6 py-2.5 rounded-xl text-xs font-black uppercase hover:bg-black transition-all">
+                                        Upload Proof
+                                    </button>
+                                ) : (
+                                    <div className="text-[10px] font-black text-slate-400 uppercase italic">No Action Required</div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 );
             })}
