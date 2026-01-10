@@ -6,9 +6,10 @@ import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 interface TargetListProps {
     targets: any[];
     isMember: boolean;
+    week: number;
 }
 
-export default function TargetList({ targets, isMember }: TargetListProps) {
+export default function TargetList({ targets, isMember, week }: TargetListProps) {
     const handleUploadClick = (id: string) => {
         if (!isMember) return;
         alert("Redirecting to video upload for target " + id);
@@ -30,7 +31,7 @@ export default function TargetList({ targets, isMember }: TargetListProps) {
                 const displayStatus = rawStatus.charAt(0).toUpperCase() + rawStatus.slice(1);
 
                 return (
-                    <div key={target.id} className="p-6 bg-white border-2 border-slate-200 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm">
+                    <div key={target.id} className={`p-6 bg-${week == target.week ? 'white' : 'slate-50'} border-2 border-slate-200 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center shadow-sm`}>
                         <div className="mb-4 md:mb-0 w-full">
                             <div className="flex items-center gap-3 mb-1">
                                 {/* This displays the name passed from the formattedTargets in page.tsx */}

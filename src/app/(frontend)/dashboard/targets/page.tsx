@@ -37,6 +37,14 @@ export default async function TeamPage() {
     `)
     .eq("assassin_id", user?.id);
 
+  const { data: config } = await supabase
+    .from("game_config")
+    .select("current_week_number")
+    .eq("id", 1)
+    .single();
+
+  const currentWeek = config?.current_week_number || 1;
+
   // Map the targets to ensure the name is easily accessible by TargetList
   const formattedTargets = targets?.map(t => ({
     ...t,
@@ -67,7 +75,7 @@ export default async function TeamPage() {
             <h2 className="text-2xl font-black text-slate-900 uppercase">Your Targets</h2>
           </div>
 
-          <TargetList targets={formattedTargets} isMember={isMember} />
+          <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} />
 
           {!isMember && (
             <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">

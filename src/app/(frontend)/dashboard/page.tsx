@@ -37,9 +37,28 @@ export default async function DashboardOverview() {
 
   const { data: targets } = await supabase
     .from("targets")
-    .select("*")
-    .eq("player_id", user?.id)
-    .eq("is_active", true);
+    .select(`
+      *,
+      target_info:players!target_id (
+        name
+      )
+    `)
+    .eq("assassin_id", user?.id);
+
+  const { data: config } = await supabase
+    .from("game_config")
+    .select("current_week_number")
+    .eq("id", 1)
+    .single();
+
+  const currentWeek = config?.current_week_number || 1;
+
+  // Map the targets to ensure the name is easily accessible by TargetList
+  const formattedTargets = targets?.map(t => ({
+    ...t,
+    // This ensures TargetList sees "target_name"
+    target_name: t.target_info?.name || "Unknown Player"
+  })) || [];
 
   return (
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
@@ -101,7 +120,7 @@ export default async function DashboardOverview() {
           <h2 className="text-xl font-black text-slate-900 mb-4 uppercase tracking-tight">Targets</h2>
           <div className={!isMember ? 'opacity-40 grayscale pointer-events-none' : ''}>
             <div className="bg-slate-50 rounded-xl p-6 border-2 border-slate-300 border-dashed min-h-[120px] flex items-center justify-center text-center">
-              <TargetList targets={targets || []} isMember={isMember} />
+              <TargetList targets={formattedTargets} isMember={isMember} week={currentWeek} />
             </div>
           </div>
           {!isMember && (
