@@ -38,16 +38,16 @@ export default function TargetList({ targets, isMember }: TargetListProps) {
                                 </div>
 
                                 <span className={`text-[9px] font-black px-2 py-0.5 rounded border uppercase tracking-tighter ${rawStatus === 'active' ? 'bg-sky-50 text-sky-600 border-sky-200' :
-                                        rawStatus === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-200' :
-                                            rawStatus === 'confirmed' ? 'bg-indigo-50 text-indigo-600 border-indigo-200' :
-                                                rawStatus === 'claimed' ? 'bg-green-50 text-green-600 border-green-200' :
-                                                    'bg-red-50 text-red-600 border-red-200'
+                                    rawStatus === 'pending' ? 'bg-amber-50 text-amber-600 border-amber-200' :
+                                        rawStatus === 'confirmed' ? 'bg-indigo-50 text-indigo-600 border-indigo-200' :
+                                            rawStatus === 'claimed' ? 'bg-green-50 text-green-600 border-green-200' :
+                                                'bg-red-50 text-red-600 border-red-200'
                                     }`}>
                                     {displayStatus}
                                 </span>
                             </div>
 
-                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Current Objective</div>
+                            <div className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Target</div>
 
                             {/* Status Icon and Description */}
                             <div className="mt-4 flex items-start gap-2">
