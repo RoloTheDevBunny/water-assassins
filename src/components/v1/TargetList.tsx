@@ -74,11 +74,19 @@ export default function TargetList({ targets, isMember }: TargetListProps) {
                                         <CheckBadgeIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
                                         <div>
                                             <p className="text-[10px] font-black uppercase text-slate-900">Status: Confirmed</p>
-                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Kill verified. You must survive to the next week.</p>
+                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Kill verified. You must survive to the next week to claim.</p>
                                         </div>
                                     </>
                                 )}
-                                {/* Add Claimed/Lost blocks similarly... */}
+                                {rawStatus === 'lost' && (
+                                    <>
+                                        <XCircleIcon className="w-4 h-4 text-red-500 mt-0.5" />
+                                        <div>
+                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Lost</p>
+                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty lost. Try to survive next time.</p>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                         </div>
 
