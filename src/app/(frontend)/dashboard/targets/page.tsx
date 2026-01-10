@@ -17,26 +17,32 @@ export default async function TeamPage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   // Unified data fetch
-  const [playerRes, membershipRes, requestRes] = await Promise.all([
+  const [playerRes, membershipRes] = await Promise.all([
     supabase.from("players").select("*").eq("id", user?.id).single(),
     supabase.from("team_members").select("*, teams(*)").eq("member_id", user?.id).maybeSingle(),
-    supabase.from("team_requests").select("*").eq("user_id", user?.id).eq("is_approved", false).maybeSingle(),
   ]);
 
   const isMember = playerRes.data?.is_member ?? false;
-  const currentTeam = membershipRes.data?.teams;
-  const isOwner = membershipRes.data?.is_owner ?? false;
 
-  const { data: invitations } = await supabase
-    .from("invitations")
-    .select("*, teams(name)")
-    .eq("invited_player_id", user?.id)
-    .eq("status", "pending");
-
+  // UPDATED QUERY: 
+  // We are selecting everything from 'targets' 
+  // AND joining the 'players' table using 'target_id' to get their name
   const { data: targets } = await supabase
     .from("targets")
-    .select("*")
-    .eq("assassin_id", user?.id)
+    .select(`
+      *,
+      target_info:players!target_id (
+        name
+      )
+    `)
+    .eq("assassin_id", user?.id);
+
+  // Map the targets to ensure the name is easily accessible by TargetList
+  const formattedTargets = targets?.map(t => ({
+    ...t,
+    // This ensures TargetList sees "target_name"
+    target_name: t.target_info?.name || "Unknown Player"
+  })) || [];
 
   return (
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
@@ -60,7 +66,9 @@ export default async function TeamPage() {
           <div className="border-b-2 border-slate-300 pb-4 mb-6">
             <h2 className="text-2xl font-black text-slate-900 uppercase">Your Targets</h2>
           </div>
-          <TargetList targets={targets || []} isMember={isMember} />
+
+          <TargetList targets={formattedTargets} isMember={isMember} />
+
           {!isMember && (
             <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">
               Membership required to receive targets.
@@ -71,17 +79,3 @@ export default async function TeamPage() {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
