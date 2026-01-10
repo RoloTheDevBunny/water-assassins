@@ -36,8 +36,7 @@ export default async function TeamPage() {
   const { data: targets } = await supabase
     .from("targets")
     .select("*")
-    .eq("player_id", user?.id)
-    .eq("is_active", true);
+    .eq("assassin_id", user?.id)
 
   return (
     <div className="space-y-10 max-w-5xl mx-auto pb-20 p-4 text-slate-900">
@@ -57,17 +56,17 @@ export default async function TeamPage() {
 
       {/* Main Content Area */}
       <section>
-          <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
-            <div className="border-b-2 border-slate-300 pb-4 mb-6">
-                <h2 className="text-2xl font-black text-slate-900 uppercase">Your Targets</h2>
-            </div>
-            <TargetList targets={targets || []} isMember={isMember} />
-            {!isMember && (
+        <div className="bg-slate-200 p-8 rounded-3xl border-2 border-slate-300 shadow-sm">
+          <div className="border-b-2 border-slate-300 pb-4 mb-6">
+            <h2 className="text-2xl font-black text-slate-900 uppercase">Your Targets</h2>
+          </div>
+          <TargetList targets={targets || []} isMember={isMember} />
+          {!isMember && (
             <p className="text-xs font-bold text-red-500 mt-4 bg-red-100 p-2 rounded border border-red-200">
               Membership required to receive targets.
             </p>
           )}
-          </div>
+        </div>
       </section>
     </div>
   );
