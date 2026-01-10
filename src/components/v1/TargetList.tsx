@@ -1,6 +1,7 @@
 "use client";
 
 import { VideoCameraIcon, ClockIcon, CheckBadgeIcon, LockClosedIcon, XCircleIcon } from "@heroicons/react/24/outline";
+import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
 interface TargetListProps {
     targets: any[];
@@ -75,6 +76,15 @@ export default function TargetList({ targets, isMember }: TargetListProps) {
                                         <div>
                                             <p className="text-[10px] font-black uppercase text-slate-900">Status: Confirmed</p>
                                             <p className="text-[10px] text-slate-500 font-bold mt-1">Kill verified. You must survive to the next week to claim.</p>
+                                        </div>
+                                    </>
+                                )}
+                                {rawStatus === 'claimed' && (
+                                    <>
+                                        <CurrencyDollarIcon className="w-4 h-4 text-indigo-500 mt-0.5" />
+                                        <div>
+                                            <p className="text-[10px] font-black uppercase text-slate-900">Status: Claimed</p>
+                                            <p className="text-[10px] text-slate-500 font-bold mt-1">Bounty claimed. You have recieved $5.</p>
                                         </div>
                                     </>
                                 )}
