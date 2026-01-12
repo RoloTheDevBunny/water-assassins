@@ -102,10 +102,10 @@ export default function Navbar() {
             <a href="#faq" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
               {translate("components.navbar.faq")}
             </a>
-            <a href="#rules" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
+            <a href="/rules" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
               {translate("components.navbar.rules")}
             </a>
-            <a href="#payments" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
+            <a href="/payment" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
               {translate("components.navbar.payments")}
             </a>
             <hr className="border-slate-300" />
