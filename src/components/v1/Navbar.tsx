@@ -96,10 +96,10 @@ export default function Navbar() {
       {isMenuOpen && (
         <div className="md:hidden bg-slate-100 border-b-4 border-slate-300 animate-in slide-in-from-top duration-300">
           <nav className="flex flex-col space-y-4 p-8">
-            <a href="#pricing" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
+            <a href="/#pricing" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
               {translate("components.navbar.pricing")}
             </a>
-            <a href="#faq" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
+            <a href="/#faq" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
               {translate("components.navbar.faq")}
             </a>
             <a href="/rules" onClick={() => setIsMenuOpen(false)} className="text-lg font-black uppercase tracking-widest text-slate-900">
