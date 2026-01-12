@@ -110,7 +110,6 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
         )}
       </div>
 
-      {/* FIXED FORM LOGIC OVERLAY */}
       {isInviteOpen && (
         <div className="absolute inset-0 z-30 bg-white p-6 flex flex-col justify-center animate-in fade-in zoom-in duration-200">
           <div className="flex justify-between items-center mb-4">
@@ -145,7 +144,7 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
               roster.map((person) => {
                 const isSelf = !!myEmail && !!person.email && person.email.toLowerCase() === myEmail.toLowerCase();
                 return (
-                  <tr key={person.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={person.id} className={`${isSelf ? 'bg-slate-50' : ''} hover:bg-slate-50 transition-colors`}>
                     <td className={`px-6 py-4 ${isSelf ? 'bg-slate-100 border-y border-l border-slate-300 rounded-l-md' : ''}`}>
                       <div className="text-sm font-black text-gray-900 leading-none">{person.name}</div>
                       <div className="text-[10px] text-gray-400 mt-1">{person.email}</div>
