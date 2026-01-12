@@ -173,6 +173,8 @@
     "navbar": {
       "pricing": "Payouts",
       "faq": "FAQ",
+      "rules": "Rules",
+      "payments": "Payments",
       "signin": "Sign In",
       "try": "Sign In",
       "dashboard": "Dashboard"
