@@ -60,6 +60,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-6 py-3 flex justify-around z-50">
         <Link href="/dashboard" className="text-xs font-bold uppercase text-slate-500">Overview</Link>
         <Link href="/dashboard/team" className="text-xs font-bold uppercase text-slate-500">Team</Link>
+        <Link href="/dashboard/targets" className="text-xs font-bold uppercase text-slate-500">Targets</Link>
         <Link href="/dashboard/settings" className="text-xs font-bold uppercase text-slate-500">Settings</Link>
       </div>
     </div>
