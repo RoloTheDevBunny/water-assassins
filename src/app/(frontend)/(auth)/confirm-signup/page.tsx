@@ -43,13 +43,13 @@ export default function ConfirmSignUp() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
-    
+
     // 1. Check if Supabase sent an error in the URL (Prevents "Database Error" hang)
     const urlError = queryParams.get("error_description") || queryParams.get("error");
     if (urlError) {
-      dispatch({ 
-        type: "FAILURE", 
-        error: "Login Failed: Please ensure you use your student email." 
+      dispatch({
+        type: "FAILURE",
+        error: "Login Failed: Please ensure you use your student email."
       });
       return;
     }
@@ -127,12 +127,21 @@ export default function ConfirmSignUp() {
           {state.wrongEmail && (
             <p className="text-sm text-gray-400 mb-6 italic">Logged in as: {state.wrongEmail}</p>
           )}
-          <button
-            onClick={handleTryAgain}
-            className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
-          >
-            Sign Out & Try Again
-          </button>
+          {state.error.includes("flow state") ? (
+            <a
+              href="/dashboard"
+              className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Reach Flow State (Dashboard)
+            </a>
+          ) : (
+            <button
+              onClick={handleTryAgain}
+              className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+            >
+              Sign Out & Try Again
+            </button>
+          )}
         </div>
       </div>
     );
