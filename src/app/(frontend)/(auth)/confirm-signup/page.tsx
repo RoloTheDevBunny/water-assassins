@@ -130,7 +130,7 @@ export default function ConfirmSignUp() {
           {state.error.includes("flow state") ? (
             <a
               href="/dashboard"
-              className="w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition"
+              className="block w-full py-3 px-4 bg-indigo-600 text-white rounded-lg font-semibold text-center hover:bg-indigo-700 transition"
             >
               Reach Flow State (Dashboard)
             </a>
