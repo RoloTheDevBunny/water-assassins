@@ -17,6 +17,7 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [myEmail, setMyEmail] = useState<string | null>(null);
 
   const fetchRoster = async () => {
     // Fetch actual members and pending invites in parallel
@@ -45,6 +46,14 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
   };
 
   useEffect(() => { fetchRoster(); }, [teamId]);
+
+  // Fetch current user's email to identify self row
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase.auth.getUser();
+      setMyEmail(data.user?.email ?? null);
+    })();
+  }, []);
 
   const handleInvite = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -133,24 +142,27 @@ export default function TeamManager({ teamId, isOwner }: { teamId: string, isOwn
         <table className="w-full text-left">
           <tbody className="divide-y divide-gray-200">
             {roster.length > 0 ? (
-              roster.map((person) => (
-                <tr key={person.id} className="hover:bg-slate-50 transition-colors">
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-black text-gray-900 leading-none">{person.name}</div>
-                    <div className="text-[10px] text-gray-400 mt-1">{person.email}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex px-2 py-0.5 text-[9px] font-black rounded border ${person.status === 'invited'
+              roster.map((person) => {
+                const isSelf = !!myEmail && !!person.email && person.email.toLowerCase() === myEmail.toLowerCase();
+                return (
+                  <tr key={person.id} className="hover:bg-slate-50 transition-colors">
+                    <td className={`px-6 py-4 ${isSelf ? 'bg-slate-100 border-y border-l border-slate-300 rounded-l-md' : ''}`}>
+                      <div className="text-sm font-black text-gray-900 leading-none">{person.name}</div>
+                      <div className="text-[10px] text-gray-400 mt-1">{person.email}</div>
+                    </td>
+                    <td className={`px-6 py-4 ${isSelf ? 'bg-slate-100 border-y border-r border-slate-300 rounded-r-md' : ''}`}>
+                      <span className={`inline-flex px-2 py-0.5 text-[9px] font-black rounded border ${person.status === 'invited'
                         ? 'bg-slate-100 text-slate-500 border-slate-200' :
                         person.role === 'LEADER'
                           ? 'bg-amber-50 text-amber-700 border-amber-200'
                           : 'bg-blue-50 text-blue-700 border-blue-200'
-                      }`}>
-                      {person.role}
-                    </span>
-                  </td>
-                </tr>
-              ))
+                        }`}>
+                        {person.role}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td className="px-6 py-10 text-center text-xs text-slate-400 font-bold uppercase tracking-widest">
